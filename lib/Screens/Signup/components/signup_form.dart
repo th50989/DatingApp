@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:believeder_app/Values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -15,14 +16,13 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signUpUrl = "http://localhost:5214/";
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
 
     Future<void> sendSignUpRequest() async {
       var options = BaseOptions(
-        baseUrl: signUpUrl,
+        baseUrl: Value.baseUrl,
         method: 'POST',
         contentType: 'application/json',
         connectTimeout: const Duration(seconds: 60),
@@ -41,12 +41,12 @@ class SignUpForm extends StatelessWidget {
 
       print(response.data);
       if (response.statusCode == HttpStatus.ok) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Post created successfully!"),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Đăng ký thành công"),
         ));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Failed to create post!"),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Đăng ký thất bại do có lỗi đã xảy ra"),
         ));
       }
     }
@@ -79,10 +79,10 @@ class SignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
@@ -94,10 +94,10 @@ class SignUpForm extends StatelessWidget {
               textInputAction: TextInputAction.next,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -109,10 +109,10 @@ class SignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.done,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Confirm password",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.lock),
               ),
             ),
@@ -133,7 +133,7 @@ class SignUpForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
   @override
@@ -37,24 +37,22 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.message,
-              color: Theme.of(context).primaryColor,
-            )
-          ),
+              onPressed: () {},
+              icon: Icon(
+                Icons.message,
+                color: Theme.of(context).primaryColor,
+              )),
           IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.person,
-              color: Theme.of(context).primaryColor,
-            )
-          )
+              onPressed: () {},
+              icon: Icon(
+                Icons.person,
+                color: Theme.of(context).primaryColor,
+              ))
         ],
       ),
     );
   }
-  
+
   @override
   Size get preferredSize => Size.fromHeight(56.0);
 }

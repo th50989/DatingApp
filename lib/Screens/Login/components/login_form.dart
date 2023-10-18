@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
 import 'package:dio/dio.dart';
+
+//Import url form Values/value.dart
+import '../../../Values/values.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -14,16 +19,40 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signUpUrl = "http://localhost:5214/";
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+
+    //Xử lý chuyển trang
+    void navigateToProfilePage(Response response) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PersonalProfilePage(
+                  currentUser:
+                      // User.fromJson(jsonDecode(response.data.toString())))),
+                      User(
+                          '${response.data['lastName']}', //cai nay phai la age nay, server chua co age
+                          '${response.data['firstName']}',
+                          '${response.data['lastName']}',
+                          '${response.data['birthday']}',
+                          '${response.data['gender']}',
+                          '${response.data['location']}',
+                          '${response.data['accessToken']}',
+                          '${response.data['bio']}',
+                          '${response.data['ImageURL']}'))));
+    }
+
+    //Xử lý đăng nhập gọi api
     Future<void> sendSignInRequest() async {
       var options = BaseOptions(
-        baseUrl: signUpUrl,
+        baseUrl: Value.baseUrl,
         method: 'POST',
         contentType: 'application/json',
         connectTimeout: const Duration(seconds: 60),
       );
+      // debugPrint(Value.baseUrl.toString());
+      // debugPrint(emailController.text);
+      // debugPrint(passwordController.text);
       Response response;
       var dio = Dio(options);
       try {
@@ -35,14 +64,17 @@ class LoginForm extends StatelessWidget {
         throw (e.toString());
       }
 
-      print(response.data);
+      debugPrint(response.data.toString());
       if (response.statusCode == HttpStatus.ok) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Post created successfully!"),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Đăng nhập thành công"),
         ));
+
+        //Xử lý đăng nhập xong thì navigate
+        navigateToProfilePage(response);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Failed to create post!"),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Có lỗi xảy ra trong quá trình đăng nhập"),
         ));
       }
       //xu ly them hoat anh , hieu ung khi dang nhap dang ky thanh cong hoac dell thanh cong
@@ -57,10 +89,10 @@ class LoginForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
@@ -72,10 +104,10 @@ class LoginForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -101,7 +133,7 @@ class LoginForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return SignUpScreen();
+                    return const SignUpScreen();
                   },
                 ),
               );
