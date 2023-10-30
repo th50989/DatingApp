@@ -1,0 +1,12 @@
+import 'package:dio/dio.dart';
+
+class Value {
+  static String baseUrl = 'http://localhost:5214/';
+}
+
+var options = BaseOptions(
+  baseUrl: Value.baseUrl,
+  method: 'POST',
+  contentType: 'application/json',
+  connectTimeout: const Duration(seconds: 60),
+);

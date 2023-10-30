@@ -1,9 +1,11 @@
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:io';
 
+import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
+import 'package:believeder_app/Values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
@@ -15,41 +17,40 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signUpUrl = "http://localhost:5214/";
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
 
     Future<void> sendSignUpRequest() async {
-      var options = BaseOptions(
-        baseUrl: signUpUrl,
-        method: 'POST',
-        contentType: 'application/json',
-        connectTimeout: const Duration(seconds: 60),
-      );
       Response response;
       var dio = Dio(options);
-      try {
-        response = await dio.post('api/Users/register', data: {
-          "email": emailController.text,
-          "password": passwordController.text,
-          "confirmPassword": confirmPasswordController.text,
-        });
-      } catch (e) {
-        throw (e.toString());
-      }
+      response = await dio.post('api/Users/register', data: {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "confirmPassword": confirmPasswordController.text,
+      });
+      //Ham nay se xu ly token nhung de sau di
+      // Future<void> sendVerifiedRequest() async {
+      //   String userVerifyToken = '';
+      // }
 
-      print(response.data);
+      //Navigation
+
+      debugPrint(response.data.toString());
+      //Post data
       if (response.statusCode == HttpStatus.ok) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Post created successfully!"),
+        // sendVerifiedRequest();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Đăng ký thành công"),
         ));
+        Future.delayed(Duration(seconds: 2));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Failed to create post!"),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Đăng ký thất bại do có lỗi đã xảy ra"),
         ));
       }
     }
+
     // Future<void> sendSignUpRequest() async {
     //   var response = await http.post(Uri.parse(signUpUrl),
     //       headers: {"Content-Type": "application/json"},
@@ -69,7 +70,6 @@ class SignUpForm extends StatelessWidget {
     //     ));
     //   }
     // }
-
     return Form(
       child: Column(
         children: [
@@ -79,10 +79,10 @@ class SignUpForm extends StatelessWidget {
             textInputAction: TextInputAction.next,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
@@ -94,25 +94,26 @@ class SignUpForm extends StatelessWidget {
               textInputAction: TextInputAction.next,
               obscureText: true,
               cursorColor: kPrimaryColor,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
             ),
           ),
           TextFormField(
+            obscureText: true,
             controller: confirmPasswordController,
             // keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Confirm password",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.lock),
               ),
             ),
@@ -133,7 +134,7 @@ class SignUpForm extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );
