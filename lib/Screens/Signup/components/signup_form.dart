@@ -1,10 +1,11 @@
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:io';
 
+import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
@@ -21,35 +22,35 @@ class SignUpForm extends StatelessWidget {
     TextEditingController confirmPasswordController = TextEditingController();
 
     Future<void> sendSignUpRequest() async {
-      var options = BaseOptions(
-        baseUrl: Value.baseUrl,
-        method: 'POST',
-        contentType: 'application/json',
-        connectTimeout: const Duration(seconds: 60),
-      );
       Response response;
       var dio = Dio(options);
-      try {
-        response = await dio.post('api/Users/register', data: {
-          "email": emailController.text,
-          "password": passwordController.text,
-          "confirmPassword": confirmPasswordController.text,
-        });
-      } catch (e) {
-        throw (e.toString());
-      }
+      response = await dio.post('api/Users/register', data: {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "confirmPassword": confirmPasswordController.text,
+      });
+      //Ham nay se xu ly token nhung de sau di
+      // Future<void> sendVerifiedRequest() async {
+      //   String userVerifyToken = '';
+      // }
 
-      print(response.data);
+      //Navigation
+
+      debugPrint(response.data.toString());
+      //Post data
       if (response.statusCode == HttpStatus.ok) {
+        // sendVerifiedRequest();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Đăng ký thành công"),
         ));
+        Future.delayed(Duration(seconds: 2));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Đăng ký thất bại do có lỗi đã xảy ra"),
         ));
       }
     }
+
     // Future<void> sendSignUpRequest() async {
     //   var response = await http.post(Uri.parse(signUpUrl),
     //       headers: {"Content-Type": "application/json"},
@@ -69,7 +70,6 @@ class SignUpForm extends StatelessWidget {
     //     ));
     //   }
     // }
-
     return Form(
       child: Column(
         children: [
@@ -104,6 +104,7 @@ class SignUpForm extends StatelessWidget {
             ),
           ),
           TextFormField(
+            obscureText: true,
             controller: confirmPasswordController,
             // keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.done,

@@ -1,6 +1,6 @@
 import 'components/signup_form.dart';
 import 'package:flutter/material.dart';
-import 'components/socal_sign_up.dart';
+
 import '../../components/background.dart';
 import 'components/sign_up_top_image.dart';
 import 'package:believeder_app/constants.dart';
@@ -11,22 +11,22 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return const Background(
       child: SingleChildScrollView(
         child: Responsive(
-          mobile: const MobileSignupScreen(),
+          mobile: MobileSignupScreen(),
           desktop: Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: SignUpScreenTopImage(),
               ),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
                       width: 450,
-                      child: const SignUpForm(),
+                      child: SignUpForm(),
                     ),
                     SizedBox(height: defaultPadding / 2),
                     // SocalSignUp()
@@ -48,12 +48,12 @@ class MobileSignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const SignUpScreenTopImage(),
+        SignUpScreenTopImage(),
         Row(
-          children: const [
+          children: [
             Spacer(),
             Expanded(
               flex: 8,

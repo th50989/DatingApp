@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
 
@@ -42,36 +44,39 @@ class LoginForm extends StatelessWidget {
                           '${response.data['ImageURL']}'))));
     }
 
+    _navigateToCreateNewUserPage() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NewUserPage()),
+      );
+    }
+
     //Xử lý đăng nhập gọi api
     Future<void> sendSignInRequest() async {
-      var options = BaseOptions(
-        baseUrl: Value.baseUrl,
-        method: 'POST',
-        contentType: 'application/json',
-        connectTimeout: const Duration(seconds: 60),
-      );
       // debugPrint(Value.baseUrl.toString());
       // debugPrint(emailController.text);
       // debugPrint(passwordController.text);
       Response response;
       var dio = Dio(options);
-      try {
-        response = await dio.post('api/Users/login', data: {
-          "email": emailController.text,
-          "password": passwordController.text,
-        });
-      } catch (e) {
-        throw (e.toString());
-      }
+
+      response = await dio.post('api/Users/login', data: {
+        "email": emailController.text,
+        "password": passwordController.text,
+      });
 
       debugPrint(response.data.toString());
+      debugPrint(response.statusCode.toString());
       if (response.statusCode == HttpStatus.ok) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Đăng nhập thành công"),
         ));
-
-        //Xử lý đăng nhập xong thì navigate
         navigateToProfilePage(response);
+        if (response.statusCode == 400) {
+          //Neu user chua duoc tao thi navigate vao trang tao user
+          _navigateToCreateNewUserPage();
+        }
+        //Xử lý đăng nhập xong thì navigate, neu user da tao roi thi navigate qua home page
+        //  navigateToProfilePage(response);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Có lỗi xảy ra trong quá trình đăng nhập"),
@@ -122,6 +127,7 @@ class LoginForm extends StatelessWidget {
                 print("da bam nut dang nhap");
               },
               child: Text(
+                style: TextStyle(color: Colors.white),
                 "Login".toUpperCase(),
               ),
             ),
