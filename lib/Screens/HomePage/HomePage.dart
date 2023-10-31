@@ -10,6 +10,23 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    const CrossButton = SnackBar(
+      content: Text(
+        "Bạn đã dislike người dùng này",
+      )
+    );
+    const LikeButton = SnackBar(
+      content: Text(
+        "Bạn đã like người dùng này",
+      )
+    );
+    const PendingButton = SnackBar(
+      content: Text(
+        "Bạn đã tạm thời lướt qua người dùng này",
+      )
+    );
+
     return Scaffold(
       body: Column(
         children: [
@@ -74,7 +91,11 @@ class HomePage extends StatelessWidget {
                               height: 60,
                               size: 25,
                               icon: Icons.clear_rounded,
-                              onPressed: () {},
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  CrossButton
+                                );
+                              },
                               color: Colors.red,
                             ),
                             ChoiceButton(
@@ -83,7 +104,11 @@ class HomePage extends StatelessWidget {
                               size: 30,
                               icon: Icons.favorite, 
                               color: Colors.red, 
-                              onPressed: () {}
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  LikeButton
+                                );
+                              }
                             ),
                             ChoiceButton(
                               width: 60,
@@ -91,7 +116,11 @@ class HomePage extends StatelessWidget {
                               size: 25,
                               icon: Icons.watch_later, 
                               color: Colors.red, 
-                              onPressed: () {}
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  PendingButton
+                                );
+                              }
                             )
                           ],
                         ),
