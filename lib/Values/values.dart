@@ -8,5 +8,5 @@ var options = BaseOptions(
   baseUrl: Value.baseUrl,
   method: 'POST',
   contentType: 'application/json',
-  connectTimeout: const Duration(seconds: 60),
+  connectTimeout: 30000,
 );

@@ -1,24 +1,57 @@
 class User {
-  String Age = '';
-  String gender = '';
-  String imgUrl = '';
-  String bio = '';
-  String birthDay = '';
-  String lastName = '';
-  String firstName = '';
-  String location = '';
-  //TAO DDEOS BIET CAN CAI NAY K NEN T CU GHI DAI
-  String accessToken = '';
+  int userId;
+  int age;
+  String gender;
+  String imgUrl;
+  String bio;
+  String birthDay;
+  String lastName;
+  String firstName;
+  String location;
+  String accessToken;
 
-  User(this.Age, this.firstName, this.lastName, this.birthDay, this.gender,
-      this.location, this.accessToken, this.bio, this.imgUrl);
-  User.fromJson(Map<String, dynamic> json)
-      : firstName = json['firstName'],
-        lastName = json['lastName'],
-        bio = json['bio'],
-        birthDay = json['birthday'],
-        gender = json['gender'],
-        location = json['location'],
-        imgUrl = json['ImageURL'],
-        accessToken = json['accessToken'];
+  User({
+    this.userId = 0,
+    this.age = 18,
+    this.gender = '',
+    this.imgUrl = '',
+    this.bio = '',
+    this.birthDay = '',
+    this.lastName = '',
+    this.firstName = '',
+    this.location = '',
+    this.accessToken = '',
+  });
+
+  // Factory constructor để tạo một User từ dữ liệu JSON
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      userId: json['userId'] ?? 0,
+      age: json['age'] ?? 18,
+      gender: json['gender'] ?? '',
+      imgUrl: json['imgUrl'] ?? '',
+      bio: json['bio'] ?? '',
+      birthDay: json['birthDay'] ?? '',
+      lastName: json['lastName'] ?? '',
+      firstName: json['firstName'] ?? '',
+      location: json['location'] ?? '',
+      accessToken: json['accessToken'] ?? '',
+    );
+  }
+
+  // Method để chuyển đổi User thành dữ liệu JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'userId': userId,
+      'age': age,
+      'gender': gender,
+      'imgUrl': imgUrl,
+      'bio': bio,
+      'birthDay': birthDay,
+      'lastName': lastName,
+      'firstName': firstName,
+      'location': location,
+      'accessToken': accessToken,
+    };
+  }
 }
