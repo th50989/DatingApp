@@ -1,11 +1,11 @@
+import 'package:believeder_app/Models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:believeder_app/Screens/Profile/Widgets/InfoTextBox.dart';
 
 class PersonalProfilePage extends StatefulWidget {
-  const PersonalProfilePage({super.key});
-
+  const PersonalProfilePage({super.key, required this.currentUser});
+  final User currentUser;
   @override
   State<PersonalProfilePage> createState() => _PersonalProfilePageState();
 }
@@ -14,16 +14,15 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       body: Container(
-        decoration: BoxDecoration(
+      body: Container(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.pinkAccent,
-              Colors.white70,
-            ]
-          ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.pinkAccent,
+                Colors.white70,
+              ]),
         ),
         height: 1000.0,
         child: Stack(
@@ -36,7 +35,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                 CircleAvatar(
                   radius: 50,
                   backgroundImage: NetworkImage(
-                    "/assets/images/usercard.jpg",
+                    widget.currentUser.imgUrl,
                     scale: 100.0,
                   ),
                 ),
@@ -44,41 +43,52 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   height: 20.0,
                 ),
                 Text(
-                  "Nguyeenx Cao Thangws",
+                  "${widget.currentUser.lastName}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w300
-                  ),
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w300),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 50.0,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
+                  padding: EdgeInsets.only(
                     left: 25.0,
                   ),
                   child: Text(
                     'My Details',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15.0
-                    ),
+                    style: TextStyle(color: Colors.black, fontSize: 15.0),
                   ),
                 ),
                 infoTextBox(
-                  text: "Nguyeenx Cao Thangws", 
-                  sectionName: 'Username'
-                ),
+                    text: "${widget.currentUser.bio}", sectionName: 'Bio'),
                 infoTextBox(
-                  text: "21", 
-                  sectionName: 'Age'
-                ),
+                    text: "${widget.currentUser.lastName}",
+                    sectionName: 'Last Name'),
                 infoTextBox(
-                  text: "Oi dan ba, Woman bu yi yang", 
-                  sectionName: 'Description'
-                ),
+                    text: "${widget.currentUser.firstName}",
+                    sectionName: 'First Name'),
+                infoTextBox(
+                    text: "${widget.currentUser.birthDay}",
+                    sectionName: 'Birthday'),
+                infoTextBox(
+                    text: "${widget.currentUser.gender}",
+                    sectionName: 'Gender'),
+                infoTextBox(
+                    text: "${widget.currentUser.location}",
+                    sectionName: 'Location'),
+                infoTextBox(text: "21", sectionName: 'Age'),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                          style: TextStyle(color: Colors.white), 'go back')),
+                )
               ],
             ),
           ],
