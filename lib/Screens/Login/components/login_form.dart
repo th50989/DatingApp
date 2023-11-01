@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
@@ -96,14 +97,23 @@ class _LoginFormState extends State<LoginForm> {
           body: Column(
             children: [
               BlocListener<LoginCubit, LoginState>(listener: (context, state) {
-                if (state is LoginSuccess) {
-                  // Handle a successful login, e.g., navigate to a new screen
+                if (state is LoginSuccessButNoUser) {
+                  // User nhập đúng email và mật khẩu nhưng chưa tạo Usser
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Đăng nhập thành công vui lòng tạo user"),
+                  ));
+                  Future.delayed(const Duration(seconds: 2));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const NewUserPage(AccountId: 4),
+                  ));
+                } else if (state is LoginSuccess) {
+                  // User nhập đúng email,mật khẩu và đã tạo User rồi
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Đăng nhập thành công"),
                   ));
                   Future.delayed(const Duration(seconds: 2));
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const NewUserPage(),
+                    builder: (context) => const HomePage(),
                   ));
                 } else if (state is LoginFailed) {
                   // Handle a failed login, e.g., show an error message

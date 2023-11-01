@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Values/values.dart';
+import 'package:believeder_app/constant/url_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 // import 'package:http/http.dart' as http;
@@ -23,6 +24,13 @@ class SignUpForm extends StatelessWidget {
 
     Future<void> sendSignUpRequest() async {
       Response response;
+      var options = BaseOptions(
+          contentType: 'application/json',
+          method: 'POST',
+          baseUrl: base_url,
+          validateStatus: (status) {
+            return status! < 500; // Accept all status codes below 500
+          });
       var dio = Dio(options);
       response = await dio.post('api/Users/register', data: {
         "email": emailController.text,

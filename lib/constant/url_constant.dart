@@ -7,3 +7,5 @@
 
 //link nay mang nha tao
 final String login_url = "http://192.168.1.199:8000/api/Users/login";
+
+final String base_url = "http://192.168.1.199:8000/";
