@@ -1,3 +1,4 @@
+import 'package:believeder_app/Screens/Login/components/login_form.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:believeder_app/constants.dart';
@@ -16,7 +17,7 @@ class App extends StatelessWidget {
         lazy: false,
         create: (context) => LoginCubit(),
       ),
-    ], child: const MyApp());
+    ], child: const LoginForm());
   }
 }
 
