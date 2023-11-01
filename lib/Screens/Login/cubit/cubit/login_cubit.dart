@@ -14,7 +14,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> login(String email, String password) async {
     emit(LoginLoading());
-
+    Future.delayed(Duration(seconds: 1));
     var options = BaseOptions(
       contentType: 'application/json',
       method: 'POST',
