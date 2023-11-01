@@ -1,12 +1,14 @@
 import 'dart:io';
 
-import 'package:believeder_app/Values/values.dart';
+import 'package:believeder_app/Screens/HomePage/HomePage.dart';
+
+import 'package:believeder_app/constant/url_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class NewUserPage extends StatefulWidget {
-  const NewUserPage({super.key});
-
+  const NewUserPage({super.key, required this.AccountId});
+  final int AccountId;
   @override
   State<NewUserPage> createState() => _NewUserPageState();
 }
@@ -18,20 +20,33 @@ class _NewUserPageState extends State<NewUserPage> {
   TextEditingController Gender = TextEditingController();
   //User chua co truong bio
   //TextEditingController Bio = TextEditingController();
-  TextEditingController Location = TextEditingController();
+  TextEditingController location = TextEditingController();
 
   String selectedGender = "Male"; // Default selection
+
+  void _navigateToHomePage() {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const HomePage(),
+    ));
+  }
+
   Future<void> sendCreateUserRequest() async {
     Response response;
+    var options = BaseOptions(
+      baseUrl: base_url,
+      method: 'POST',
+      contentType: 'application/json',
+      connectTimeout: 30000,
+    );
     var dio = Dio(options);
     try {
       response = await dio.post('api/Users/create-user', data: {
-        "accountId": 8,
+        "accountId": widget.AccountId.toInt(),
         "lastName": lName.text,
         "firstName": fName.text,
         "gender": selectedGender,
         "birthday": "2023-10-17",
-        "location": Location.text
+        "location": location.text
       });
     } catch (e) {
       throw (e.toString());
@@ -43,7 +58,7 @@ class _NewUserPageState extends State<NewUserPage> {
         content: Text("Tao user thành công"),
       ));
       //tao user thanh cong thi navigate vao homepage
-      //_navigateToHomePage(){}
+      _navigateToHomePage();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Có lỗi xảy ra trong quá trình tao user"),
@@ -157,10 +172,10 @@ class _NewUserPageState extends State<NewUserPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
-                          controller: Location,
+                          controller: location,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: 'Location',
+                            labelText: 'location',
                           ),
                         ),
                       ),
@@ -192,7 +207,7 @@ class _NewUserPageState extends State<NewUserPage> {
                       //     sectionName: 'Gender'),
                       // infoTextBox(
                       //     text: "${widget.currentUser.location}",
-                      //     sectionName: 'Location'),
+                      //     sectionName: 'location'),
                       // infoTextBox(text: "21", sectionName: 'Age'),
                       // Padding(
                       //   padding: const EdgeInsets.all(10.0),
