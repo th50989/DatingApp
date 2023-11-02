@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:believeder_app/constant/colors_constant.dart';
@@ -19,11 +20,16 @@ import 'package:dio/dio.dart';
 import '../../../Values/values.dart';
 import '../cubit/cubit/login_cubit.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
@@ -80,37 +86,15 @@ class LoginForm extends StatelessWidget {
     //   //xu ly them hoat anh , hieu ung khi dang nhap dang ky thanh cong hoac dell thanh cong
     // }
 
-    return Form(
-      child: Column(
-        children: [
-          TextFormField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            onSaved: (email) {},
-            decoration: const InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: passwordController,
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              decoration: const InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
-                ),
-              ),
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 100,
+            title: Container(
+              child: const Text(
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  'Dit me cai giao dien cua thang thang la cai loi chu dell phai cubit loi'),
             ),
           ),
           const SizedBox(height: defaultPadding),
@@ -176,6 +160,7 @@ class LoginForm extends StatelessWidget {
           ),
         ],
       ),
+
     );
   }
 }
