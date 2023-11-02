@@ -41,7 +41,6 @@ class MobileLoginScreen extends StatelessWidget {
   const MobileLoginScreen({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return const Column(
