@@ -11,6 +11,8 @@ class LoginLoading extends LoginState {
   LoginLoading();
 }
 
+class LoginSuccessButNoUser extends LoginState {}
+
 class LoginSuccess extends LoginState {
   final User user;
   LoginSuccess(this.user);
