@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:believeder_app/constant/colors_constant.dart';
@@ -18,11 +19,16 @@ import 'package:dio/dio.dart';
 import '../../../Values/values.dart';
 import '../cubit/cubit/login_cubit.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
@@ -59,6 +65,7 @@ class LoginForm extends StatelessWidget {
                   child: Icon(Icons.lock),
                 ),
               ),
+
             ),
           ),
           const SizedBox(height: defaultPadding),
@@ -124,6 +131,7 @@ class LoginForm extends StatelessWidget {
           ),
         ],
       ),
+
     );
   }
 }
