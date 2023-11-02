@@ -63,6 +63,7 @@ class MyApp extends StatelessWidget {
           listener: (context, state) {
             if (state is LoginSuccess) {
               Future.delayed(Duration(seconds: 1), () {
+                //delay de hien thong bao dang nhap thanh cong
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) {
                     return HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
