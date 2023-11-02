@@ -11,7 +11,6 @@ import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../Signup/signup_screen.dart';
 import 'package:dio/dio.dart';
@@ -35,66 +34,38 @@ class _LoginFormState extends State<LoginForm> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    // //Xử lý chuyển trang
-    // void navigateToProfilePage(Response response) {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => PersonalProfilePage(currentUser: User()
-    //               // User.fromJson(jsonDecode(response.data.toString())))),
-    //               )));
-    // }
+    return Form(
+      child: Column(
+        children: [
+          TextFormField(
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            cursorColor: kPrimaryColor,
+            onSaved: (email) {},
+            decoration: const InputDecoration(
+              hintText: "Your email",
+              prefixIcon: Padding(
+                padding: EdgeInsets.all(defaultPadding),
+                child: Icon(Icons.person),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
+            child: TextFormField(
+              controller: passwordController,
+              textInputAction: TextInputAction.done,
+              obscureText: true,
+              cursorColor: kPrimaryColor,
+              decoration: const InputDecoration(
+                hintText: "Your password",
+                prefixIcon: Padding(
+                  padding: EdgeInsets.all(defaultPadding),
+                  child: Icon(Icons.lock),
+                ),
+              ),
 
-    // _navigateToCreateNewUserPage() {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => const NewUserPage()),
-    //   );
-    // }
-
-    // //Xử lý đăng nhập gọi api
-    // Future<void> sendSignInRequest() async {
-    //   // debugPrint(Value.baseUrl.toString());
-    //   // debugPrint(emailController.text);
-    //   // debugPrint(passwordController.text);
-    //   Response response;
-    //   var dio = Dio(options);
-
-    //   response = await dio.post('api/Users/login', data: {
-    //     "email": emailController.text,
-    //     "password": passwordController.text,
-    //   });
-
-    //   debugPrint(response.data.toString());
-    //   debugPrint(response.statusCode.toString());
-    //   if (response.statusCode == HttpStatus.ok) {
-    //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //       content: Text("Đăng nhập thành công"),
-    //     ));
-    //     navigateToProfilePage(response);
-    //     if (response.statusCode == 400) {
-    //       //Neu user chua duoc tao thi navigate vao trang tao user
-    //       _navigateToCreateNewUserPage();
-    //     }
-    //     //Xử lý đăng nhập xong thì navigate, neu user da tao roi thi navigate qua home page
-    //     //  navigateToProfilePage(response);
-    //   } else {
-    //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //       content: Text("Có lỗi xảy ra trong quá trình đăng nhập"),
-    //     ));
-    //   }
-    //   //xu ly them hoat anh , hieu ung khi dang nhap dang ky thanh cong hoac dell thanh cong
-    // }
-
-    return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 100,
-            title: Container(
-              child: const Text(
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  'Dit me cai giao dien cua thang thang la cai loi chu dell phai cubit loi'),
             ),
           ),
           const SizedBox(height: defaultPadding),
