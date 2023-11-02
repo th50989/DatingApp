@@ -22,7 +22,9 @@ class App extends StatelessWidget {
         lazy: false,
         create: (context) => LoginCubit(),
       ),
-    ], child: const LoginForm());
+
+    ], child: const MyApp()); //cai nay de phan phoi cubit cho toan app
+
   }
 }
 
