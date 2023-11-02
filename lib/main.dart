@@ -1,4 +1,6 @@
+
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
+
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +22,9 @@ class App extends StatelessWidget {
         lazy: false,
         create: (context) => LoginCubit(),
       ),
+
     ], child: const MyApp()); //cai nay de phan phoi cubit cho toan app
+
   }
 }
 
