@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../../../constant/colors_constant.dart';
+
 import '../../Login/login_screen.dart';
 import '../../Signup/signup_screen.dart';
 

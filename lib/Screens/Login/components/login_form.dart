@@ -4,11 +4,14 @@ import 'dart:io';
 import 'package:believeder_app/Models/models.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
+import 'package:believeder_app/constant/colors_constant.dart';
+import 'package:believeder_app/constant/font_constant.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
-import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
 import 'package:dio/dio.dart';
 
@@ -111,22 +114,52 @@ class LoginForm extends StatelessWidget {
             ),
           ),
           const SizedBox(height: defaultPadding),
-          Hero(
-            tag: "login_btn",
-            child: ElevatedButton(
-              onPressed: () {
-                print(emailController.text);
-                print(passwordController.text);
-                context
-                    .read<LoginCubit>()
-                    .login(emailController.text, passwordController.text);
-                print("da bam nut dang nhap");
-              },
-              child: Text(
-                style: TextStyle(color: Colors.white),
-                "Login".toUpperCase(),
-              ),
-            ),
+          BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, state) {
+              if (state is LoginLoading) {
+                return Hero(
+                  tag: "login_btn",
+                  child: ElevatedButton(
+                      onPressed: null,
+                      child: Transform.scale(
+                          scale: 1,
+                          child: const Center(
+                              child: CircularProgressIndicator(
+                            color: kPrimaryColor,
+                          )))),
+                );
+              }
+              if (state is LoginSuccess) {
+                Future.delayed(Duration.zero, () async {
+                  ElegantNotification.success(
+                          background: kPrimaryLightColor,
+                          height: 50,
+                          notificationPosition: NotificationPosition.topCenter,
+                          animation: AnimationType.fromTop,
+                          toastDuration: const Duration(milliseconds: 1500),
+                          description: Text("Login success !"))
+                      .show(context);
+                });
+              }
+
+              return Hero(
+                tag: "login_btn",
+                child: ElevatedButton(
+                  onPressed: () {
+                    print(emailController.text);
+                    print(passwordController.text);
+                    context
+                        .read<LoginCubit>()
+                        .login(emailController.text, passwordController.text);
+                    print("da bam nut dang nhap");
+                  },
+                  child: Text(
+                    style: TextStyle(color: Colors.white),
+                    "Login".toUpperCase(),
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
