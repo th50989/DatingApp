@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,16 @@ import 'package:dio/dio.dart';
 import '../../../Values/values.dart';
 import '../cubit/cubit/login_cubit.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
@@ -77,72 +83,131 @@ class LoginForm extends StatelessWidget {
     //   //xu ly them hoat anh , hieu ung khi dang nhap dang ky thanh cong hoac dell thanh cong
     // }
 
-    return Form(
-      child: Column(
-        children: [
-          TextFormField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.next,
-            cursorColor: kPrimaryColor,
-            onSaved: (email) {},
-            decoration: const InputDecoration(
-              hintText: "Your email",
-              prefixIcon: Padding(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
-              ),
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 100,
+            title: Container(
+              child: const Text(
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  'Dit me cai giao dien cua thang thang la cai loi chu dell phai cubit loi'),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: defaultPadding),
-            child: TextFormField(
-              controller: passwordController,
-              textInputAction: TextInputAction.done,
-              obscureText: true,
-              cursorColor: kPrimaryColor,
-              decoration: const InputDecoration(
-                hintText: "Your password",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: defaultPadding),
-          Hero(
-            tag: "login_btn",
-            child: ElevatedButton(
-              onPressed: () {
-                print(emailController.text);
-                print(passwordController.text);
-                context
-                    .read<LoginCubit>()
-                    .login(emailController.text, passwordController.text);
-                print("da bam nut dang nhap");
-              },
-              child: Text(
-                style: TextStyle(color: Colors.white),
-                "Login".toUpperCase(),
-              ),
-            ),
-          ),
-          const SizedBox(height: defaultPadding),
-          AlreadyHaveAnAccountCheck(
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const SignUpScreen();
-                  },
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+          body: Column(
+            children: [
+              BlocListener<LoginCubit, LoginState>(listener: (context, state) {
+                if (state is LoginSuccessButNoUser) {
+                  // User nhập đúng email và mật khẩu nhưng chưa tạo Usser
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Đăng nhập thành công vui lòng tạo user"),
+                  ));
+                  Future.delayed(const Duration(seconds: 2));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const NewUserPage(AccountId: 4),
+                  ));
+                } else if (state is LoginSuccess) {
+                  // User nhập đúng email,mật khẩu và đã tạo User rồi
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Đăng nhập thành công"),
+                  ));
+                  Future.delayed(const Duration(seconds: 2));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ));
+                } else if (state is LoginFailed) {
+                  // Handle a failed login, e.g., show an error message
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Đăng nhập khong thành công"),
+                  ));
+                }
+              }, child: BlocBuilder<LoginCubit, LoginState>(
+                  builder: (context, state) {
+                if (state is LoginLoading) {
+                  // Show a loading indicator or progress bar
+                  return const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Form(
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          cursorColor: kPrimaryColor,
+                          onSaved: (email) {},
+                          decoration: const InputDecoration(
+                            hintText: "Your email",
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(defaultPadding),
+                              child: Icon(Icons.person),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: defaultPadding),
+                          child: TextFormField(
+                            controller: passwordController,
+                            textInputAction: TextInputAction.done,
+                            obscureText: true,
+                            cursorColor: kPrimaryColor,
+                            decoration: const InputDecoration(
+                              hintText: "Your password",
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(defaultPadding),
+                                child: Icon(Icons.lock),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        Hero(
+                          tag: "login_btn",
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print(emailController.text);
+                              print(passwordController.text);
+                              context.read<LoginCubit>().login(
+                                  emailController.text,
+                                  passwordController.text);
+
+                              print("da bam nut dang nhap");
+                            },
+                            child: Text(
+                              style: const TextStyle(color: Colors.white),
+                              "Login".toUpperCase(),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        AlreadyHaveAnAccountCheck(
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const SignUpScreen();
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              }))
+            ],
+          )),
     );
   }
 }
