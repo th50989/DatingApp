@@ -1,9 +1,14 @@
-import 'package:believeder_app/Screens/Login/components/login_form.dart';
+
+import 'package:believeder_app/Screens/HomePage/HomePage.dart';
+
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:believeder_app/constants.dart';
+
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'constant/colors_constant.dart';
+import 'constant/font_constant.dart';
 
 void main() => runApp(const App());
 
@@ -28,33 +33,47 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'BelieveDer App',
-      theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              backgroundColor: kPrimaryColor,
-              shape: const StadiumBorder(),
-              maximumSize: const Size(double.infinity, 56),
-              minimumSize: const Size(double.infinity, 56),
+        debugShowCheckedModeBanner: false,
+        title: 'BelieveDer App',
+        theme: ThemeData(
+            primaryColor: kPrimaryColor,
+            scaffoldBackgroundColor: Colors.white,
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                backgroundColor: kPrimaryColor,
+                shape: const StadiumBorder(),
+                maximumSize: const Size(double.infinity, 56),
+                minimumSize: const Size(double.infinity, 56),
+              ),
             ),
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            filled: true,
-            fillColor: kPrimaryLightColor,
-            iconColor: kPrimaryColor,
-            prefixIconColor: kPrimaryColor,
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: defaultPadding, vertical: defaultPadding),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-              borderSide: BorderSide.none,
-            ),
-          )),
-      home: const WelcomeScreen(),
-    );
+            inputDecorationTheme: const InputDecorationTheme(
+              filled: true,
+              fillColor: kPrimaryLightColor,
+              iconColor: kPrimaryColor,
+              prefixIconColor: kPrimaryColor,
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: defaultPadding, vertical: defaultPadding),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                borderSide: BorderSide.none,
+              ),
+            )),
+        home: BlocListener<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state is LoginSuccess) {
+              Future.delayed(Duration(seconds: 1), () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) {
+                    return HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
+                  }),
+                  (Route<dynamic> route) =>
+                      false, // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
+                );
+              });
+            }
+          },
+          child: const WelcomeScreen(),
+        ));
   }
 }

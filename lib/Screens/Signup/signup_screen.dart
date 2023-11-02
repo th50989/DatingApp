@@ -1,9 +1,10 @@
+import '../../constant/font_constant.dart';
 import 'components/signup_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/background.dart';
 import 'components/sign_up_top_image.dart';
-import 'package:believeder_app/constants.dart';
+
 import 'package:believeder_app/responsive.dart';
 
 class SignUpScreen extends StatelessWidget {

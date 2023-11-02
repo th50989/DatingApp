@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:believeder_app/constants.dart';
+
+import '../constant/colors_constant.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;

@@ -5,11 +5,14 @@ import 'package:believeder_app/Models/models.dart';
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
+import 'package:believeder_app/constant/colors_constant.dart';
+import 'package:believeder_app/constant/font_constant.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
-import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
 import 'package:dio/dio.dart';
 
@@ -94,120 +97,70 @@ class _LoginFormState extends State<LoginForm> {
                   'Dit me cai giao dien cua thang thang la cai loi chu dell phai cubit loi'),
             ),
           ),
-          body: Column(
-            children: [
-              BlocListener<LoginCubit, LoginState>(listener: (context, state) {
-                if (state is LoginSuccessButNoUser) {
-                  // User nhập đúng email và mật khẩu nhưng chưa tạo Usser
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Đăng nhập thành công vui lòng tạo user"),
-                  ));
-                  Future.delayed(const Duration(seconds: 2));
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const NewUserPage(AccountId: 4),
-                  ));
-                } else if (state is LoginSuccess) {
-                  // User nhập đúng email,mật khẩu và đã tạo User rồi
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Đăng nhập thành công"),
-                  ));
-                  Future.delayed(const Duration(seconds: 2));
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ));
-                } else if (state is LoginFailed) {
-                  // Handle a failed login, e.g., show an error message
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Đăng nhập khong thành công"),
-                  ));
-                }
-              }, child: BlocBuilder<LoginCubit, LoginState>(
-                  builder: (context, state) {
-                if (state is LoginLoading) {
-                  // Show a loading indicator or progress bar
-                  return const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ],
-                  );
-                } else {
-                  return Form(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          cursorColor: kPrimaryColor,
-                          onSaved: (email) {},
-                          decoration: const InputDecoration(
-                            hintText: "Your email",
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.all(defaultPadding),
-                              child: Icon(Icons.person),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: defaultPadding),
-                          child: TextFormField(
-                            controller: passwordController,
-                            textInputAction: TextInputAction.done,
-                            obscureText: true,
-                            cursorColor: kPrimaryColor,
-                            decoration: const InputDecoration(
-                              hintText: "Your password",
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.all(defaultPadding),
-                                child: Icon(Icons.lock),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: defaultPadding),
-                        Hero(
-                          tag: "login_btn",
-                          child: ElevatedButton(
-                            onPressed: () {
-                              print(emailController.text);
-                              print(passwordController.text);
-                              context.read<LoginCubit>().login(
-                                  emailController.text,
-                                  passwordController.text);
+          const SizedBox(height: defaultPadding),
+          BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, state) {
+              if (state is LoginLoading) {
+                return Hero(
+                  tag: "login_btn",
+                  child: ElevatedButton(
+                      onPressed: null,
+                      child: Transform.scale(
+                          scale: 1,
+                          child: const Center(
+                              child: CircularProgressIndicator(
+                            color: kPrimaryColor,
+                          )))),
+                );
+              }
+              if (state is LoginSuccess) {
+                Future.delayed(Duration.zero, () async {
+                  ElegantNotification.success(
+                          background: kPrimaryLightColor,
+                          height: 50,
+                          notificationPosition: NotificationPosition.topCenter,
+                          animation: AnimationType.fromTop,
+                          toastDuration: const Duration(milliseconds: 1500),
+                          description: Text("Login success !"))
+                      .show(context);
+                });
+              }
 
-                              print("da bam nut dang nhap");
-                            },
-                            child: Text(
-                              style: const TextStyle(color: Colors.white),
-                              "Login".toUpperCase(),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: defaultPadding),
-                        AlreadyHaveAnAccountCheck(
-                          press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const SignUpScreen();
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              }))
-            ],
-          )),
+              return Hero(
+                tag: "login_btn",
+                child: ElevatedButton(
+                  onPressed: () {
+                    print(emailController.text);
+                    print(passwordController.text);
+                    context
+                        .read<LoginCubit>()
+                        .login(emailController.text, passwordController.text);
+                    print("da bam nut dang nhap");
+                  },
+                  child: Text(
+                    style: TextStyle(color: Colors.white),
+                    "Login".toUpperCase(),
+                  ),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: defaultPadding),
+          AlreadyHaveAnAccountCheck(
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const SignUpScreen();
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+
     );
   }
 }

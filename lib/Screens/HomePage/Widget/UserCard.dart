@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+
 class UserCard extends StatelessWidget {
   const UserCard({super.key});
 
@@ -31,11 +32,8 @@ class UserCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                      "assets/images/usercard.jpg"
-                    ),
-                    fit: BoxFit.cover
-                  ),
+                      image: AssetImage("assets/images/usercard.jpg"),
+                      fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
@@ -60,17 +58,22 @@ class UserCard extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 2.0,
                     ), // Khoảng cách từ đỉnh Container xuống dưới
                     Padding(
-                      padding: EdgeInsets.only(left: 20), // Tạo khoảng cách lề trái 20 đơn vị
+                      padding: EdgeInsets.only(
+                          left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
-                        'Duy Quân, 20',
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          color: Colors.white,
-                        ),
+                        'Thắng Nguyễn, 21',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              color: Colors.white,
+                            ),
                       ),
                     ),
                     SizedBox(height: 10), // Khoảng cách giữa các dòng
                     Padding(
-                      padding: EdgeInsets.only(left: 20), // Tạo khoảng cách lề trái 20 đơn vị
+                      padding: EdgeInsets.only(
+                          left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
                         'Những thằng khác ngại tán em, tại ngán anh.',
                         style: TextStyle(
