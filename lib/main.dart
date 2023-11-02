@@ -3,9 +3,12 @@ import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:believeder_app/constants.dart';
+
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'constant/colors_constant.dart';
+import 'constant/font_constant.dart';
 
 void main() => runApp(const App());
 
@@ -59,13 +62,15 @@ class MyApp extends StatelessWidget {
         home: BlocListener<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) {
-                  return HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
-                }),
-                (Route<dynamic> route) =>
-                    false, // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
-              );
+              Future.delayed(Duration(seconds: 1), () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) {
+                    return HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
+                  }),
+                  (Route<dynamic> route) =>
+                      false, // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
+                );
+              });
             }
           },
           child: const WelcomeScreen(),

@@ -37,11 +37,11 @@ class LoginCubit extends Cubit<LoginState> {
         // Map<String, dynamic> userData = json.decode(data);
         User currentUser = User.fromJson(data);
         print(currentUser.toJson());
-        emit(LoginSuccess(currentUser));
-      } else if (response.data.toString() == userNoInfor) {
-        emit(LoginSuccessButNoUser());
-      } else {
-        emit(LoginFailed('Error of API'));
+
+        Future.delayed(const Duration(seconds: 3), () {
+          emit(LoginSuccess(currentUser));
+        });
+
       }
     } catch (e) {
       print(e.toString());

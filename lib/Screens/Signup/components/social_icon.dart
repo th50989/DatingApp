@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:believeder_app/constants.dart';
+
+import '../../../constant/colors_constant.dart';
 
 class SocalIcon extends StatelessWidget {
   final String? iconSrc;

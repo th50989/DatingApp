@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 // import 'package:http/http.dart' as http;
 import '../../../components/already_have_an_account_acheck.dart';
-import '../../../constants.dart';
+import '../../../constant/colors_constant.dart';
+import '../../../constant/font_constant.dart';
+
 import '../../Login/login_screen.dart';
 
 class SignUpForm extends StatelessWidget {

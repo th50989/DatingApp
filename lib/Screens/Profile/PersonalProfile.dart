@@ -1,4 +1,3 @@
-import 'package:believeder_app/Models/models.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
         height: 1000.0,
         child: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, state) {
-            if (state is LoginSuccess)
+            if (state is LoginSuccess) {
               return Stack(
                 children: <Widget>[
                   ListView(
@@ -51,15 +50,15 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                       Text(
                         state.user.lastName,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w300),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50.0,
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(
                           left: 25.0,
                         ),
@@ -88,7 +87,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text(
+                            child: const Text(
                                 style: TextStyle(color: Colors.white),
                                 'go back')),
                       )
@@ -96,8 +95,8 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   ),
                 ],
               );
-            else {
-              return WelcomeScreen();
+            } else {
+              return const WelcomeScreen();
             }
           },
         ),
