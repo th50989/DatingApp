@@ -10,7 +10,6 @@ import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../Signup/signup_screen.dart';
 import 'package:dio/dio.dart';
