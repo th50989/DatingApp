@@ -1,3 +1,4 @@
+import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,29 +11,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     const CrossButton = SnackBar(
-      content: Text(
-        "Bạn đã dislike người dùng này",
-      )
-    );
+        content: Text(
+      "Bạn đã dislike người dùng này",
+    ));
     const LikeButton = SnackBar(
-      content: Text(
-        "Bạn đã like người dùng này",
-      )
-    );
+        content: Text(
+      "Bạn đã like người dùng này",
+    ));
     const PendingButton = SnackBar(
-      content: Text(
-        "Bạn đã tạm thời lướt qua người dùng này",
-      )
-    );
+        content: Text(
+      "Bạn đã tạm thời lướt qua người dùng này",
+    ));
 
     return Scaffold(
       body: Column(
         children: [
           Container(
             padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + 16.0, // Lấy padding trên cùng của màn hình
+              top: MediaQuery.of(context).padding.top +
+                  16.0, // Lấy padding trên cùng của màn hình
               left: 24.0,
               right: 24.0,
               bottom: 16.0,
@@ -46,9 +44,17 @@ class HomePage extends StatelessWidget {
                 Container(
                   height: 20,
                   width: 20,
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.black,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return PersonalProfilePage();
+                      }));
+                    },
+                    icon: const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 Text(
@@ -92,36 +98,31 @@ class HomePage extends StatelessWidget {
                               size: 25,
                               icon: Icons.clear_rounded,
                               onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  CrossButton
-                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(CrossButton);
                               },
                               color: Colors.red,
                             ),
                             ChoiceButton(
-                              width: 80,
-                              height: 80,
-                              size: 30,
-                              icon: Icons.favorite, 
-                              color: Colors.red, 
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  LikeButton
-                                );
-                              }
-                            ),
+                                width: 80,
+                                height: 80,
+                                size: 30,
+                                icon: Icons.favorite,
+                                color: Colors.red,
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(LikeButton);
+                                }),
                             ChoiceButton(
-                              width: 60,
-                              height: 60,
-                              size: 25,
-                              icon: Icons.watch_later, 
-                              color: Colors.red, 
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  PendingButton
-                                );
-                              }
-                            )
+                                width: 60,
+                                height: 60,
+                                size: 25,
+                                icon: Icons.watch_later,
+                                color: Colors.red,
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(PendingButton);
+                                })
                           ],
                         ),
                       ),
@@ -133,7 +134,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
     );
   }
 }
