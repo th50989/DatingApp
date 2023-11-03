@@ -1,8 +1,5 @@
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/UserCard.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/ChoiceButton.dart';
 
@@ -41,14 +38,14 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   height: 20,
                   width: 20,
                   child: IconButton(
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
-                        return PersonalProfilePage();
+                        return const PersonalProfilePage();
                       }));
                     },
                     icon: const Icon(
@@ -57,7 +54,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   "F O R   Y O U",
                   style: TextStyle(
                     color: Colors.black,
@@ -66,7 +63,7 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
+                const SizedBox(
                   height: 20,
                   width: 20,
                   child: Icon(
@@ -83,7 +80,7 @@ class HomePage extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      UserCard(),
+                      const UserCard(),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 15.0,

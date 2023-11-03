@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ChoiceButton extends StatelessWidget {
   final IconData icon;
@@ -9,7 +7,7 @@ class ChoiceButton extends StatelessWidget {
   final double size;
   final Color color;
   final Function onPressed;
-  const ChoiceButton({
+  const ChoiceButton({super.key, 
     required this.icon,
     required this.width,
     required this.height,
@@ -22,22 +20,20 @@ class ChoiceButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (onPressed != null) {
-          onPressed();
-        }
+        onPressed();
       },
       child: Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withAlpha(50),
               spreadRadius: 4,
               blurRadius: 4,
-              offset: Offset(3, 3),
+              offset: const Offset(3, 3),
             )
           ]
         ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class FriendChatList extends StatefulWidget {
   const FriendChatList({super.key});
@@ -34,7 +32,7 @@ class _FriendChatListState extends State<FriendChatList> {
                         color: Colors.white,
                       )
                     ),
-                    Text(
+                    const Text(
                       "Chat",
                       style: TextStyle(
                         color: Colors.white,
@@ -264,7 +262,7 @@ class UserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
+    return const CircleAvatar(
       radius: 32,
       backgroundColor: Colors.white,
       child: CircleAvatar(

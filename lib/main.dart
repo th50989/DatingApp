@@ -64,11 +64,11 @@ class MyApp extends StatelessWidget {
         home: BlocListener<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              Future.delayed(Duration(seconds: 1), () {
+              Future.delayed(const Duration(seconds: 1), () {
                 //delay de hien thong bao dang nhap thanh cong
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) {
-                    return HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
+                    return const HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
                   }),
                   (Route<dynamic> route) =>
                       false, // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class infoTextBox extends StatelessWidget {
   final String text;
@@ -18,11 +16,11 @@ class infoTextBox extends StatelessWidget {
         color: Colors.lightBlue[100],
         borderRadius: BorderRadius.circular(10.0)
       ),
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 15.0,
         bottom: 15.0,
       ),
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 20.0,
         right: 20.0,
         top: 20.0,
@@ -35,13 +33,13 @@ class infoTextBox extends StatelessWidget {
             children: [
               Text(
                 sectionName,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black45,
                 ),
               ),
               IconButton(
                 onPressed: () {}, 
-                icon: Icon(
+                icon: const Icon(
                   Icons.edit,
                   color: Colors.black
                 ),
