@@ -1,4 +1,3 @@
-
 import 'package:believeder_app/constant/colors_constant.dart';
 import 'package:believeder_app/constant/font_constant.dart';
 import 'package:elegant_notification/elegant_notification.dart';
@@ -57,7 +56,6 @@ class _LoginFormState extends State<LoginForm> {
                   child: Icon(Icons.lock),
                 ),
               ),
-
             ),
           ),
           const SizedBox(height: defaultPadding),
@@ -83,12 +81,23 @@ class _LoginFormState extends State<LoginForm> {
                           height: 50,
                           notificationPosition: NotificationPosition.topCenter,
                           animation: AnimationType.fromTop,
-                          toastDuration: const Duration(milliseconds: 1500),
+                          toastDuration: const Duration(milliseconds: 2000),
                           description: const Text("Login success !"))
                       .show(context);
                 });
+              } else if (state is LoginFailed) {
+                Future.delayed(Duration.zero, () async {
+                  ElegantNotification.error(
+                          background: kPrimaryLightColor,
+                          height: 70,
+                          notificationPosition: NotificationPosition.topCenter,
+                          animation: AnimationType.fromTop,
+                          title: const Text('Login Failed!'),
+                          toastDuration: const Duration(milliseconds: 2000),
+                          description: Text(state.error))
+                      .show(context);
+                });
               }
-
               return Hero(
                 tag: "login_btn",
                 child: ElevatedButton(
@@ -123,7 +132,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ],
       ),
-
     );
   }
 }

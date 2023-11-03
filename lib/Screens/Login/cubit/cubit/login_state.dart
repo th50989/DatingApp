@@ -11,7 +11,10 @@ class LoginLoading extends LoginState {
   LoginLoading();
 }
 
-class LoginSuccessButNoUser extends LoginState {}
+class NewUser extends LoginState {
+  int AccountId;
+  NewUser(this.AccountId);
+}
 
 class LoginSuccess extends LoginState {
   final User user;

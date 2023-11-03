@@ -23,6 +23,10 @@ class User {
     this.accessToken = '',
   });
 
+  factory User.unknown() {
+    return User();
+  }
+
   // Factory constructor để tạo một User từ dữ liệu JSON
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
