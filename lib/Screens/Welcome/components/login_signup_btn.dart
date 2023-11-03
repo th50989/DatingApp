@@ -22,7 +22,7 @@ class LoginAndSignupBtn extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
               );
@@ -40,16 +40,16 @@ class LoginAndSignupBtn extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return SignUpScreen();
+                  return const SignUpScreen();
                 },
               ),
             );
           },
           style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
+              backgroundColor: kPrimaryLightColor, elevation: 0),
           child: Text(
             "Sign Up".toUpperCase(),
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
         ),
       ],

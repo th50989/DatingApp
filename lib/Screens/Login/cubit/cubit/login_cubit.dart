@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
@@ -29,7 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
         data: body,
       );
       if (response.statusCode == HttpStatus.ok) {
-        final data = response.data;
+        final data = response.data["userInfo"];
         // Map<String, dynamic> userData = json.decode(data);
         User currentUser = User.fromJson(data);
         print(currentUser.toJson());
