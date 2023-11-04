@@ -65,7 +65,6 @@ class _LoginFormState extends State<LoginForm> {
                   child: Icon(Icons.lock),
                 ),
               ),
-
             ),
           ),
           const SizedBox(height: defaultPadding),
@@ -131,7 +130,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ],
       ),
-
     );
   }
 }

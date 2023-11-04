@@ -1,3 +1,4 @@
+import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,17 +42,17 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 20,
-                  width: 20,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return PersonalProfilePage();
-                      }));
-                    },
-                    icon: const Icon(
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const PersonalProfilePage();
+                    }));
+                  },
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    child: const Icon(
                       Icons.person,
                       color: Colors.black,
                     ),
@@ -66,14 +67,15 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
-                  height: 20,
-                  width: 20,
-                  child: Icon(
-                    Icons.chat,
-                    color: Colors.black,
-                  ),
-                ),
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return FriendChatList();
+                      }));
+                    },
+                    child: Container(
+                        height: 20, width: 20, child: Icon(Icons.chat))),
               ],
             ),
           ),
