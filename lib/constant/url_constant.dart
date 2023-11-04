@@ -2,6 +2,8 @@
 
 const String login_url = "http://localhost:8000/api/Users/login";
 
+const String get_user_url = "http://localhost:8000/api/Users/get-user/";
+
 //mang nha quan
 //final String login_url = "http://192.168.1.12:8000/api/Users/login";
 
