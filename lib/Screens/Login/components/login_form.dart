@@ -74,18 +74,7 @@ class _LoginFormState extends State<LoginForm> {
                           )))),
                 );
               }
-              if (state is LoginSuccess) {
-                Future.delayed(Duration.zero, () async {
-                  ElegantNotification.success(
-                          background: kPrimaryLightColor,
-                          height: 50,
-                          notificationPosition: NotificationPosition.topCenter,
-                          animation: AnimationType.fromTop,
-                          toastDuration: const Duration(milliseconds: 2000),
-                          description: const Text("Login success !"))
-                      .show(context);
-                });
-              } else if (state is LoginFailed) {
+              if (state is LoginFailed) {
                 Future.delayed(Duration.zero, () async {
                   ElegantNotification.error(
                           background: kPrimaryLightColor,

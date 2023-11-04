@@ -1,7 +1,12 @@
+import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
+import 'package:believeder_app/Screens/Welcome/components/welcome_image.dart';
+import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
+import 'package:believeder_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/UserCard.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/ChoiceButton.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -95,8 +100,13 @@ class HomePage extends StatelessWidget {
                               size: 25,
                               icon: Icons.clear_rounded,
                               onPressed: () {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(CrossButton);
+                                context.read<LoginCubit>().logout();
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const MyApp()),
+                                    (route) => false);
+                                // ScaffoldMessenger.of(context)
+                                //     .showSnackBar(CrossButton);
                               },
                               color: Colors.red,
                             ),

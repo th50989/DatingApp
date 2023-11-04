@@ -21,6 +21,10 @@ class LoginSuccess extends LoginState {
   LoginSuccess(this.user);
 }
 
+class LogoutSuccess extends LoginState {
+  LogoutSuccess();
+}
+
 class LoginFailed extends LoginState {
   final String error;
   LoginFailed(this.error);

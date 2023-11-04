@@ -36,12 +36,13 @@ class LoginCubit extends Cubit<LoginState> {
         final data = response.data["userInfo"];
 
         final storage = FlutterSecureStorage();
-        await storage.write(
-            key: 'accessToken',
-            value: response.data['userInfo']['accessToken']);
-        await storage.write(
-            key: 'accountId', value: response.data['accountId'].toString());
+
         if (data != null) {
+          await storage.write(
+              key: 'accessToken',
+              value: response.data['userInfo']['accessToken']);
+          await storage.write(
+              key: 'accountId', value: response.data['accountId'].toString());
           currentUser = User.fromJson(data);
           print(currentUser.toJson());
           Future.delayed(const Duration(seconds: 3), () {
@@ -89,7 +90,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> isLogged() async {
-    final storage = FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     String accessToken = await storage.read(key: "accessToken") ?? "";
     if (accessToken.isNotEmpty) {
       try {
@@ -109,5 +110,12 @@ class LoginCubit extends Cubit<LoginState> {
     } else {
       emit(LoginInitial());
     }
+  }
+
+  Future<void> logout() async {
+    const storage = FlutterSecureStorage();
+    storage.deleteAll();
+    emit(LogoutSuccess());
+    emit(LoginInitial());
   }
 }

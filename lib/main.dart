@@ -1,4 +1,5 @@
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
+import 'package:believeder_app/Screens/Login/components/login_form.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
@@ -104,6 +105,16 @@ class _MyAppState extends State<MyApp> {
                     return NewUserPage(
                       AccountId: state.AccountId,
                     ); // Widget của màn hình mới bạn muốn hiển thị.
+                  }),
+                  // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
+                );
+              });
+            } else if (state is LogoutSuccess) {
+              Future.delayed(const Duration(seconds: 1), () {
+                //delay de hien thong bao dang nhap thanh cong
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return const WelcomeScreen(); // Widget của màn hình mới bạn muốn hiển thị.
                   }),
                   // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
                 );
