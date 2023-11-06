@@ -12,10 +12,6 @@ class infoTextBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.lightBlue[100],
-        borderRadius: BorderRadius.circular(10.0)
-      ),
       padding: const EdgeInsets.only(
         left: 15.0,
         bottom: 15.0,
@@ -23,7 +19,6 @@ class infoTextBox extends StatelessWidget {
       margin: const EdgeInsets.only(
         left: 20.0,
         right: 20.0,
-        top: 20.0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +36,8 @@ class infoTextBox extends StatelessWidget {
                 onPressed: () {}, 
                 icon: const Icon(
                   Icons.edit,
-                  color: Colors.black
+                  color: Colors.black,
+                  size: 15,
                 ),
               )
             ],
