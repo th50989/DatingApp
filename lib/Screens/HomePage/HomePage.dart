@@ -1,4 +1,8 @@
+
+import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
+
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
+
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:believeder_app/Screens/Welcome/components/welcome_image.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
@@ -43,17 +47,19 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const PersonalProfilePage();
-                      }));
-                    },
-                    icon: const Icon(
+
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const PersonalProfilePage();
+                    }));
+                  },
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    child: const Icon(
+
                       Icons.person,
                       color: Colors.black,
                     ),
@@ -68,14 +74,17 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: Icon(
-                    Icons.chat,
-                    color: Colors.black,
-                  ),
-                ),
+
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return FriendChatList();
+                      }));
+                    },
+                    child: Container(
+                        height: 20, width: 20, child: Icon(Icons.chat))),
+
               ],
             ),
           ),

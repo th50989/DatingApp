@@ -1,3 +1,4 @@
+import 'package:believeder_app/Screens/ChatSession/Chat.dart';
 import 'package:flutter/material.dart';
 
 class FriendChatList extends StatefulWidget {
@@ -25,14 +26,16 @@ class _FriendChatListState extends State<FriendChatList> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {
-                      },
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                      )
-                    ),
-                    const Text(
+
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        )),
+                    Text(
+
                       "Chat",
                       style: TextStyle(
                         color: Colors.white,
@@ -41,12 +44,11 @@ class _FriendChatListState extends State<FriendChatList> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      )
-                    ),
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        )),
                   ],
                 ),
               ),
@@ -120,8 +122,8 @@ class _FriendChatListState extends State<FriendChatList> {
                 child: ListView(
                   padding: const EdgeInsets.only(left: 25),
                   children: [
-                    buildConversationRow(
-                        'Quân Nguyễn', 'Memaybeo', '', 0),
+                    buildConversationRow('Quân Nguyễn', 'Memaybeo', '', 0),
+                    buildConversationRow('Tâm Nguyễn', 'Memaybeo', '', 2),
                   ],
                 ),
               ))
@@ -134,59 +136,66 @@ class _FriendChatListState extends State<FriendChatList> {
       String name, String message, String filename, int msgCount) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                UserAvatar(filename: filename),
-                const SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      message,
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 25, top: 5),
-              child: Column(
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return ChatSession();
+            }));
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  const Text(
-                    '16:35',
-                    style: TextStyle(fontSize: 10),
-                  ),
+                  UserAvatar(filename: filename),
                   const SizedBox(
-                    height: 15,
+                    width: 15,
                   ),
-                  if (msgCount > 0)
-                    CircleAvatar(
-                      radius: 7,
-                      backgroundColor: const Color(0xFF27c1a9),
-                      child: Text(
-                        msgCount.toString(),
-                        style:
-                            const TextStyle(fontSize: 10, color: Colors.white),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(color: Colors.grey),
                       ),
-                    )
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        message,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  )
                 ],
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(right: 25, top: 5),
+                child: Column(
+                  children: [
+                    const Text(
+                      '16:35',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    if (msgCount > 0)
+                      CircleAvatar(
+                        radius: 7,
+                        backgroundColor: const Color(0xFF27c1a9),
+                        child: Text(
+                          msgCount.toString(),
+                          style: const TextStyle(
+                              fontSize: 10, color: Colors.white),
+                        ),
+                      )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
         const Divider(
           indent: 70,
