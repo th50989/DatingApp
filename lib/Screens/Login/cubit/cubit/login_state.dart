@@ -16,6 +16,8 @@ class NewUser extends LoginState {
   NewUser(this.AccountId);
 }
 
+class NewUserCreating extends LoginState {}
+
 class LoginSuccess extends LoginState {
   final User user;
   LoginSuccess(this.user);

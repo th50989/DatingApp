@@ -3,6 +3,8 @@ import 'package:believeder_app/Screens/Login/components/login_form.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
+
+import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider<LoginCubit>(
         lazy: false,
-        create: (context) => LoginCubit(),
+        create: (context) => LoginCubit(UserRepo()),
       ),
     ], child: const MyApp()); //cai nay de phan phoi cubit cho toan app
   }
