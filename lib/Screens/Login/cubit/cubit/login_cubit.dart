@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
 import 'package:believeder_app/constant/url_constant.dart';
+import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,8 +12,8 @@ import 'package:meta/meta.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
-
+  LoginCubit(this.userRepo) : super(LoginInitial());
+  UserRepo userRepo;
   Future<void> login(String email, String password) async {
     User currentUser;
     emit(LoginLoading());
@@ -64,31 +65,6 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<User> getUser(int accountId) async {
-    User currentUser = User();
-    var options = BaseOptions(
-        contentType: 'application/json',
-        method: 'GET',
-        baseUrl: get_user_url,
-        validateStatus: ((status) => status != null && status < 500));
-
-    final Dio dio = Dio(options);
-    try {
-      final response = await dio.get("$accountId");
-      final storage = FlutterSecureStorage();
-      if (response.statusCode == HttpStatus.ok) {
-        final data = response.data;
-        currentUser = User.fromJson(data);
-        await storage.write(
-            key: 'accessToken', value: response.data['accessToken']);
-        return currentUser;
-      }
-      return User.unknown();
-    } catch (e) {
-      throw (e.toString());
-    }
-  }
-
   Future<void> isLogged() async {
     const storage = FlutterSecureStorage();
     String accessToken = await storage.read(key: "accessToken") ?? "";
@@ -97,7 +73,7 @@ class LoginCubit extends Cubit<LoginState> {
         bool hasExpired = JwtDecoder.isExpired(accessToken);
         if (!hasExpired) {
           String accountId = await storage.read(key: "accountId") ?? "";
-          User currentUser = await getUser(int.parse(accountId));
+          User currentUser = await userRepo.getUser(int.parse(accountId));
           print(currentUser.toJson());
           emit(LoginSuccess(currentUser));
         } else {
@@ -117,5 +93,19 @@ class LoginCubit extends Cubit<LoginState> {
     storage.deleteAll();
     emit(LogoutSuccess());
     emit(LoginInitial());
+  }
+
+  Future<void> createUser(var body) async {
+    emit(NewUserCreating());
+    User currentUser;
+    try {
+      currentUser = await userRepo.sendCreateUserRequest(body);
+      if (currentUser != User.unknown()) {
+        emit(LoginSuccess(currentUser));
+      } else
+        emit(LoginFailed('Create user failed!'));
+    } catch (e) {
+      throw (e.toString());
+    }
   }
 }

@@ -1,8 +1,11 @@
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
+import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 
 import 'package:believeder_app/constant/url_constant.dart';
+import 'package:believeder_app/main.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewUserPage extends StatefulWidget {
   const NewUserPage({super.key, required this.AccountId});
@@ -28,41 +31,41 @@ class _NewUserPageState extends State<NewUserPage> {
     ));
   }
 
-  Future<void> sendCreateUserRequest() async {
-    Response response;
-    var options = BaseOptions(
-      baseUrl: base_url,
-      method: 'POST',
-      contentType: 'application/json',
-      connectTimeout: 30000,
-    );
-    var dio = Dio(options);
-    try {
-      response = await dio.post('api/Users/create-user', data: {
-        "accountId": widget.AccountId.toInt(),
-        "lastName": lName.text,
-        "firstName": fName.text,
-        "gender": selectedGender,
-        "birthday": "2023-10-17",
-        "location": location.text
-      });
-    } catch (e) {
-      throw (e.toString());
-    }
+  // Future<void> sendCreateUserRequest() async {
+  //   Response response;
+  //   var options = BaseOptions(
+  //     baseUrl: base_url,
+  //     method: 'POST',
+  //     contentType: 'application/json',
+  //     connectTimeout: 30000,
+  //   );
+  //   var dio = Dio(options);
+  //   try {
+  //     response = await dio.post('api/Users/create-user', data: {
+  //       "accountId": widget.AccountId.toInt(),
+  //       "lastName": lName.text,
+  //       "firstName": fName.text,
+  //       "gender": selectedGender,
+  //       "birthday": "2023-10-17",
+  //       "location": location.text
+  //     });
+  //   } catch (e) {
+  //     throw (e.toString());
+  //   }
 
-    debugPrint(response.data.toString());
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Tao user thành công"),
-      ));
-      //tao user thanh cong thi navigate vao homepage
-      _navigateToHomePage();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Có lỗi xảy ra trong quá trình tao user"),
-      ));
-    }
-  }
+  //   debugPrint(response.data.toString());
+  //   if (response.statusCode == 200) {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //       content: Text("Tao user thành công"),
+  //     ));
+  //     //tao user thanh cong thi navigate vao homepage
+  //     _navigateToHomePage();
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //       content: Text("Có lỗi xảy ra trong quá trình tao user"),
+  //     ));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -177,18 +180,35 @@ class _NewUserPageState extends State<NewUserPage> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                          style: const ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll<Color>(
-                                Colors.pinkAccent),
-                          ),
-                          onPressed: () {
-                            sendCreateUserRequest();
-                          },
-                          child: const Text(
-                            'Create User',
-                            style: TextStyle(color: Colors.white),
-                          ))
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          if (state is NewUser) {
+                            return ElevatedButton(
+                                style: const ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          Colors.pinkAccent),
+                                ),
+                                onPressed: () {
+                                  var body = {
+                                    "accountId": state.AccountId,
+                                    "lastName": lName.text,
+                                    "firstName": fName.text,
+                                    "gender": selectedGender,
+                                    "birthday": "2023-10-17",
+                                    "location": location.text
+                                  };
+                                  context.read<LoginCubit>().createUser(body);
+                                },
+                                child: const Text(
+                                  'Create User',
+                                  style: TextStyle(color: Colors.white),
+                                ));
+                          }
+
+                          return const MyApp();
+                        },
+                      )
                       // infoTextBox(
                       //     text: "${widget.currentUser.bio}", sectionName: 'Bio'),
                       // infoTextBox(
