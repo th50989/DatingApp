@@ -1,8 +1,6 @@
 //import 'dart:convert';
 import 'dart:io';
 
-import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
-import 'package:believeder_app/Values/values.dart';
 import 'package:believeder_app/constant/url_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -53,7 +51,7 @@ class SignUpForm extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Đăng ký thành công"),
         ));
-        Future.delayed(Duration(seconds: 2));
+        Future.delayed(const Duration(seconds: 2));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Đăng ký thất bại do có lỗi đã xảy ra"),

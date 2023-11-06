@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 
 import 'package:believeder_app/constant/url_constant.dart';
@@ -128,7 +126,7 @@ class _NewUserPageState extends State<NewUserPage> {
                       Column(
                         children: <Widget>[
                           RadioListTile(
-                            title: Text("Male"),
+                            title: const Text("Male"),
                             value: "male",
                             groupValue: selectedGender,
                             onChanged: (value) {
@@ -138,7 +136,7 @@ class _NewUserPageState extends State<NewUserPage> {
                             },
                           ),
                           RadioListTile(
-                            title: Text("Female"),
+                            title: const Text("Female"),
                             value: "female",
                             groupValue: selectedGender,
                             onChanged: (value) {

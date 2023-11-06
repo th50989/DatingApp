@@ -1,11 +1,16 @@
+
 import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
+
+import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
+
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
+import 'package:believeder_app/Screens/Welcome/components/welcome_image.dart';
+import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
+import 'package:believeder_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/UserCard.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/ChoiceButton.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -42,6 +47,7 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
                 InkWell(
                   onTap: () {
                     Navigator.of(context)
@@ -53,12 +59,13 @@ class HomePage extends StatelessWidget {
                     height: 20,
                     width: 20,
                     child: const Icon(
+
                       Icons.person,
                       color: Colors.black,
                     ),
                   ),
                 ),
-                Text(
+                const Text(
                   "F O R   Y O U",
                   style: TextStyle(
                     color: Colors.black,
@@ -67,6 +74,7 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 InkWell(
                     onTap: () {
                       Navigator.of(context)
@@ -76,6 +84,7 @@ class HomePage extends StatelessWidget {
                     },
                     child: Container(
                         height: 20, width: 20, child: Icon(Icons.chat))),
+
               ],
             ),
           ),
@@ -85,7 +94,7 @@ class HomePage extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      UserCard(),
+                      const UserCard(),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                           vertical: 15.0,
@@ -100,8 +109,13 @@ class HomePage extends StatelessWidget {
                               size: 25,
                               icon: Icons.clear_rounded,
                               onPressed: () {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(CrossButton);
+                                context.read<LoginCubit>().logout();
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const MyApp()),
+                                    (route) => false);
+                                // ScaffoldMessenger.of(context)
+                                //     .showSnackBar(CrossButton);
                               },
                               color: Colors.red,
                             ),

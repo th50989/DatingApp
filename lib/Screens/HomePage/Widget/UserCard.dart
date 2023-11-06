@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class UserCard extends StatelessWidget {
   const UserCard({super.key});
@@ -31,7 +29,7 @@ class UserCard extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
+                  image: const DecorationImage(
                       image: AssetImage("assets/images/usercard.jpg"),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(20.0),
@@ -40,7 +38,7 @@ class UserCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Color.fromARGB(200, 0, 0, 0),
                       Color.fromARGB(0, 0, 0, 0),
@@ -58,7 +56,7 @@ class UserCard extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 2.0,
                     ), // Khoảng cách từ đỉnh Container xuống dưới
                     Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
                         'Thắng Nguyễn, 21',
@@ -70,8 +68,8 @@ class UserCard extends StatelessWidget {
                             ),
                       ),
                     ),
-                    SizedBox(height: 10), // Khoảng cách giữa các dòng
-                    Padding(
+                    const SizedBox(height: 10), // Khoảng cách giữa các dòng
+                    const Padding(
                       padding: EdgeInsets.only(
                           left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
