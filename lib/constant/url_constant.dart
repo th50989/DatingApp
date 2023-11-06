@@ -1,12 +1,10 @@
 //sửa ip thì nhớ sửa cái link lại rồi mới xài được nhéee
 
+//final String login_url = "http://192.168.1.101:8000/api/Users/login";
 
-final String login_url = "http://192.168.1.101:8000/api/Users/login";
+const String login_url = "http://localhost:8000/api/Users/login";
 
-// const String login_url = "http://localhost:8000/api/Users/login";
-
-// const String get_user_url = "http://localhost:8000/api/Users/get-user/";
-
+const String get_user_url = "http://localhost:8000/api/Users/get-user/";
 
 const String create_new_user = "http://localhost:8000/api/Users/create-user";
 
@@ -22,6 +20,4 @@ const String create_new_user = "http://localhost:8000/api/Users/create-user";
 
 //final String login_url = "http://192.168.1.199:8000/api/Users/login";
 
-
 final String base_url = "http://192.168.1.101:8000/";
-

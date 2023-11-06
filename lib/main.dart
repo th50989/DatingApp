@@ -104,9 +104,7 @@ class _MyAppState extends State<MyApp> {
                 //delay de hien thong bao dang nhap thanh cong
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return NewUserPage(
-                      AccountId: state.AccountId,
-                    ); // Widget của màn hình mới bạn muốn hiển thị.
+                    return const NewUserPage(); // Widget của màn hình mới bạn muốn hiển thị.
                   }),
                   // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
                 );

@@ -46,15 +46,15 @@ class UserRepo {
     var dio = Dio(options);
     try {
       response = await dio.post('', data: body);
+      if (response.statusCode == 201) {
+        currentUser = await getUser(response.data["accountId"]);
+        print('created user: ' '${currentUser.toJson()}');
+        return currentUser;
+      } else {
+        return User.unknown();
+      }
     } catch (e) {
       throw (e.toString());
-    }
-
-    if (response.statusCode == 200) {
-      currentUser = await getUser(body.accountId);
-      return currentUser;
-    } else {
-      return User.unknown();
     }
   }
 }

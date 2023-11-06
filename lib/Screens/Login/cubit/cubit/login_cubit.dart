@@ -96,7 +96,6 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> createUser(var body) async {
-    emit(NewUserCreating());
     User currentUser;
     try {
       currentUser = await userRepo.sendCreateUserRequest(body);
