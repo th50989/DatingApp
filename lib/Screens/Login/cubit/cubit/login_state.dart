@@ -23,6 +23,11 @@ class LoginSuccess extends LoginState {
   LoginSuccess(this.user);
 }
 
+// class FetchMatchedUserSuccess extends LoginState {
+//   final List<User> user;
+//   FetchMatchedUserSuccess(this.user);
+// }
+
 class LogoutSuccess extends LoginState {
   LogoutSuccess();
 }

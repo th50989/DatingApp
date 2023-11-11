@@ -5,6 +5,7 @@ import 'package:believeder_app/constant/url_constant.dart';
 import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:meta/meta.dart';
@@ -21,14 +22,14 @@ class LoginCubit extends Cubit<LoginState> {
     var options = BaseOptions(
         contentType: 'application/json',
         method: 'POST',
-        baseUrl: login_url,
+        baseUrl: base_url,
         validateStatus: ((status) => status != null && status < 500));
 
     final Dio dio = Dio(options);
     final body = {"email": email, "password": password};
     try {
       final response = await dio.post(
-        "",
+        "api/Users/login",
         data: body,
       );
       if (email.isEmpty || password.isEmpty) {
@@ -64,6 +65,39 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginFailed(e.toString()));
     }
   }
+
+  // Future<void> fetchMatchedUser() async {
+  //   List<User> currentUser;
+  //   emit(LoginLoading());
+
+  //   var options = BaseOptions(
+  //       contentType: 'application/json',
+  //       method: 'POST',
+  //       baseUrl: base_url,
+  //       validateStatus: ((status) => status != null && status < 500));
+
+  //   final Dio dio = Dio(options);
+
+  //   try {
+  //     final response = await dio.get(
+  //       "api/Users/matched-users",
+  //     );
+  //     debugPrint(response.data);
+  //     if (response.statusCode == 200) {
+  //       // Parse the response data and convert it into a list of User objects
+  //       List<dynamic> responseData = response.data;
+  //       currentUser =
+  //           responseData.map((userJson) => User.fromJson(userJson)).toList();
+
+  //       emit(FetchMatchedUserSuccess(currentUser));
+  //     } else {
+  //       emit(LoginFailed("Failed to fetch matched users"));
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //     emit(LoginFailed(e.toString()));
+  //   }
+  // }
 
   Future<void> isLogged() async {
     const storage = FlutterSecureStorage();

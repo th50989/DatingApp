@@ -13,12 +13,12 @@ class UserRepo {
     var options = BaseOptions(
         contentType: 'application/json',
         method: 'GET',
-        baseUrl: get_user_url,
+        baseUrl: base_url,
         validateStatus: ((status) => status != null && status < 500));
 
     final Dio dio = Dio(options);
     try {
-      final response = await dio.get("$accountId");
+      final response = await dio.get("api/Users/get-user/$accountId");
       final storage = FlutterSecureStorage();
       if (response.statusCode == HttpStatus.ok) {
         final data = response.data;
@@ -38,14 +38,14 @@ class UserRepo {
     User currentUser;
     Response response;
     var options = BaseOptions(
-      baseUrl: create_new_user,
+      baseUrl: base_url,
       method: 'POST',
       contentType: 'application/json',
       connectTimeout: 30000,
     );
     var dio = Dio(options);
     try {
-      response = await dio.post('', data: body);
+      response = await dio.post('api/Users/create-user', data: body);
       if (response.statusCode == 201) {
         currentUser = await getUser(response.data["accountId"]);
         print('created user: ' '${currentUser.toJson()}');
