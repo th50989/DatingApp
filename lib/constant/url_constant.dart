@@ -2,11 +2,11 @@
 
 //final String login_url = "http://192.168.1.101:8000/api/Users/login";
 
-const String login_url = "http://localhost:8000/api/Users/login";
+// const String login_url = "http://localhost:8000/api/Users/login";
 
-const String get_user_url = "http://localhost:8000/api/Users/get-user/";
+// const String get_user_url = "http://localhost:8000/api/Users/get-user/";
 
-const String create_new_user = "http://localhost:8000/api/Users/create-user";
+// const String create_new_user = "http://localhost:8000/api/Users/create-user";
 
 //mang nha quan
 //final String login_url = "http://192.168.1.12:8000/api/Users/login";
@@ -19,5 +19,5 @@ const String create_new_user = "http://localhost:8000/api/Users/create-user";
 //link nay mang nha tao
 
 //final String login_url = "http://192.168.1.199:8000/api/Users/login";
-
-final String base_url = "http://192.168.1.101:8000/";
+//dit me tml Nguyen Duy Quan sua cai baseUrl thoi, m ma dung vo cai cho nao khac tao dam cmmmay
+final String base_url = "http://10.106.22.168:8000/";

@@ -1,4 +1,3 @@
-
 import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
@@ -26,9 +25,10 @@ class HomePage extends StatelessWidget {
       "Bạn đã like người dùng này",
     ));
     const PendingButton = SnackBar(
+        duration: Duration(milliseconds: 1000),
         content: Text(
-      "Bạn đã tạm thời lướt qua người dùng này",
-    ));
+          "Bạn đã tạm thời lướt qua người dùng này",
+        ));
 
     return Scaffold(
       body: Column(
@@ -47,7 +47,6 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 InkWell(
                   onTap: () {
                     Navigator.of(context)
@@ -59,7 +58,6 @@ class HomePage extends StatelessWidget {
                     height: 20,
                     width: 20,
                     child: const Icon(
-
                       Icons.person,
                       color: Colors.black,
                     ),
@@ -74,7 +72,6 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 InkWell(
                     onTap: () {
                       Navigator.of(context)
@@ -84,7 +81,6 @@ class HomePage extends StatelessWidget {
                     },
                     child: Container(
                         height: 20, width: 20, child: Icon(Icons.chat))),
-
               ],
             ),
           ),
