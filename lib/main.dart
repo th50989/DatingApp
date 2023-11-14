@@ -1,10 +1,17 @@
+import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
+import 'package:believeder_app/Screens/ChatSession/cubit/chat_cubit.dart';
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
 import 'package:believeder_app/Screens/Login/components/login_form.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
+import 'package:believeder_app/api_chat/firebase_api.dart';
+import 'package:believeder_app/firebase_options.dart';
+
+import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
@@ -13,7 +20,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'constant/colors_constant.dart';
 import 'constant/font_constant.dart';
 
-void main() => runApp(const App());
+final navigatorKey = GlobalKey<NavigatorState>();
+// void main() => runApp(const App());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseApi().initNotifications();
+
+  runApp(const App());
+}
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -23,8 +38,9 @@ class App extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider<LoginCubit>(
         lazy: false,
-        create: (context) => LoginCubit(),
+        create: (context) => LoginCubit(UserRepo()),
       ),
+      BlocProvider<ChatCubit>(lazy: false, create: (context) => ChatCubit())
     ], child: const MyApp()); //cai nay de phan phoi cubit cho toan app
   }
 }
@@ -48,6 +64,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        //2 cai nay dang duoc su dung de navigate bang notification
+        navigatorKey: navigatorKey,
+        routes: {'/chat_list_screen': (context) => FriendChatList()},
+        //
         debugShowCheckedModeBanner: false,
         title: 'BelieveDer App',
         theme: ThemeData(
@@ -102,9 +122,7 @@ class _MyAppState extends State<MyApp> {
                 //delay de hien thong bao dang nhap thanh cong
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return NewUserPage(
-                      AccountId: state.AccountId,
-                    ); // Widget của màn hình mới bạn muốn hiển thị.
+                    return const NewUserPage(); // Widget của màn hình mới bạn muốn hiển thị.
                   }),
                   // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
                 );

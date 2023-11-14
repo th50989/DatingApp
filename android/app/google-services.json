@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "600474936928",
+    "project_id": "pushnotidoanttlta",
+    "storage_bucket": "pushnotidoanttlta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600474936928:android:411d1de744fa3f477ec505",
+        "android_client_info": {
+          "package_name": "com.example.believeder_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO2wXpcKOwnCeXRmCe3uZsp49Ke7Tf08k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,6 @@ import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:believeder_app/Screens/Profile/Widgets/InfoTextBox.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 
-
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
 

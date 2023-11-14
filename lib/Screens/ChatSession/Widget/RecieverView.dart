@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
-class ReceiverRowView extends StatelessWidget {
-  const ReceiverRowView({Key? key, required this.receiverMessage}) : super(key: key);
+class ReceiverRowView extends StatefulWidget {
+  const ReceiverRowView(
+      {Key? key, required this.receiverMessage, required this.time})
+      : super(key: key);
 
-  final String receiverMessage;
+  final String? receiverMessage;
+  final String? time;
+  @override
+  State<ReceiverRowView> createState() => _ReceiverRowViewState();
+}
 
+class _ReceiverRowViewState extends State<ReceiverRowView> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -42,7 +49,7 @@ class ReceiverRowView extends StatelessWidget {
                         color: Color(0xFF87D4E6),
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     child: Text(
-                      receiverMessage,
+                      widget.receiverMessage!,
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -50,9 +57,9 @@ class ReceiverRowView extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10.0, bottom: 8.0),
-                child: const Text(
-                  '8:55 AM, Today',
-                  style: TextStyle(
+                child: Text(
+                  widget.time!,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 7.0,
                   ),
