@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SenderRowView extends StatelessWidget {
-  const SenderRowView({Key? key, required this.senderMessage}) : super(key: key);
+class SenderRowView extends StatefulWidget {
+  const SenderRowView({Key? key, required this.senderMessage, this.time})
+      : super(key: key);
+  final String? time;
+  final String? senderMessage;
 
-  final String senderMessage;
+  @override
+  State<SenderRowView> createState() => _SenderRowViewState();
+}
 
+class _SenderRowViewState extends State<SenderRowView> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -35,7 +41,7 @@ class SenderRowView extends StatelessWidget {
                         color: Color(0xFF7CE994),
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     child: Text(
-                      senderMessage,
+                      widget.senderMessage!,
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -43,9 +49,9 @@ class SenderRowView extends StatelessWidget {
               ),
               Container(
                 margin: const EdgeInsets.only(right: 10.0, bottom: 8.0),
-                child: const Text(
-                  '8:55 AM, Today',
-                  style: TextStyle(
+                child: Text(
+                  widget.time!,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 7.0,
                   ),

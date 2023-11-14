@@ -16,10 +16,17 @@ class NewUser extends LoginState {
   NewUser(this.AccountId);
 }
 
+class NewUserCreating extends LoginState {}
+
 class LoginSuccess extends LoginState {
   final User user;
   LoginSuccess(this.user);
 }
+
+// class FetchMatchedUserSuccess extends LoginState {
+//   final List<User> user;
+//   FetchMatchedUserSuccess(this.user);
+// }
 
 class LogoutSuccess extends LoginState {
   LogoutSuccess();
