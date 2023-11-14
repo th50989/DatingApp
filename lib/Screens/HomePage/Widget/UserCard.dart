@@ -6,24 +6,14 @@ class UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.pinkAccent.withOpacity(0.5), // Màu hồng nhạt
-            Colors.white, // Màu trắng
-          ],
-        ),
-      ),
       child: Padding(
         padding: const EdgeInsets.only(
-          top: 10,
+          top: 20,
           left: 20,
           right: 20,
         ),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 1.5,
+          height: MediaQuery.of(context).size.height / 1.4,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -33,6 +23,18 @@ class UserCard extends StatelessWidget {
                       image: AssetImage("assets/images/usercard.jpg"),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(
+                    width: 0.5,
+                    color: Colors.grey
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white, // Màu của bóng
+                      offset: Offset(0, 1), // Độ dịch chuyển ngang và dọc của bóng
+                      blurRadius: 8, // Độ mờ của bóng
+                      spreadRadius: 5, // Phạm vi của bóng
+                    ),
+                  ]
                 ),
               ),
               Container(
@@ -65,22 +67,43 @@ class UserCard extends StatelessWidget {
                             .headlineMedium!
                             .copyWith(
                               color: Colors.white,
+                              fontWeight: FontWeight.bold
                             ),
+                            
                       ),
                     ),
                     const SizedBox(height: 10), // Khoảng cách giữa các dòng
                     const Padding(
                       padding: EdgeInsets.only(
+                          bottom: 20,
                           left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
-                        'Những thằng khác ngại tán em, tại ngán anh.',
+                        'Những thằng khác ngại tán em, tại ngán anh!',
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 14,
                           color: Colors.white,
-                          fontWeight: FontWeight.normal,
+                          fontWeight: FontWeight.w200
                         ),
                       ),
                     ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Icon(
+                              Icons.info,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               )

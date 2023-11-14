@@ -39,7 +39,7 @@ class infoTextBox extends StatelessWidget {
                   color: Colors.black,
                   size: 15,
                 ),
-              )
+              ) 
             ],
           ),
           Text(
