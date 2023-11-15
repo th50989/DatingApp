@@ -2,6 +2,7 @@ import 'package:believeder_app/Models/models.dart';
 import 'package:believeder_app/Screens/ChatSession/cubit/chat_cubit.dart';
 import 'package:believeder_app/Screens/ChatSession/cubit/chat_state.dart';
 import 'package:believeder_app/constant/url_constant.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -54,7 +55,7 @@ class _ChatListViewState extends State<ChatListView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<ChatCubit>().renderChatMessage(widget.peerUser.userId);
+    //context.read<ChatCubit>().renderChatMessage(widget.peerUser.userId);
 
     // renderChatMessage(widget.peerUser.userId, widget.currentUser.accessToken);
   }
@@ -67,50 +68,81 @@ class _ChatListViewState extends State<ChatListView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatCubit, ChatState>(builder: (context, state) {
-      if (state is ChatRecived) {
-        //Sort tin nhan theo time
-        state.chatList.sort((a, b) => b.timeSent!.compareTo(a.timeSent!));
-        // widget.chatList = widget.chatList.reversed.toList();
-        return Expanded(
-          child: ListView.builder(
-              reverse: true,
+    // return BlocBuilder<ChatCubit, ChatState>(builder: (context, state) {
+    //   if (state is ChatRecived) {
+    //     //Sort tin nhan theo time
+    //     state.chatList.sort((a, b) => b.timeSent!.compareTo(a.timeSent!));
+    //     // widget.chatList = widget.chatList.reversed.toList();
+    //     return Expanded(
+    //       child: ListView.builder(
+    //           reverse: true,
+    //           shrinkWrap: true,
+    //           physics: const BouncingScrollPhysics(),
+    //           controller: widget.scrollController,
+    //           itemCount: state.chatList.length,
+    //           itemBuilder: (context, index) =>
+    //               (state.chatList[index].userIdFrom ==
+    //                       widget.currentUser.userId)
+    //                   ? SenderRowView(
+    //                       senderMessage: state.chatList[index].content,
+    //                       time: state.chatList[index].timeSent)
+    //                   : ReceiverRowView(
+    //                       receiverMessage: state.chatList[index].content,
+    //                       time: state.chatList[index].timeSent,
+    //                     )),
+    //     );
+    //   } else {
+    //     // return Expanded(
+    //     //   child: ListView.builder(
+    //     //     reverse: true,
+    //     //     shrinkWrap: true,
+    //     //     physics: const BouncingScrollPhysics(),
+    //     //     controller: widget.scrollController,
+    //     //     itemCount: state.chatList.length,
+    //     //     itemBuilder: (context, index) =>
+    //     //         (state.chatList[index].userIdFrom == widget.currentUser.userId)
+    //     //             ? ReceiverRowView(
+    //     //                 receiverMessage: widget.chatList[index].content,
+    //     //                 time: widget.chatList[index].timeSent,
+    //     //               )
+    //     //             : SenderRowView(
+    //     //                 senderMessage: widget.chatList[index].content,
+    //     //                 time: widget.chatList[index].timeSent),
+    //     //   ),
+    //     // );
+    //     return CircularProgressIndicator();
+    //   }
+    // });
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('Messages').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return ListView.builder(
               shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              controller: widget.scrollController,
-              itemCount: state.chatList.length,
-              itemBuilder: (context, index) =>
-                  (state.chatList[index].userIdFrom ==
-                          widget.currentUser.userId)
-                      ? SenderRowView(
-                          senderMessage: state.chatList[index].content,
-                          time: state.chatList[index].timeSent)
-                      : ReceiverRowView(
-                          receiverMessage: state.chatList[index].content,
-                          time: state.chatList[index].timeSent,
-                        )),
-        );
-      } else {
-        // return Expanded(
-        //   child: ListView.builder(
-        //     reverse: true,
-        //     shrinkWrap: true,
-        //     physics: const BouncingScrollPhysics(),
-        //     controller: widget.scrollController,
-        //     itemCount: state.chatList.length,
-        //     itemBuilder: (context, index) =>
-        //         (state.chatList[index].userIdFrom == widget.currentUser.userId)
-        //             ? ReceiverRowView(
-        //                 receiverMessage: widget.chatList[index].content,
-        //                 time: widget.chatList[index].timeSent,
-        //               )
-        //             : SenderRowView(
-        //                 senderMessage: widget.chatList[index].content,
-        //                 time: widget.chatList[index].timeSent),
-        //   ),
-        // );
-        return CircularProgressIndicator();
-      }
-    });
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (context, index) {
+                var document = snapshot.data!.docs[index];
+                // var testId = document['UserIdFrom'];
+                if ((document['UserIdFrom'] == widget.currentUser.userId &&
+                        document['UserIdTo'] == widget.peerUser.userId) ||
+                    (document['UserIdFrom'] == widget.peerUser.userId &&
+                        document['UserIdTo'] == widget.currentUser.userId)) {
+                  if (document['UserIdFrom'] == widget.currentUser.userId) {
+                    return SenderRowView(
+                        senderMessage: document['content'],
+                        time: document['timeSent']);
+                  } else
+                    return ReceiverRowView(
+                        receiverMessage: document['content'],
+                        time: document['timeSent']);
+                }
+              });
+        }
+      },
+    );
   }
 }

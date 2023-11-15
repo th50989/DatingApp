@@ -95,14 +95,14 @@ class _ChatSessionState extends State<ChatSession> {
             // renderChatMessage(widget.user.userId, state.user.accessToken);
             return Column(
               children: [
-                BlocBuilder<ChatCubit, ChatState>(
-                    builder: (context, chatState) {
-                  return ChatListView(
-                    scrollController: scrollController,
-                    peerUser: widget.user,
-                    currentUser: state.user,
-                  );
-                }),
+                // BlocBuilder<ChatCubit, ChatState>(
+                //     builder: (context, chatState) {
+                ChatListView(
+                  scrollController: scrollController,
+                  peerUser: widget.user,
+                  currentUser: state.user,
+                ),
+                // }),
                 Container(
                   // height: 50,
                   margin: const EdgeInsets.all(8.0),
