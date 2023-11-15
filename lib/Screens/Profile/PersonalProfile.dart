@@ -31,92 +31,92 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
             if (state is LoginSuccess) {
               return Stack(
                 children: <Widget>[
-                  SingleChildScrollView(
-                    child: ListView(
-                      children: [
-                        const SizedBox(
-                          height: 50.0,
+                  ListView(
+                    children: [
+                      const SizedBox(
+                        height: 50.0,
+                      ),
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(
+                          state.user.imgUrl,
+                          scale: 100.0,
                         ),
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                            state.user.imgUrl,
-                            scale: 100.0,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20.0,
-                        ),
-                        Text(
-                          state.user.lastName,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w300),
-                        ),                  
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height / 1.2,
-                            width: MediaQuery.of(context).size.width / 0.5,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10)
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 10,
-                                )
-                              ]
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Text(
+                        state.user.lastName,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w300),
+                      ),                  
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 1.2,
+                          width: MediaQuery.of(context).size.width / 0.5,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10)
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 10.0,
-                                    left: 25.0,
-                                    bottom: 5.0,
-                                  ),
-                                  child: Text( 
-                                    'My Details',
-                                    style: TextStyle(color: Colors.black, fontSize: 15.0),
-                                  ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 10,
+                              )
+                            ]
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                  top: 10.0,
+                                  left: 25.0,
+                                  bottom: 5.0,
                                 ),
-                                infoTextBox(text: state.user.bio, sectionName: 'Bio'),
-                                infoTextBox(
-                                    text: state.user.lastName, sectionName: 'Last Name'),
-                                infoTextBox(
-                                    text: state.user.firstName,
-                                    sectionName: 'First Name'),
-                                infoTextBox(
-                                    text: state.user.birthDay, sectionName: 'Birthday'),
-                                infoTextBox(
-                                    text: state.user.gender, sectionName: 'Gender'),
-                                infoTextBox(
-                                    text: state.user.location, sectionName: 'Location'),
-                                infoTextBox(
-                                    text: state.user.age.toString(), sectionName: 'Age'),
-                                
-                              ],
-                            ),
+                                child: Text( 
+                                  'My Details',
+                                  style: TextStyle(color: Colors.black, fontSize: 15.0),
+                                ),
+                              ),
+                              infoTextBox(
+                                text: state.user.bio, 
+                                sectionName: 'Bio'),
+                              infoTextBox(
+                                  text: state.user.lastName, sectionName: 'Last Name'),
+                              infoTextBox(
+                                  text: state.user.firstName,
+                                  sectionName: 'First Name'),
+                              infoTextBox(
+                                  text: state.user.birthDay, sectionName: 'Birthday'),
+                              infoTextBox(
+                                  text: state.user.gender, sectionName: 'Gender'),
+                              infoTextBox(
+                                  text: state.user.location, sectionName: 'Location'),
+                              infoTextBox(
+                                  text: state.user.age.toString(), sectionName: 'Age'),
+                              
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text(
-                                  style: TextStyle(color: Colors.white),
-                                  'go back')),
-                        )  
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                                style: TextStyle(color: Colors.white),
+                                'go back')),
+                      )  
+                    ],
                   ),
                 ],
               );
