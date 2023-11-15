@@ -85,7 +85,9 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                   style: TextStyle(color: Colors.black, fontSize: 15.0),
                                 ),
                               ),
-                              infoTextBox(text: state.user.bio, sectionName: 'Bio'),
+                              infoTextBox(
+                                text: state.user.bio, 
+                                sectionName: 'Bio'),
                               infoTextBox(
                                   text: state.user.lastName, sectionName: 'Last Name'),
                               infoTextBox(
