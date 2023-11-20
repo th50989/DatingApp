@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:believeder_app/Screens/HomePage/Widget/CardProvider/CardProvider.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard({super.key});
+  final UserInfoModel userInfo;
+  
+  const UserCard(
+    this.userInfo, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container(     
       child: Padding(
         padding: const EdgeInsets.only(
-          top: 20,
-          left: 20,
-          right: 20,
+          top: 10,
+          left: 10,
+          right: 10,
         ),
         child: SizedBox(
           height: MediaQuery.of(context).size.height / 1.4,
@@ -19,8 +25,8 @@ class UserCard extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  image: const DecorationImage(
-                      image: AssetImage("assets/images/usercard.jpg"),
+                  image: DecorationImage(
+                      image: AssetImage(userInfo.imageUrl),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(20.0),
                   border: Border.all(
@@ -55,13 +61,13 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 2.0,
+                      height: MediaQuery.of(context).size.height / 2.3,
                     ), // Khoảng cách từ đỉnh Container xuống dưới
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
-                        'Thắng Nguyễn, 21',
+                        userInfo.username + ' ,' + userInfo.age,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
@@ -73,23 +79,31 @@ class UserCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10), // Khoảng cách giữa các dòng
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(
-                          bottom: 20,
-                          left: 20), // Tạo khoảng cách lề trái 20 đơn vị
-                      child: Text(
-                        'Những thằng khác ngại tán em, tại ngán anh!',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w200
+                        bottom: 20,
+                        left: 20
+                      ), // Tạo khoảng cách lề trái 20 đơn vị
+                      child: Container(
+                        height: 40, // Đặt chiều cao cố định cho Container
+                        child: Text(
+                          userInfo.description,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
                       ),
                     ),
                     Container(
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.only(
+                          right: 10.0,
+                          // top: 10.0,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
