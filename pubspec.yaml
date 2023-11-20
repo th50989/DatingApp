@@ -48,6 +48,7 @@ dependencies:
   firebase_core: ^2.22.0
   firebase_messaging: ^14.7.4
   flutter_card_swiper: ^6.0.0 
+  cloud_firestore: ^4.13.0
 
 dev_dependencies:
   flutter_test:
