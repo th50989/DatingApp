@@ -136,7 +136,7 @@ class _FriendChatListState extends State<FriendChatList> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text(
-                                    "Favorite contacts",
+                                    "Recently contacts",
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   IconButton(
@@ -253,7 +253,7 @@ class _FriendChatListState extends State<FriendChatList> {
                       Text(
                         CurrentUserid == user.latestMessageUserIdFrom
                             ? 'You sent : ${user.latestMessageContent}'
-                            : '${user.firstName} sent : ${user.latestMessageContent} to you :',
+                            : '${user.firstName} sent to you :${user.latestMessageContent} ',
                         // user.latestMessageContent,
                         style: const TextStyle(color: Colors.black),
                       ),
