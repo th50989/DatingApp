@@ -147,7 +147,8 @@ class _ChatSessionState extends State<ChatSession> {
                             padding: const EdgeInsets.only(bottom: 5.0),
                             child: GestureDetector(
                               onTap: () {
-                                sendMessage(state.user.accessToken, state.user);
+                                sendMessage(state.user.accessToken, state.user,
+                                    widget.user);
                               },
                               onLongPress: () {},
                               child: const Icon(
@@ -168,7 +169,7 @@ class _ChatSessionState extends State<ChatSession> {
         }));
   }
 
-  void sendMessage(String accessToken, User user) async {
+  void sendMessage(String accessToken, User user, User2 peerUser) async {
     var options = BaseOptions(
         contentType: 'application/json',
         method: 'POST',
@@ -187,17 +188,39 @@ class _ChatSessionState extends State<ChatSession> {
         "api/Users/send-message",
         data: body,
       );
-      context.read<ChatCubit>().renderChatMessage(widget.user.userId);
+      //context.read<ChatCubit>().renderChatMessage(widget.user.userId);
+
+      debugPrint(response.data.toString());
+    } catch (e) {}
+    var base_url1 = '';
+    var optionsFirebase = BaseOptions(
+        contentType: 'application/json',
+        method: 'POST',
+        baseUrl: base_url1,
+        validateStatus: ((status) => status != null && status < 500));
+
+    final Dio dioFirebase = Dio(optionsFirebase);
+    final bodyFirebase = {
+      "UserIdTo": peerUser.userId,
+      "UserIdFrom": user.userId,
+      "content": textEditingController.text,
+      "status": 'sent'
+    };
+    try {
+      final response = await dioFirebase.post(
+        "https://addmessages.onrender.com/addmessages",
+        data: bodyFirebase,
+      );
+      debugPrint(response.data.toString());
       setState(() {
-        ChatListView(
-          scrollController: scrollController,
-          peerUser: widget.user, //nay la user 2
-          currentUser: user, // nay la user
-        );
+        // ChatListView(
+        //   scrollController: scrollController,
+        //   peerUser: widget.user, //nay la user 2
+        //   currentUser: user, // nay la user
+        // );
         // context.read<ChatCubit>().renderChatMessage(widget.peerUser.userId);
         textEditingController.text = '';
       });
-      debugPrint(response.data.toString());
     } catch (e) {}
   }
 }
