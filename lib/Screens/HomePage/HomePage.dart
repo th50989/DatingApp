@@ -190,14 +190,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  bool _onSwipe(
+  Future<bool> _onSwipe(
     int previousIndex,
     int? currentIndex,
     CardSwiperDirection direction,
-  ) {
-    debugPrint(
-      'Bạn vừa quẹt người dùng $currentIndex sang ${direction.name} bạn đã yêu / sẽ gầy hoặc ghét với người đó',
-    );
+  ) async {
+    if (direction.name == 'right') {
+      var userId = shuffledCards[currentIndex!].userInfo.userId;
+      print(userId);
+      await BlocProvider.of<CardCubit>(context).addFavorite(userId);
+    } else if (direction.name == 'left') {
+      print('Ban eo thich nguoi nay');
+    }
     return true;
   }
 
