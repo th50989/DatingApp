@@ -12,13 +12,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class FirebaseApi {
   //tao instance cua firebase messaging
   final _firebaseMessaging = FirebaseMessaging.instance;
-
+  static String? fCMToken = "";
   // init notification va lay token device
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
 
     //lay token cua device
-    final fCMToken = await _firebaseMessaging.getToken();
+    fCMToken = await _firebaseMessaging.getToken();
     print('My device`s Token: $fCMToken');
 
     initPushNotifications();

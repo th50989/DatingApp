@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/api_chat/firebase_api.dart';
 import 'package:believeder_app/constant/url_constant.dart';
 import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:bloc/bloc.dart';
@@ -47,6 +48,28 @@ class LoginCubit extends Cubit<LoginState> {
               key: 'accountId', value: response.data['accountId'].toString());
           currentUser = User.fromJson(data);
           print(currentUser.toJson());
+
+          //xu ly nhap devicetoken neu dang nhap thanh cong
+          var options1 = BaseOptions(
+              contentType: 'application/json',
+              method: 'POST',
+              baseUrl: "http://192.168.2.50:5555/",
+              validateStatus: ((status) => status != null && status < 500));
+
+          final Dio dio1 = Dio(options1);
+          final body1 = {
+            "deviceToken": FirebaseApi.fCMToken,
+            "userId": currentUser.userId
+          };
+          try {
+            final response2 = await dio1.post(
+              "add_device_token",
+              data: body1,
+            );
+            print(response2.data.toString());
+          } catch (e) {}
+          ;
+
           Future.delayed(const Duration(seconds: 3), () {
             emit(LoginSuccess(currentUser));
           });
@@ -64,6 +87,8 @@ class LoginCubit extends Cubit<LoginState> {
       print(e.toString());
       emit(LoginFailed(e.toString()));
     }
+
+    print("sau:${FirebaseApi.fCMToken}");
   }
 
   // Future<void> fetchMatchedUser() async {
