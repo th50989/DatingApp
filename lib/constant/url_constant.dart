@@ -20,8 +20,4 @@
 
 //final String login_url = "http://192.168.1.199:8000/api/Users/login";
 //dit me tml Nguyen Duy Quan sua cai baseUrl thoi, m ma dung vo cai cho nao khac tao dam cmmmay
-
 final String base_url = "http://192.168.2.50:8000/";
-
-
-
