@@ -1,6 +1,7 @@
 import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
 import 'package:believeder_app/Screens/ChatSession/cubit/chat_cubit.dart';
 import 'package:believeder_app/Screens/HomePage/HomePage.dart';
+import 'package:believeder_app/Screens/HomePage/cubit/card_cubit.dart';
 import 'package:believeder_app/Screens/Login/components/login_form.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
@@ -48,6 +49,10 @@ class App extends StatelessWidget {
       BlocProvider<LoginCubit>(
         lazy: false,
         create: (context) => LoginCubit(UserRepo()),
+      ),
+      BlocProvider<CardCubit>(
+        lazy: false,
+        create: (context) => CardCubit(),
       ),
       BlocProvider<ChatCubit>(lazy: false, create: (context) => ChatCubit())
     ], child: const MyApp()); //cai nay de phan phoi cubit cho toan app
