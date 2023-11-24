@@ -9,6 +9,7 @@ import 'package:believeder_app/constant/url_constant.dart';
 import 'package:bloc/bloc.dart';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:meta/meta.dart';
 
@@ -38,6 +39,32 @@ class CardCubit extends Cubit<CardState> {
       }
     } catch (e) {
       emit(CardFailed(e.toString()));
+      throw (e.toString());
+    }
+  }
+
+  Future<void> addFavorite(int otherUserId) async {
+    const storage = FlutterSecureStorage();
+
+    var accessToken = await storage.read(key: 'accessToken');
+    var options = BaseOptions(
+        contentType: 'application/json',
+        method: 'POST',
+        baseUrl: base_url,
+        headers: {'Authorization': 'Bearer $accessToken'},
+        validateStatus: ((status) => status != null && status < 500));
+
+    final Dio dio = Dio(options);
+    var body = {"otherUserId": otherUserId, "isLike": true};
+    try {
+      final response = await dio.post('/api/Users/like-or-dislike', data: body);
+      if (response.statusCode == 200) {
+        print("like ok!");
+      } else {
+        print('Deo like duoc!');
+      }
+    } catch (e) {
+      print(e.toString());
       throw (e.toString());
     }
   }
