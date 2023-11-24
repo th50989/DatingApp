@@ -53,7 +53,7 @@ class LoginCubit extends Cubit<LoginState> {
           var options1 = BaseOptions(
               contentType: 'application/json',
               method: 'POST',
-              baseUrl: "http://192.168.2.50:5555/",
+              baseUrl: "https://addmessages.onrender.com/",
               validateStatus: ((status) => status != null && status < 500));
 
           final Dio dio1 = Dio(options1);
