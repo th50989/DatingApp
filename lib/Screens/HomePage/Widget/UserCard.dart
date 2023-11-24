@@ -3,7 +3,7 @@ import 'package:believeder_app/Screens/HomePage/Widget/CardProvider/CardProvider
 
 class UserCard extends StatelessWidget {
   final UserInfoModel userInfo;
-  
+
   const UserCard(
     this.userInfo, {
     Key? key,
@@ -11,7 +11,7 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(     
+    return Container(
       child: Padding(
         padding: const EdgeInsets.only(
           top: 10,
@@ -25,23 +25,20 @@ class UserCard extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(userInfo.imageUrl),
-                      fit: BoxFit.cover),
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(
-                    width: 0.5,
-                    color: Colors.grey
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white, // Màu của bóng
-                      offset: Offset(0, 1), // Độ dịch chuyển ngang và dọc của bóng
-                      blurRadius: 8, // Độ mờ của bóng
-                      spreadRadius: 5, // Phạm vi của bóng
-                    ),
-                  ]
-                ),
+                    image: DecorationImage(
+                        image: AssetImage(userInfo.imageUrl),
+                        fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(20.0),
+                    border: Border.all(width: 0.5, color: Colors.grey),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white, // Màu của bóng
+                        offset: Offset(
+                            0, 1), // Độ dịch chuyển ngang và dọc của bóng
+                        blurRadius: 8, // Độ mờ của bóng
+                        spreadRadius: 5, // Phạm vi của bóng
+                      ),
+                    ]),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -67,27 +64,24 @@ class UserCard extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Text(
-                        userInfo.username + ' ,' + userInfo.age,
+                        userInfo.username + ' ,' + userInfo.age.toString(),
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium!
                             .copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
-                            ),
-                            
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                       ),
                     ),
                     const SizedBox(height: 10), // Khoảng cách giữa các dòng
                     Padding(
                       padding: EdgeInsets.only(
-                        bottom: 20,
-                        left: 20
-                      ), // Tạo khoảng cách lề trái 20 đơn vị
+                          bottom: 20,
+                          left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Container(
                         height: 40, // Đặt chiều cao cố định cho Container
                         child: Text(
-                          userInfo.description,
+                          userInfo.bio,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
