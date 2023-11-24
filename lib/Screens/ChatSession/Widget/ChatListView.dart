@@ -28,6 +28,7 @@ class ChatListView extends StatefulWidget {
 }
 
 class _ChatListViewState extends State<ChatListView> {
+  late ScrollController _scrollController;
   // Future<void> renderChatMessage(int peerUserId, String accessToken) async {
   //   var options = BaseOptions(
   //       contentType: 'application/json',
@@ -55,6 +56,10 @@ class _ChatListViewState extends State<ChatListView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _scrollController = ScrollController();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    // });
     //context.read<ChatCubit>().renderChatMessage(widget.peerUser.userId);
 
     // renderChatMessage(widget.peerUser.userId, widget.currentUser.accessToken);
@@ -64,6 +69,7 @@ class _ChatListViewState extends State<ChatListView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -114,33 +120,48 @@ class _ChatListViewState extends State<ChatListView> {
     //   }
     // });
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('Messages').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('Messages')
+          .orderBy('timeSent', descending: false)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data?.docs.length,
-              itemBuilder: (context, index) {
-                var document = snapshot.data!.docs[index];
-                // var testId = document['UserIdFrom'];
-                if ((document['UserIdFrom'] == widget.currentUser.userId &&
-                        document['UserIdTo'] == widget.peerUser.userId) ||
-                    (document['UserIdFrom'] == widget.peerUser.userId &&
-                        document['UserIdTo'] == widget.currentUser.userId)) {
-                  if (document['UserIdFrom'] == widget.currentUser.userId) {
-                    return SenderRowView(
-                        senderMessage: document['content'],
-                        time: document['timeSent']);
-                  } else
-                    return ReceiverRowView(
-                        receiverMessage: document['content'],
-                        time: document['timeSent']);
-                }
-              });
+          return Expanded(
+            child: ListView.builder(
+                // controller: _scrollController.jumpTo(value),
+                // controller:ScrollController(initialScrollOffset: ),
+                shrinkWrap: true,
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (context, index) {
+                  var document = snapshot.data!.docs[index];
+                  // var testId = document['UserIdFrom'];
+                  try {
+                    if ((document['UserIdFrom'] == widget.currentUser.userId &&
+                            document['UserIdTo'] == widget.peerUser.userId) ||
+                        (document['UserIdFrom'] == widget.peerUser.userId &&
+                            document['UserIdTo'] ==
+                                widget.currentUser.userId)) {
+                      if (document['UserIdFrom'] == widget.currentUser.userId) {
+                        return SenderRowView(
+                            senderMessage: document['content'],
+                            time: document['timeSent']);
+                      } else {
+                        return ReceiverRowView(
+                            receiverMessage: document['content'],
+                            time: document['timeSent']);
+                      }
+                    }
+                  } catch (e) {}
+                  // } else {
+                  //   return Center(child: CircularProgressIndicator());
+                  // }
+                  return Container();
+                }),
+          );
         }
       },
     );
