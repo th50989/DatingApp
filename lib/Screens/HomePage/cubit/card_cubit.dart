@@ -1,0 +1,44 @@
+import 'dart:io';
+
+import 'package:believeder_app/Screens/HomePage/Widget/CardProvider/CardProvider.dart';
+
+import 'package:believeder_app/Screens/HomePage/Widget/UserCard.dart';
+
+import 'package:believeder_app/constant/url_constant.dart';
+
+import 'package:bloc/bloc.dart';
+
+import 'package:dio/dio.dart';
+
+import 'package:meta/meta.dart';
+
+part 'card_state.dart';
+
+class CardCubit extends Cubit<CardState> {
+  CardCubit() : super(CardInitial());
+
+  Future<void> getRandomUser() async {
+    List<UserInfoModel> userInfoList;
+
+    var options = BaseOptions(
+        contentType: 'application/json',
+        method: 'GET',
+        baseUrl: base_url,
+        validateStatus: ((status) => status != null && status < 500));
+
+    final Dio dio = Dio(options);
+
+    try {
+      final response = await dio.get('/api/Users/randomusers');
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        userInfoList =
+            data.map((user) => UserInfoModel.fromJson(user)).toList();
+        emit(CardSuccess(userInfoList));
+      }
+    } catch (e) {
+      emit(CardFailed(e.toString()));
+      throw (e.toString());
+    }
+  }
+}
