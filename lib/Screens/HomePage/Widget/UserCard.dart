@@ -19,7 +19,7 @@ class UserCard extends StatelessWidget {
           right: 10,
         ),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 1.4,
+          height: MediaQuery.of(context).size.height / 1.42,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
