@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:believeder_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:believeder_app/Screens/Profile/Widgets/InfoTextBox.dart';
@@ -110,11 +111,17 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                         padding: const EdgeInsets.all(10.0),
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
+                              context.read<LoginCubit>().logout();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const MyApp()),
+                                (route) => false,
+                              );
                             },
                             child: const Text(
                                 style: TextStyle(color: Colors.white),
-                                'go back')),
+                                'L O G O U T')),
                       )  
                     ],
                   ),
