@@ -148,12 +148,7 @@ class _HomePageState extends State<HomePage> {
                             size: 25,
                             icon: Icons.clear_rounded,
                             onPressed: () {
-                              context.read<LoginCubit>().logout();
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) => const MyApp()),
-                                (route) => false,
-                              );
+                              controller.swipeLeft();
                             },
                             color: Colors.red,
                           ),
@@ -174,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                             icon: Icons.watch_later,
                             color: Colors.red,
                             onPressed: () {
-                              controller.swipeLeft();
+                              controller.undo();
                             },
                           ),
                         ],
