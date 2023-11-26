@@ -30,7 +30,7 @@ class LoginCubit extends Cubit<LoginState> {
     final body = {"email": email, "password": password};
     try {
       final response = await dio.post(
-        "api/Users/login",
+        "api/Authentication/login",
         data: body,
       );
       if (email.isEmpty || password.isEmpty) {
@@ -53,7 +53,7 @@ class LoginCubit extends Cubit<LoginState> {
           var options1 = BaseOptions(
               contentType: 'application/json',
               method: 'POST',
-              baseUrl: "https://addmessages.onrender.com/",
+              baseUrl: addmess,
               validateStatus: ((status) => status != null && status < 500));
 
           final Dio dio1 = Dio(options1);

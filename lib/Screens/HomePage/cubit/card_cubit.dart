@@ -21,16 +21,21 @@ class CardCubit extends Cubit<CardState> {
   Future<void> getRandomUser() async {
     List<UserInfoModel> userInfoList;
 
+    const storage = FlutterSecureStorage();
+
+    var accessToken = await storage.read(key: 'accessToken');
+
     var options = BaseOptions(
         contentType: 'application/json',
         method: 'GET',
         baseUrl: base_url,
+        headers: {'Authorization': 'Bearer $accessToken'},
         validateStatus: ((status) => status != null && status < 500));
 
     final Dio dio = Dio(options);
 
     try {
-      final response = await dio.get('/api/Users/randomusers');
+      final response = await dio.get('api/Relations/random-unmatched-users');
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         userInfoList =
@@ -57,7 +62,8 @@ class CardCubit extends Cubit<CardState> {
     final Dio dio = Dio(options);
     var body = {"otherUserId": otherUserId, "isLike": true};
     try {
-      final response = await dio.post('/api/Users/like-or-dislike', data: body);
+      final response =
+          await dio.post('api/Relations/like-or-dislike', data: body);
       if (response.statusCode == 200) {
         print("like ok!");
       } else {

@@ -45,7 +45,7 @@ class UserRepo {
     );
     var dio = Dio(options);
     try {
-      response = await dio.post('api/Users/create-user', data: body);
+      response = await dio.post('api/Authentication/create-user', data: body);
       if (response.statusCode == 201) {
         currentUser = await getUser(response.data["accountId"]);
         print('created user: ' '${currentUser.toJson()}');
