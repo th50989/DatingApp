@@ -22,7 +22,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.pinkAccent,
+                Color.fromRGBO(241, 230, 255, 1),
                 Colors.white70,
               ]),
         ),
@@ -75,6 +75,16 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                           radius: 60,
                           backgroundImage: NetworkImage(
                             state.user.imgUrl,
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {
+
+                            },
+                            child: const Icon(
+                              Icons.camera_enhance,
+                              size: 50,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -156,6 +166,17 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             child: const Text(
                                 style: TextStyle(color: Colors.white),
                                 'L O G O U T')),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              
+                            },
+                            child: const Text(
+                                style: TextStyle(color: Colors.white),
+                                'Go Back')),
                       )  
                     ],
                   ),
