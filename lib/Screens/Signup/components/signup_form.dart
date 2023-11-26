@@ -1,15 +1,15 @@
-//import 'dart:convert';
 import 'dart:io';
-
-import 'package:believeder_app/constant/url_constant.dart';
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-// import 'package:http/http.dart' as http;
-import '../../../components/already_have_an_account_acheck.dart';
-import '../../../constant/colors_constant.dart';
-import '../../../constant/font_constant.dart';
-
+import 'package:flutter/material.dart';
 import '../../Login/login_screen.dart';
+import '../../../constant/font_constant.dart';
+import '../../../constant/colors_constant.dart';
+import 'package:believeder_app/constant/url_constant.dart';
+import '../../../components/already_have_an_account_acheck.dart';
+//import 'dart:convert';
+
+// import 'package:http/http.dart' as http;
+
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({
@@ -132,7 +132,12 @@ class SignUpForm extends StatelessWidget {
               sendSignUpRequest();
               print("da bam nut sign up");
             },
-            child: Text("Sign Up".toUpperCase()),
+            child: Text(
+              "Sign Up".toUpperCase(),
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
