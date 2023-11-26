@@ -32,16 +32,50 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
             if (state is LoginSuccess) {
               return Stack(
                 children: <Widget>[
+                  Container(
+                    height: MediaQuery.sizeOf(context).height / 2.6,                   
+                    decoration: BoxDecoration(
+                      image: state.user.imgUrl != ''
+                        ? DecorationImage(
+                            image: NetworkImage(state.user.imgUrl),
+                            fit: BoxFit.cover,
+                          )
+                        : DecorationImage(
+                            image: AssetImage("assets/images/defaul_background.jpg"),
+                            fit: BoxFit.cover,
+                          ),
+                      color: state.user.imgUrl != null ? null : Colors.grey, // Màu nền của hộp trang trí
+                      borderRadius: BorderRadius.circular(10.0), // Góc bo tròn
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // Màu đổ bóng
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // Vị trí đổ bóng
+                        ),
+                      ],
+                    ),
+                  ),
                   ListView(
                     children: [
                       const SizedBox(
                         height: 50.0,
                       ),
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                          state.user.imgUrl,
-                          scale: 100.0,
+                      Container(
+                        width: 120.0, // Đặt chiều rộng và chiều cao cho container
+                        height: 120.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.black, // Màu sắc của border
+                            width: 1.0, // Độ rộng của border (1px)
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundImage: NetworkImage(
+                            state.user.imgUrl,
+                          ),
                         ),
                       ),
                       const SizedBox(
