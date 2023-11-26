@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:believeder_app/Screens/HomePage/cubit/card_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:believeder_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:believeder_app/Screens/Profile/PersonalProfile.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/UserCard.dart';
+import 'package:believeder_app/Screens/HomePage/cubit/card_cubit.dart';
 import 'package:believeder_app/Screens/HomePage/Widget/ChoiceButton.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Welcome/components/welcome_image.dart';

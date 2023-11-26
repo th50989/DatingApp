@@ -26,8 +26,9 @@ class UserCard extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(userInfo.imageUrl),
-                        fit: BoxFit.cover),
+                        image: AssetImage(userInfo.imageUrl)
+                        
+                    ),
                     borderRadius: BorderRadius.circular(20.0),
                     border: Border.all(width: 0.5, color: Colors.grey),
                     boxShadow: [
