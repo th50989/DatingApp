@@ -32,7 +32,7 @@ class SignUpForm extends StatelessWidget {
             return status! < 500; // Accept all status codes below 500
           });
       var dio = Dio(options);
-      response = await dio.post('api/Users/register', data: {
+      response = await dio.post('api/Authentication/register', data: {
         "email": emailController.text,
         "password": passwordController.text,
         "confirmPassword": confirmPasswordController.text,
