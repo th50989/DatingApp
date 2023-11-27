@@ -30,7 +30,7 @@ class UserCard extends StatelessWidget {
                         
                     ),
                     borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(width: 0.5, color: Colors.grey),
+                    // border: Border.all(width: 0.5, color: Colors.grey),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.white, // Màu của bóng
@@ -77,8 +77,9 @@ class UserCard extends StatelessWidget {
                     const SizedBox(height: 10), // Khoảng cách giữa các dòng
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: 20,
-                          left: 20), // Tạo khoảng cách lề trái 20 đơn vị
+                          bottom: 9,
+                          left: 20
+                        ), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Container(
                         height: 40, // Đặt chiều cao cố định cho Container
                         child: Text(
@@ -96,18 +97,22 @@ class UserCard extends StatelessWidget {
                     Container(
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          right: 10.0,
+                          top: 0.1,
+                          right: 5.0,
                           // top: 10.0,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              height: 10,
+                              height: 30,
                             ),
-                            Icon(
-                              Icons.info,
+                            IconButton(
+                              icon: Icon(Icons.info),
                               color: Colors.white,
+                              onPressed: () {
+                                print("Bạn bấm vào trang cá nhân của người dùng này");
+                              },
                             )
                           ],
                         ),

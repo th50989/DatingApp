@@ -31,9 +31,6 @@ class _HomePageState extends State<HomePage> {
   final CardSwiperController controller = CardSwiperController();
 
   late List<UserCard> shuffledCards;
-  //Thằng Tâm handle cái xáo trộn người dùng UserCard nha t đang xài
-  //Raw trong cardProvider á, hiện tại nó đang đi theo danh sách từ trên xuống
-  //m shuffle nó đi random thẻ là đc
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                   bottom: 16.0,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.pinkAccent.withOpacity(0.5),
+                  color: const Color.fromRGBO(111, 53, 165, 1),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,14 +78,14 @@ class _HomePageState extends State<HomePage> {
                         width: 20,
                         child: const Icon(
                           Icons.person,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                     const Text(
                       "F O R   Y O U",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 20,
                         fontFamily: "Proxima Nova Bold",
                         fontWeight: FontWeight.bold,
@@ -102,7 +99,13 @@ class _HomePageState extends State<HomePage> {
                           }));
                         },
                         child: Container(
-                            height: 20, width: 20, child: Icon(Icons.chat))),
+                            height: 20, width: 20, 
+                            child: Icon(
+                              Icons.chat,
+                              color: Colors.white,
+                            )
+                        )
+                    ),
                   ],
                 ),
               ),
@@ -131,8 +134,42 @@ class _HomePageState extends State<HomePage> {
                             index,
                             horizontalThresholdPercentage,
                             verticalThresholdPercentage,
-                          ) =>
-                              shuffledCards[index]),
+                            
+                          ) {
+                            bool shouldShowText = horizontalThresholdPercentage.abs() >= 30; // Hành trình quẹt
+                            bool isLike = horizontalThresholdPercentage > 0;
+                            return Stack(
+                              children: [
+                                shuffledCards[index],
+                                // Hiển thị chữ "Like" khi quẹt phải
+                                if (shouldShowText)
+                                  Positioned(
+                                    top: 0,
+                                    right: isLike ? 2 : null, // Nếu là "Like" thì hiển thị bên phải, ngược lại hiển thị bên trái
+                                    left: isLike ? null : 2, // Nếu là "Dislike" thì hiển thị bên trái, ngược lại hiển thị bên phải
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width * 0.4,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                        color: isLike ? Colors.lightGreen : Colors.redAccent,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          isLike ? 'L I K E' : 'D I S L I K E',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          }
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
