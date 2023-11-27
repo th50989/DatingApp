@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
+import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:flutter/material.dart';
 import 'package:believeder_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +25,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
 
   @override
   void initState() {
+    BlocProvider.of<LoginCubit>(context).reGetUser();
     super.initState();
   }
 
@@ -46,14 +48,12 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
         child: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, state) {
             if (state is LoginSuccess) {
-              var imgUrl = state.user.imgUrl;
               return BlocBuilder<AvatarCubit, AvatarState>(
                 builder: (context, avtState) {
                   if (avtState is AvatarUploadSuccess) {
-                    imgUrl = avtState.imageUrl;
-                  } else {
-                    imgUrl = state.user.imgUrl;
+                    BlocProvider.of<LoginCubit>(context).reGetUser();
                   }
+                  var imgUrl = state.user.imgUrl;
                   return Stack(
                     children: <Widget>[
                       Container(
@@ -312,7 +312,10 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                         if (image != null) {
                           await BlocProvider.of<AvatarCubit>(context)
                               .uploadImage(userId, image!)
-                              .then((value) => Navigator.pop(context));
+                              .then((value) {
+                            image = null;
+                            Navigator.pop(context);
+                          });
                           // Đóng bottom sheet khi đã chọn ảnh
                         } else {
                           print('No image choose');

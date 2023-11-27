@@ -92,6 +92,20 @@ class LoginCubit extends Cubit<LoginState> {
     print("sau:${FirebaseApi.fCMToken}");
   }
 
+  Future<void> reGetUser() async {
+    User currentUser;
+
+    final storage = FlutterSecureStorage();
+
+    var accountId = await storage.read(key: 'accountId') ?? "";
+
+    try {
+      currentUser = await userRepo.getUser(int.parse(accountId));
+      emit(LoginSuccess(currentUser));
+    } catch (e) {
+      throw (e.toString());
+    }
+  }
   // Future<void> fetchMatchedUser() async {
   //   List<User> currentUser;
   //   emit(LoginLoading());
