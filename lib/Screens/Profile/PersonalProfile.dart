@@ -317,9 +317,9 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                 onPressed: () {
                                   // Navigator.pop(context);
                                   context.read<LoginCubit>().logout();
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => const MyApp()),
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/log_in',
                                     (route) => false,
                                   );
                                 },

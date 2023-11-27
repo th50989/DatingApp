@@ -5,6 +5,7 @@ import 'package:believeder_app/Screens/HomePage/cubit/card_cubit.dart';
 import 'package:believeder_app/Screens/Login/components/login_form.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
+import 'package:believeder_app/Screens/Login/login_screen.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
 import 'package:believeder_app/Screens/Profile/cubit/editInfoCubit/cubit/edit_info_cubit.dart';
@@ -86,7 +87,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         //2 cai nay dang duoc su dung de navigate bang notification
         navigatorKey: navigatorKey,
-        routes: {'/chat_list_screen': (context) => FriendChatList()},
+        routes: {
+          '/chat_list_screen': (context) => FriendChatList(),
+          '/my_app': (context) => MyApp(),
+          '/log_in': (context) => LoginScreen()
+        },
         //
         debugShowCheckedModeBanner: false,
         title: 'BelieveDer App',
