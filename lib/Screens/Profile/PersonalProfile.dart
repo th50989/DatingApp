@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:believeder_app/Screens/Profile/Widgets/InfoTextBox.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
+import 'package:believeder_app/Screens/Profile/Widgets/editDataProfile.dart';
 
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
@@ -132,20 +133,66 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                               ),
                               infoTextBox(
                                 text: state.user.bio, 
-                                sectionName: 'Bio'),
+                                sectionName: 'Bio',
+                                onTap: () async {
+                                  String updatedBio = await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return EditProfileDialog(
+                                        text: "Change Bio",                                        
+                                      );
+                                    },
+                                  );
+                                  if (updatedBio != '') {
+                                    print('Updated Bio: $updatedBio');
+                                  } else {
+                                    print('User canceled the operation or did not enter a value.');
+                                  }
+                                },
+                              ),
                               infoTextBox(
-                                  text: state.user.lastName, sectionName: 'Last Name'),
+                                text: state.user.lastName, 
+                                sectionName: 'Last Name',
+                                onTap: () async {
+                                  String updatelastName = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return EditProfileDialog(
+                                        text: "Change last Name",                                        
+                                      );
+                                    },
+                                  );
+                                  if (updatelastName != '') {
+                                    print('Updated Bio: $updatelastName');
+                                  }
+                                },
+                              ),
                               infoTextBox(
-                                  text: state.user.firstName,
-                                  sectionName: 'First Name'),
+                                text: state.user.firstName,
+                                sectionName: 'First Name',
+                                onTap: () {},
+                              ),
                               infoTextBox(
-                                  text: state.user.birthDay, sectionName: 'Birthday'),
+                                text: state.user.birthDay, 
+                                sectionName: 'Birthday',
+                                onTap: () {},
+                              ),
                               infoTextBox(
-                                  text: state.user.gender, sectionName: 'Gender'),
+                                text: state.user.gender, 
+                                sectionName: 'Gender',
+                                onTap: () {},
+                              ),
                               infoTextBox(
-                                  text: state.user.location, sectionName: 'Location'),
+                                text: state.user.location, 
+                                sectionName: 'Location',
+                                onTap: () {},
+                              ),
                               infoTextBox(
-                                  text: state.user.age.toString(), sectionName: 'Age'),
+                                  text: state.user.age.toString(),
+                                  sectionName: 'Age',
+                                  onTap: () {},
+                              ),
                               
                             ],
                           ),
@@ -177,7 +224,8 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             child: const Text(
                                 style: TextStyle(color: Colors.white),
                                 'Go Back')),
-                      )  
+                      ),
+                      
                     ],
                   ),
                 ],
