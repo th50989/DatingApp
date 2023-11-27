@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
+import 'package:believeder_app/Screens/Profile/cubit/editInfoCubit/cubit/edit_info_cubit.dart';
 import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:flutter/material.dart';
 import 'package:believeder_app/main.dart';
@@ -136,85 +137,177 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                       blurRadius: 10,
                                     )
                                   ]),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 10.0,
-                                      left: 25.0,
-                                      bottom: 5.0,
-                                    ),
-                                    child: Text(
-                                      'My Details',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 15.0),
-                                    ),
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.bio,
-                                    sectionName: 'Bio',
-                                    onTap: () async {
-                                      String updatedBio = await showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return EditProfileDialog(
-                                            text: "Change Bio",
+                              child: BlocBuilder<EditInfoCubit, EditInfoState>(
+                                builder: (context, editState) {
+                                  if (editState is EditInfoSuccess) {
+                                    BlocProvider.of<LoginCubit>(context)
+                                        .reGetUser();
+                                  }
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                          top: 10.0,
+                                          left: 25.0,
+                                          bottom: 5.0,
+                                        ),
+                                        child: Text(
+                                          'My Details',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.0),
+                                        ),
+                                      ),
+                                      infoTextBox(
+                                        text: state.user.bio,
+                                        sectionName: 'Bio',
+                                        onTap: () async {
+                                          String updatedBio = await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return EditProfileDialog(
+                                                text: "Change Bio",
+                                              );
+                                            },
                                           );
+                                          if (updatedBio != '') {
+                                            print('Updated Bio: $updatedBio');
+                                            BlocProvider.of<EditInfoCubit>(
+                                                    context)
+                                                .updateBio(updatedBio, Info.bio,
+                                                    state.user);
+                                          } else {
+                                            print(
+                                                'User canceled the operation or did not enter a value.');
+                                          }
                                         },
-                                      );
-                                      if (updatedBio != '') {
-                                        print('Updated Bio: $updatedBio');
-                                      } else {
-                                        print(
-                                            'User canceled the operation or did not enter a value.');
-                                      }
-                                    },
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.lastName,
-                                    sectionName: 'Last Name',
-                                    onTap: () async {
-                                      String updatelastName = await showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return EditProfileDialog(
-                                            text: "Change last Name",
+                                      ),
+                                      infoTextBox(
+                                        text: state.user.lastName,
+                                        sectionName: 'Last Name',
+                                        onTap: () async {
+                                          String updatedlastName =
+                                              await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return EditProfileDialog(
+                                                text: "Change last Name",
+                                              );
+                                            },
                                           );
+                                          if (updatedlastName != '') {
+                                            print(
+                                                'Updated Bio: $updatedlastName');
+                                            BlocProvider.of<EditInfoCubit>(
+                                                    context)
+                                                .updateInfo(updatedlastName,
+                                                    Info.lname, state.user);
+                                          }
                                         },
-                                      );
-                                      if (updatelastName != '') {
-                                        print('Updated Bio: $updatelastName');
-                                      }
-                                    },
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.firstName,
-                                    sectionName: 'First Name',
-                                    onTap: () {},
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.birthDay,
-                                    sectionName: 'Birthday',
-                                    onTap: () {},
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.gender,
-                                    sectionName: 'Gender',
-                                    onTap: () {},
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.location,
-                                    sectionName: 'Location',
-                                    onTap: () {},
-                                  ),
-                                  infoTextBox(
-                                    text: state.user.age.toString(),
-                                    sectionName: 'Age',
-                                    onTap: () {},
-                                  ),
-                                ],
+                                      ),
+                                      infoTextBox(
+                                        text: state.user.firstName,
+                                        sectionName: 'First Name',
+                                        onTap: () async {
+                                          String updatedFirstName =
+                                              await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return EditProfileDialog(
+                                                text: "Change First Name",
+                                              );
+                                            },
+                                          );
+                                          if (updatedFirstName != '') {
+                                            print(
+                                                'Updated Bio: $updatedFirstName');
+                                            BlocProvider.of<EditInfoCubit>(
+                                                    context)
+                                                .updateInfo(updatedFirstName,
+                                                    Info.fname, state.user);
+                                          }
+                                        },
+                                      ),
+                                      infoTextBox(
+                                        text: state.user.birthDay,
+                                        sectionName: 'Birthday',
+                                        onTap: () async {
+                                          String updatedBirthDay =
+                                              await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return EditProfileDialog(
+                                                text: "Change Birthday",
+                                              );
+                                            },
+                                          );
+                                          if (updatedBirthDay != '') {
+                                            print(
+                                                'Updated Bio: $updatedBirthDay');
+                                            BlocProvider.of<EditInfoCubit>(
+                                                    context)
+                                                .updateInfo(updatedBirthDay,
+                                                    Info.bday, state.user);
+                                          }
+                                        },
+                                      ),
+                                      infoTextBox(
+                                        text: state.user.gender,
+                                        sectionName: 'Gender',
+                                        onTap: () async {
+                                          String updatedGender =
+                                              await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return EditProfileDialog(
+                                                text: "Change Gender",
+                                              );
+                                            },
+                                          );
+                                          if (updatedGender != '') {
+                                            print(
+                                                'Updated Bio: $updatedGender');
+                                            BlocProvider.of<EditInfoCubit>(
+                                                    context)
+                                                .updateInfo(updatedGender,
+                                                    Info.gender, state.user);
+                                          }
+                                        },
+                                      ),
+                                      infoTextBox(
+                                        text: state.user.location,
+                                        sectionName: 'Location',
+                                        onTap: () async {
+                                          String updatedLocation =
+                                              await showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return EditProfileDialog(
+                                                text: "Change Location",
+                                              );
+                                            },
+                                          );
+                                          if (updatedLocation != '') {
+                                            print(
+                                                'Updated Bio: $updatedLocation');
+                                            BlocProvider.of<EditInfoCubit>(
+                                                    context)
+                                                .updateInfo(updatedLocation,
+                                                    Info.location, state.user);
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
                           ),
