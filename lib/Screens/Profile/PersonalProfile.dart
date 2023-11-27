@@ -42,7 +42,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                 Colors.white70,
               ]),
         ),
-        height: 1000.0,
+        height: size.height,
         child: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, state) {
             if (state is LoginSuccess) {
@@ -124,7 +124,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Container(
-                              height: MediaQuery.of(context).size.height / 1.2,
+                              height: MediaQuery.of(context).size.height * 0.9,
                               width: MediaQuery.of(context).size.width / 0.5,
                               decoration: BoxDecoration(
                                   color: Colors.white,
@@ -150,6 +150,44 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 15.0),
                                     ),
+                                  ),
+                                  infoTextBox(
+                                    text: state.user.bio,
+                                    sectionName: 'Bio',
+                                    onTap: () async {
+                                      String updatedBio = await showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return EditProfileDialog(
+                                            text: "Change Bio",
+                                          );
+                                        },
+                                      );
+                                      if (updatedBio != '') {
+                                        print('Updated Bio: $updatedBio');
+                                      } else {
+                                        print(
+                                            'User canceled the operation or did not enter a value.');
+                                      }
+                                    },
+                                  ),
+                                  infoTextBox(
+                                    text: state.user.lastName,
+                                    sectionName: 'Last Name',
+                                    onTap: () async {
+                                      String updatelastName = await showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return EditProfileDialog(
+                                            text: "Change last Name",
+                                          );
+                                        },
+                                      );
+                                      if (updatelastName != '') {
+                                        print('Updated Bio: $updatelastName');
+                                      }
+                                    },
                                   ),
                                   infoTextBox(
                                     text: state.user.firstName,
@@ -180,62 +218,24 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                               ),
                             ),
                           ),
-                          infoTextBox(
-                            text: state.user.bio,
-                            sectionName: 'Bio',
-                            onTap: () async {
-                              String updatedBio = await showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return EditProfileDialog(
-                                    text: "Change Bio",
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  // Navigator.pop(context);
+                                  context.read<LoginCubit>().logout();
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const MyApp()),
+                                    (route) => false,
                                   );
                                 },
-                              );
-                              if (updatedBio != '') {
-                                print('Updated Bio: $updatedBio');
-                              } else {
-                                print(
-                                    'User canceled the operation or did not enter a value.');
-                              }
-                            },
-                          ),
-                          infoTextBox(
-                            text: state.user.lastName,
-                            sectionName: 'Last Name',
-                            onTap: () async {
-                              String updatelastName = await showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return EditProfileDialog(
-                                    text: "Change last Name",
-                                  );
-                                },
-                              );
-                              if (updatelastName != '') {
-                                print('Updated Bio: $updatelastName');
-                              }
-                            },
-                          ),
+                                child: const Text(
+                                    style: TextStyle(color: Colors.white),
+                                    'L O G O U T')),
+                          )
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              // Navigator.pop(context);
-                              context.read<LoginCubit>().logout();
-                              Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (context) => const MyApp()),
-                                (route) => false,
-                              );
-                            },
-                            child: const Text(
-                                style: TextStyle(color: Colors.white),
-                                'L O G O U T')),
-                      )
                     ],
                   );
                 },

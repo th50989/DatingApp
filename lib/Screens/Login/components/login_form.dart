@@ -20,11 +20,11 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     return Form(
       child: SingleChildScrollView(
         child: Column(
@@ -80,7 +80,8 @@ class _LoginFormState extends State<LoginForm> {
                     ElegantNotification.error(
                             background: kPrimaryLightColor,
                             height: 70,
-                            notificationPosition: NotificationPosition.topCenter,
+                            notificationPosition:
+                                NotificationPosition.topCenter,
                             animation: AnimationType.fromTop,
                             title: const Text('Login Failed!'),
                             toastDuration: const Duration(milliseconds: 2000),
@@ -122,7 +123,8 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ],
         ),
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       ),
     );
   }
