@@ -9,7 +9,9 @@ import '../../../components/already_have_an_account_acheck.dart';
 //import 'dart:convert';
 
 // import 'package:http/http.dart' as http;
-
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+TextEditingController confirmPasswordController = TextEditingController();
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({
@@ -18,10 +20,6 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController confirmPasswordController = TextEditingController();
-
     Future<void> sendSignUpRequest() async {
       Response response;
       var options = BaseOptions(
