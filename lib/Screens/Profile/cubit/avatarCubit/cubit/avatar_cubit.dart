@@ -23,14 +23,14 @@ class AvatarCubit extends Cubit<AvatarState> {
 
   Future<void> uploadImage(int userId, File image) async {
     String imgUrl;
-    if (image != 'null') {
+    if (image.path.isNotEmpty) {
       final storageReference = firebase_storage.FirebaseStorage.instance
           .ref()
           .child('avatar/$userId/${DateTime.now().millisecondsSinceEpoch}.jpg');
 
       await storageReference.putFile(image);
       imgUrl = await storageReference.getDownloadURL();
-      var body = {'ImgUrl': imgUrl};
+      var body = {'ImageUrl': imgUrl};
       print('Image uploaded successfully. URL: $imgUrl');
       if (imgUrl.isNotEmpty) {
         try {
@@ -54,6 +54,8 @@ class AvatarCubit extends Cubit<AvatarState> {
           throw (error.toString());
         }
       }
+    } else {
+      emit(AvatarSelectFailed());
     }
   }
 }
