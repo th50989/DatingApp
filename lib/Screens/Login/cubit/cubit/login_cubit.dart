@@ -67,8 +67,9 @@ class LoginCubit extends Cubit<LoginState> {
               data: body1,
             );
             print(response2.data.toString());
-          } catch (e) {}
-          ;
+          } catch (e) {
+            throw (e.toString());
+          }
 
           Future.delayed(const Duration(seconds: 3), () {
             emit(LoginSuccess(currentUser));

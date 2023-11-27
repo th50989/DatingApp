@@ -49,6 +49,8 @@ dependencies:
   firebase_messaging: ^14.7.4
   flutter_card_swiper: ^6.0.0 
   cloud_firestore: ^4.13.0
+  image_picker: ^1.0.4
+  firebase_storage: ^11.5.1
 
 dev_dependencies:
   flutter_test:
