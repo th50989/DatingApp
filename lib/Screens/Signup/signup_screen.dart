@@ -1,11 +1,11 @@
-import '../../constant/font_constant.dart';
 import 'components/signup_form.dart';
 import 'package:flutter/material.dart';
-
 import '../../components/background.dart';
+import '../../constant/font_constant.dart';
 import 'components/sign_up_top_image.dart';
-
 import 'package:believeder_app/responsive.dart';
+
+
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -49,22 +49,27 @@ class MobileSignupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        SignUpScreenTopImage(),
-        Row(
-          children: [
-            Spacer(),
-            Expanded(
-              flex: 8,
-              child: SignUpForm(),
+    return Container(
+      child: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SignUpScreenTopImage(),
+            Row(
+              children: [
+                Spacer(),
+                Expanded(
+                  flex: 8,
+                  child: SignUpForm(),
+                ),
+                Spacer(),
+              ],
             ),
-            Spacer(),
           ],
         ),
-        // const SocalSignUp()
-      ],
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      ),
     );
   }
 }

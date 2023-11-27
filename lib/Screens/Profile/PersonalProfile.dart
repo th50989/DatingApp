@@ -7,7 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:believeder_app/Screens/Profile/Widgets/InfoTextBox.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
+
 import 'package:image_picker/image_picker.dart';
+
+import 'package:believeder_app/Screens/Profile/Widgets/editDataProfile.dart';
+
 
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
@@ -35,7 +39,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.pinkAccent,
+                Color.fromRGBO(241, 230, 255, 1),
                 Colors.white70,
               ]),
         ),
@@ -56,6 +60,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                       Container(
                         height: MediaQuery.sizeOf(context).height / 2.6,
                         decoration: BoxDecoration(
+
                           image: imgUrl != ''
                               ? DecorationImage(
                                   image: NetworkImage(imgUrl),
@@ -80,6 +85,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                               offset: Offset(0, 3), // Vị trí đổ bóng
                             ),
                           ],
+
                         ),
                       ),
                       ListView(
@@ -169,8 +175,73 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                       text: state.user.age.toString(),
                                       sectionName: 'Age'),
                                 ],
+                              ),),)
+
+                              infoTextBox(
+                                text: state.user.bio, 
+                                sectionName: 'Bio',
+                                onTap: () async {
+                                  String updatedBio = await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return EditProfileDialog(
+                                        text: "Change Bio",                                        
+                                      );
+                                    },
+                                  );
+                                  if (updatedBio != '') {
+                                    print('Updated Bio: $updatedBio');
+                                  } else {
+                                    print('User canceled the operation or did not enter a value.');
+                                  }
+                                },
                               ),
-                            ),
+                              infoTextBox(
+                                text: state.user.lastName, 
+                                sectionName: 'Last Name',
+                                onTap: () async {
+                                  String updatelastName = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return EditProfileDialog(
+                                        text: "Change last Name",                                        
+                                      );
+                                    },
+                                  );
+                                  if (updatelastName != '') {
+                                    print('Updated Bio: $updatelastName');
+                                  }
+                                },
+                              ),
+                              infoTextBox(
+                                text: state.user.firstName,
+                                sectionName: 'First Name',
+                                onTap: () {},
+                              ),
+                              infoTextBox(
+                                text: state.user.birthDay, 
+                                sectionName: 'Birthday',
+                                onTap: () {},
+                              ),
+                              infoTextBox(
+                                text: state.user.gender, 
+                                sectionName: 'Gender',
+                                onTap: () {},
+                              ),
+                              infoTextBox(
+                                text: state.user.location, 
+                                sectionName: 'Location',
+                                onTap: () {},
+                              ),
+                              infoTextBox(
+                                  text: state.user.age.toString(),
+                                  sectionName: 'Age',
+                                  onTap: () {},
+                              ),
+                              
+                            ],
+
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -189,8 +260,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                     'L O G O U T')),
                           )
                         ],
-                      ),
-                    ],
+                     
                   );
                 },
               );

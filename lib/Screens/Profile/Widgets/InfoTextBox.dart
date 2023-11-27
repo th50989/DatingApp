@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class infoTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
+  final Function onTap;
   const infoTextBox({
+    required this.onTap,
     required this.text,
     required this.sectionName,
     super.key,
@@ -33,13 +35,15 @@ class infoTextBox extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {}, 
+                onPressed: () {
+                  onTap();
+                }, 
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.black,
                   size: 15,
                 ),
-              ) 
+              ),
             ],
           ),
           Text(
