@@ -12,7 +12,6 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:believeder_app/Screens/Profile/Widgets/editDataProfile.dart';
 
-
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
 
@@ -60,7 +59,6 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                       Container(
                         height: MediaQuery.sizeOf(context).height / 2.6,
                         decoration: BoxDecoration(
-
                           image: imgUrl != ''
                               ? DecorationImage(
                                   image: NetworkImage(imgUrl),
@@ -85,7 +83,6 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                               offset: Offset(0, 3), // Vị trí đổ bóng
                             ),
                           ],
-
                         ),
                       ),
                       ListView(
@@ -155,112 +152,91 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                     ),
                                   ),
                                   infoTextBox(
-                                      text: state.user.bio, sectionName: 'Bio'),
+                                    text: state.user.firstName,
+                                    sectionName: 'First Name',
+                                    onTap: () {},
+                                  ),
                                   infoTextBox(
-                                      text: state.user.lastName,
-                                      sectionName: 'Last Name'),
+                                    text: state.user.birthDay,
+                                    sectionName: 'Birthday',
+                                    onTap: () {},
+                                  ),
                                   infoTextBox(
-                                      text: state.user.firstName,
-                                      sectionName: 'First Name'),
+                                    text: state.user.gender,
+                                    sectionName: 'Gender',
+                                    onTap: () {},
+                                  ),
                                   infoTextBox(
-                                      text: state.user.birthDay,
-                                      sectionName: 'Birthday'),
+                                    text: state.user.location,
+                                    sectionName: 'Location',
+                                    onTap: () {},
+                                  ),
                                   infoTextBox(
-                                      text: state.user.gender,
-                                      sectionName: 'Gender'),
-                                  infoTextBox(
-                                      text: state.user.location,
-                                      sectionName: 'Location'),
-                                  infoTextBox(
-                                      text: state.user.age.toString(),
-                                      sectionName: 'Age'),
+                                    text: state.user.age.toString(),
+                                    sectionName: 'Age',
+                                    onTap: () {},
+                                  ),
                                 ],
-                              ),),)
-
-                              infoTextBox(
-                                text: state.user.bio, 
-                                sectionName: 'Bio',
-                                onTap: () async {
-                                  String updatedBio = await showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return EditProfileDialog(
-                                        text: "Change Bio",                                        
-                                      );
-                                    },
-                                  );
-                                  if (updatedBio != '') {
-                                    print('Updated Bio: $updatedBio');
-                                  } else {
-                                    print('User canceled the operation or did not enter a value.');
-                                  }
-                                },
                               ),
-                              infoTextBox(
-                                text: state.user.lastName, 
-                                sectionName: 'Last Name',
-                                onTap: () async {
-                                  String updatelastName = await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return EditProfileDialog(
-                                        text: "Change last Name",                                        
-                                      );
-                                    },
-                                  );
-                                  if (updatelastName != '') {
-                                    print('Updated Bio: $updatelastName');
-                                  }
-                                },
-                              ),
-                              infoTextBox(
-                                text: state.user.firstName,
-                                sectionName: 'First Name',
-                                onTap: () {},
-                              ),
-                              infoTextBox(
-                                text: state.user.birthDay, 
-                                sectionName: 'Birthday',
-                                onTap: () {},
-                              ),
-                              infoTextBox(
-                                text: state.user.gender, 
-                                sectionName: 'Gender',
-                                onTap: () {},
-                              ),
-                              infoTextBox(
-                                text: state.user.location, 
-                                sectionName: 'Location',
-                                onTap: () {},
-                              ),
-                              infoTextBox(
-                                  text: state.user.age.toString(),
-                                  sectionName: 'Age',
-                                  onTap: () {},
-                              ),
-                              
-                            ],
-
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  // Navigator.pop(context);
-                                  context.read<LoginCubit>().logout();
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => const MyApp()),
-                                    (route) => false,
+                          infoTextBox(
+                            text: state.user.bio,
+                            sectionName: 'Bio',
+                            onTap: () async {
+                              String updatedBio = await showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return EditProfileDialog(
+                                    text: "Change Bio",
                                   );
                                 },
-                                child: const Text(
-                                    style: TextStyle(color: Colors.white),
-                                    'L O G O U T')),
-                          )
+                              );
+                              if (updatedBio != '') {
+                                print('Updated Bio: $updatedBio');
+                              } else {
+                                print(
+                                    'User canceled the operation or did not enter a value.');
+                              }
+                            },
+                          ),
+                          infoTextBox(
+                            text: state.user.lastName,
+                            sectionName: 'Last Name',
+                            onTap: () async {
+                              String updatelastName = await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return EditProfileDialog(
+                                    text: "Change last Name",
+                                  );
+                                },
+                              );
+                              if (updatelastName != '') {
+                                print('Updated Bio: $updatelastName');
+                              }
+                            },
+                          ),
                         ],
-                     
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              // Navigator.pop(context);
+                              context.read<LoginCubit>().logout();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const MyApp()),
+                                (route) => false,
+                              );
+                            },
+                            child: const Text(
+                                style: TextStyle(color: Colors.white),
+                                'L O G O U T')),
+                      )
+                    ],
                   );
                 },
               );
