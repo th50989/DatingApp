@@ -50,66 +50,64 @@ class _HomePageState extends State<HomePage> {
           } else {
             shuffledCards = [];
           }
-          return Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top +
-                      16.0, // Lấy padding trên cùng của màn hình
-                  left: 20.0,
-                  right: 20.0,
-                  bottom: 16.0,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(111, 53, 165, 1),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
+          return Column(children: [
+            Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top +
+                    16.0, // Lấy padding trên cùng của màn hình
+                left: 20.0,
+                right: 20.0,
+                bottom: 16.0,
+              ),
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(111, 53, 165, 1),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const PersonalProfilePage();
+                      }));
+                    },
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    "F O R   Y O U",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: "Proxima Nova Bold",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  InkWell(
                       onTap: () {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (context) {
-                          return const PersonalProfilePage();
+                          return FriendChatList();
                         }));
                       },
                       child: Container(
-                        height: 20,
-                        width: 20,
-                        child: const Icon(
-                          Icons.person,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const Text(
-                      "F O R   Y O U",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: "Proxima Nova Bold",
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return FriendChatList();
-                          }));
-                        },
-                        child: Container(
-                            height: 20, width: 20, 
-                            child: Icon(
-                              Icons.chat,
-                              color: Colors.white,
-                            )
-                        )
-                    ),
-                  ],
-                ),
+                          height: 20,
+                          width: 20,
+                          child: Icon(
+                            Icons.chat,
+                            color: Colors.white,
+                          ))),
+                ],
               ),
-              Container(
+            ),
+            Container(
                 height: MediaQuery.of(context).size.height / 1.2,
                 // width: MediaQuery.of(context).size.width / 0.9,
 
@@ -118,72 +116,6 @@ class _HomePageState extends State<HomePage> {
                         child: Text('Run out of user'),
                       )
                     : Column(
-                  children: [
-                    Flexible(
-                      child: CardSwiper(
-                          controller: controller,
-                          cardsCount: shuffledCards.length,
-                          onSwipe: _onSwipe,
-                          onUndo: _onUndo,
-                          onEnd: () async {
-                            print('End list');
-                            BlocProvider.of<CardCubit>(context).getRandomUser();
-                          },
-                          allowedSwipeDirection:
-                              AllowedSwipeDirection.symmetric(horizontal: true),
-                          numberOfCardsDisplayed: 3,
-                          backCardOffset: const Offset(10, 35),
-                          padding: const EdgeInsets.all(24.0),
-                          cardBuilder: (
-                            context,
-                            index,
-                            horizontalThresholdPercentage,
-                            verticalThresholdPercentage,
-                            
-                          ) {
-                            bool shouldShowText = horizontalThresholdPercentage.abs() >= 30; // Hành trình quẹt
-                            bool isLike = horizontalThresholdPercentage > 0;
-                            return Stack(
-                              children: [
-                                shuffledCards[index],
-                                // Hiển thị chữ "Like" khi quẹt phải
-                                if (shouldShowText)
-                                  Positioned(
-                                    top: 0,
-                                    right: isLike ? 2 : null, // Nếu là "Like" thì hiển thị bên phải, ngược lại hiển thị bên trái
-                                    left: isLike ? null : 2, // Nếu là "Dislike" thì hiển thị bên trái, ngược lại hiển thị bên phải
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width * 0.4,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                        color: isLike ? Colors.lightGreen : Colors.redAccent,
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          isLike ? 'L I K E' : 'D I S L I K E',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            );
-                          }
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15.0,
-                        horizontal: 60,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                         children: [
                           Flexible(
                             child: CardSwiper(
@@ -199,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                                 allowedSwipeDirection:
                                     AllowedSwipeDirection.symmetric(
                                         horizontal: true),
-                                numberOfCardsDisplayed: 1,
+                                numberOfCardsDisplayed: 3,
                                 backCardOffset: const Offset(10, 35),
                                 padding: const EdgeInsets.all(24.0),
                                 cardBuilder: (
@@ -207,8 +139,54 @@ class _HomePageState extends State<HomePage> {
                                   index,
                                   horizontalThresholdPercentage,
                                   verticalThresholdPercentage,
-                                ) =>
-                                    shuffledCards[index]),
+                                ) {
+                                  bool shouldShowText =
+                                      horizontalThresholdPercentage.abs() >=
+                                          30; // Hành trình quẹt
+                                  bool isLike =
+                                      horizontalThresholdPercentage > 0;
+                                  return Stack(
+                                    children: [
+                                      shuffledCards[index],
+                                      // Hiển thị chữ "Like" khi quẹt phải
+                                      if (shouldShowText)
+                                        Positioned(
+                                          top: 0,
+                                          right: isLike
+                                              ? 2
+                                              : null, // Nếu là "Like" thì hiển thị bên phải, ngược lại hiển thị bên trái
+                                          left: isLike
+                                              ? null
+                                              : 2, // Nếu là "Dislike" thì hiển thị bên trái, ngược lại hiển thị bên phải
+                                          child: Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.4,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                              color: isLike
+                                                  ? Colors.lightGreen
+                                                  : Colors.redAccent,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                isLike
+                                                    ? 'L I K E'
+                                                    : 'D I S L I K E',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  );
+                                }),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -218,44 +196,79 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                ChoiceButton(
-                                  width: 60,
-                                  height: 60,
-                                  size: 25,
-                                  icon: Icons.clear_rounded,
-                                  onPressed: () {
-                                    controller.swipeLeft();
-                                  },
-                                  color: Colors.red,
+                                Flexible(
+                                  child: CardSwiper(
+                                      controller: controller,
+                                      cardsCount: shuffledCards.length,
+                                      onSwipe: _onSwipe,
+                                      onUndo: _onUndo,
+                                      onEnd: () async {
+                                        print('End list');
+                                        BlocProvider.of<CardCubit>(context)
+                                            .getRandomUser();
+                                      },
+                                      allowedSwipeDirection:
+                                          AllowedSwipeDirection.symmetric(
+                                              horizontal: true),
+                                      numberOfCardsDisplayed: 1,
+                                      backCardOffset: const Offset(10, 35),
+                                      padding: const EdgeInsets.all(24.0),
+                                      cardBuilder: (
+                                        context,
+                                        index,
+                                        horizontalThresholdPercentage,
+                                        verticalThresholdPercentage,
+                                      ) =>
+                                          shuffledCards[index]),
                                 ),
-                                ChoiceButton(
-                                  width: 80,
-                                  height: 80,
-                                  size: 30,
-                                  icon: Icons.favorite,
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    controller.swipeRight();
-                                  },
-                                ),
-                                ChoiceButton(
-                                  width: 60,
-                                  height: 60,
-                                  size: 25,
-                                  icon: Icons.watch_later,
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    controller.undo();
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15.0,
+                                    horizontal: 60,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ChoiceButton(
+                                        width: 60,
+                                        height: 60,
+                                        size: 25,
+                                        icon: Icons.clear_rounded,
+                                        onPressed: () {
+                                          controller.swipeLeft();
+                                        },
+                                        color: Colors.red,
+                                      ),
+                                      ChoiceButton(
+                                        width: 80,
+                                        height: 80,
+                                        size: 30,
+                                        icon: Icons.favorite,
+                                        color: Colors.red,
+                                        onPressed: () {
+                                          controller.swipeRight();
+                                        },
+                                      ),
+                                      ChoiceButton(
+                                        width: 60,
+                                        height: 60,
+                                        size: 25,
+                                        icon: Icons.watch_later,
+                                        color: Colors.red,
+                                        onPressed: () {
+                                          controller.undo();
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ],
-                      ),
-              ),
-            ],
-          );
+                      ))
+          ]);
         },
       ),
     );
