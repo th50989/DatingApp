@@ -18,17 +18,15 @@ class UserCard extends StatelessWidget {
           left: 10,
           right: 10,
         ),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 1.42,
-          width: MediaQuery.of(context).size.width,
+        child: Expanded(
+          // height: MediaQuery.of(context).size.height * 0.4,
+          // width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
               Container(
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(userInfo.imageUrl)
-                        
-                    ),
+                    image:
+                        DecorationImage(image: AssetImage(userInfo.imageUrl)),
                     borderRadius: BorderRadius.circular(20.0),
                     // border: Border.all(width: 0.5, color: Colors.grey),
                     boxShadow: [
@@ -78,8 +76,7 @@ class UserCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: 9,
-                          left: 20
-                        ), // Tạo khoảng cách lề trái 20 đơn vị
+                          left: 20), // Tạo khoảng cách lề trái 20 đơn vị
                       child: Container(
                         height: 40, // Đặt chiều cao cố định cho Container
                         child: Text(
@@ -111,7 +108,8 @@ class UserCard extends StatelessWidget {
                               icon: Icon(Icons.info),
                               color: Colors.white,
                               onPressed: () {
-                                print("Bạn bấm vào trang cá nhân của người dùng này");
+                                print(
+                                    "Bạn bấm vào trang cá nhân của người dùng này");
                               },
                             )
                           ],

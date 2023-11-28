@@ -107,8 +107,8 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Container(
-                height: MediaQuery.of(context).size.height / 1.2,
+            Expanded(
+                // height: MediaQuery.of(context).size.height / 1.2,
                 // width: MediaQuery.of(context).size.width / 0.9,
 
                 child: shuffledCards.length < 1
@@ -195,40 +195,39 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [                               
-                                    ChoiceButton(
-                                      width: 60,
-                                      height: 60,
-                                      size: 25,
-                                      icon: Icons.clear_rounded,
-                                      onPressed: () {
-                                        controller.swipeLeft();
-                                      },
-                                      color: Colors.red,
-                                    ),
-                                    ChoiceButton(
-                                      width: 80,
-                                      height: 80,
-                                      size: 30,
-                                      icon: Icons.favorite,
-                                      color: Colors.red,
-                                      onPressed: () {
-                                        controller.swipeRight();
-                                      },
-                                    ),
-                                    ChoiceButton(
-                                      width: 60,
-                                      height: 60,
-                                      size: 25,
-                                      icon: Icons.watch_later,
-                                      color: Colors.red,
-                                      onPressed: () {
-                                        controller.undo();
-                                      },
-                                    ),
-                                  ],
+                              children: [
+                                ChoiceButton(
+                                  width: 60,
+                                  height: 60,
+                                  size: 25,
+                                  icon: Icons.clear_rounded,
+                                  onPressed: () {
+                                    controller.swipeLeft();
+                                  },
+                                  color: Colors.red,
                                 ),
-                              
+                                ChoiceButton(
+                                  width: 80,
+                                  height: 80,
+                                  size: 30,
+                                  icon: Icons.favorite,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    controller.swipeRight();
+                                  },
+                                ),
+                                ChoiceButton(
+                                  width: 60,
+                                  height: 60,
+                                  size: 25,
+                                  icon: Icons.watch_later,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    controller.undo();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ))
