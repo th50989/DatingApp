@@ -5,8 +5,10 @@ import 'package:believeder_app/Screens/HomePage/cubit/card_cubit.dart';
 import 'package:believeder_app/Screens/Login/components/login_form.dart';
 
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
+import 'package:believeder_app/Screens/Login/login_screen.dart';
 import 'package:believeder_app/Screens/Profile/CreateNewUser.dart';
 import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
+import 'package:believeder_app/Screens/Profile/cubit/editInfoCubit/cubit/edit_info_cubit.dart';
 import 'package:believeder_app/api_chat/firebase_api.dart';
 import 'package:believeder_app/firebase_options.dart';
 
@@ -56,7 +58,10 @@ class App extends StatelessWidget {
         create: (context) => CardCubit(),
       ),
       BlocProvider<ChatCubit>(lazy: false, create: (context) => ChatCubit()),
-      BlocProvider<AvatarCubit>(lazy: false, create: (context) => AvatarCubit())
+      BlocProvider<AvatarCubit>(
+          lazy: false, create: (context) => AvatarCubit()),
+      BlocProvider<EditInfoCubit>(
+          lazy: false, create: (context) => EditInfoCubit()),
     ], child: const MyApp()); //cai nay de phan phoi cubit cho toan app
   }
 }
@@ -82,7 +87,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         //2 cai nay dang duoc su dung de navigate bang notification
         navigatorKey: navigatorKey,
-        routes: {'/chat_list_screen': (context) => FriendChatList()},
+        routes: {
+          '/chat_list_screen': (context) => FriendChatList(),
+          '/my_app': (context) => MyApp(),
+          '/log_in': (context) => LoginScreen()
+        },
         //
         debugShowCheckedModeBanner: false,
         title: 'BelieveDer App',

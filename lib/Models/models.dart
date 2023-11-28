@@ -35,7 +35,7 @@ class User {
       gender: json['gender'] ?? '',
       imgUrl: json['ImageURL'] ?? '',
       bio: json['bio'] ?? '',
-      birthDay: json['birthDay'] ?? '',
+      birthDay: json['birthday'] ?? '',
       lastName: json['lastName'] ?? '',
       firstName: json['firstName'] ?? '',
       location: json['location'] ?? '',
