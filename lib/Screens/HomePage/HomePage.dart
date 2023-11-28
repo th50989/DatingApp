@@ -131,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                                 allowedSwipeDirection:
                                     AllowedSwipeDirection.symmetric(
                                         horizontal: true),
-                                numberOfCardsDisplayed: 3,
+                                numberOfCardsDisplayed: 1,
                                 backCardOffset: const Offset(10, 35),
                                 padding: const EdgeInsets.all(24.0),
                                 cardBuilder: (
@@ -195,76 +195,40 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: CardSwiper(
-                                      controller: controller,
-                                      cardsCount: shuffledCards.length,
-                                      onSwipe: _onSwipe,
-                                      onUndo: _onUndo,
-                                      onEnd: () async {
-                                        print('End list');
-                                        BlocProvider.of<CardCubit>(context)
-                                            .getRandomUser();
+                              children: [                               
+                                    ChoiceButton(
+                                      width: 60,
+                                      height: 60,
+                                      size: 25,
+                                      icon: Icons.clear_rounded,
+                                      onPressed: () {
+                                        controller.swipeLeft();
                                       },
-                                      allowedSwipeDirection:
-                                          AllowedSwipeDirection.symmetric(
-                                              horizontal: true),
-                                      numberOfCardsDisplayed: 1,
-                                      backCardOffset: const Offset(10, 35),
-                                      padding: const EdgeInsets.all(24.0),
-                                      cardBuilder: (
-                                        context,
-                                        index,
-                                        horizontalThresholdPercentage,
-                                        verticalThresholdPercentage,
-                                      ) =>
-                                          shuffledCards[index]),
+                                      color: Colors.red,
+                                    ),
+                                    ChoiceButton(
+                                      width: 80,
+                                      height: 80,
+                                      size: 30,
+                                      icon: Icons.favorite,
+                                      color: Colors.red,
+                                      onPressed: () {
+                                        controller.swipeRight();
+                                      },
+                                    ),
+                                    ChoiceButton(
+                                      width: 60,
+                                      height: 60,
+                                      size: 25,
+                                      icon: Icons.watch_later,
+                                      color: Colors.red,
+                                      onPressed: () {
+                                        controller.undo();
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 15.0,
-                                    horizontal: 60,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ChoiceButton(
-                                        width: 60,
-                                        height: 60,
-                                        size: 25,
-                                        icon: Icons.clear_rounded,
-                                        onPressed: () {
-                                          controller.swipeLeft();
-                                        },
-                                        color: Colors.red,
-                                      ),
-                                      ChoiceButton(
-                                        width: 80,
-                                        height: 80,
-                                        size: 30,
-                                        icon: Icons.favorite,
-                                        color: Colors.red,
-                                        onPressed: () {
-                                          controller.swipeRight();
-                                        },
-                                      ),
-                                      ChoiceButton(
-                                        width: 60,
-                                        height: 60,
-                                        size: 25,
-                                        icon: Icons.watch_later,
-                                        color: Colors.red,
-                                        onPressed: () {
-                                          controller.undo();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              
                           ),
                         ],
                       ))
