@@ -314,12 +314,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   // Navigator.pop(context);
-                                  context.read<LoginCubit>().logout();
+                                  await BlocProvider.of<LoginCubit>(context)
+                                      .logout();
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    '/log_in',
+                                    '/welcome',
                                     (route) => false,
                                   );
                                 },

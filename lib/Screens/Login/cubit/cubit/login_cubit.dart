@@ -16,6 +16,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.userRepo) : super(LoginInitial());
   UserRepo userRepo;
+
   Future<void> login(String email, String password) async {
     User currentUser;
     emit(LoginLoading());
@@ -166,7 +167,7 @@ class LoginCubit extends Cubit<LoginState> {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
     emit(LogoutSuccess());
-    emit(LoginInitial());
+    //emit(LoginInitial());
   }
 
   Future<void> createUser(var body) async {

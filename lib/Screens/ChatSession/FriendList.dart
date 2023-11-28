@@ -35,7 +35,7 @@ class _FriendChatListState extends State<FriendChatList> {
     dio.options.headers['Authorization'] = 'Bearer $accessToken';
 
     final response = await dio.get(
-      "api/Users/matched-users-with-latest-message",
+      "/api/Messages/matched-users-with-latest-message",
     );
     // debugPrint(response.data.toString());
     if (response.statusCode == 200) {

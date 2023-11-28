@@ -112,7 +112,12 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: MediaQuery.of(context).size.height / 1.2,
                 // width: MediaQuery.of(context).size.width / 0.9,
-                child: Column(
+
+                child: shuffledCards.length < 1
+                    ? Center(
+                        child: Text('Run out of user'),
+                      )
+                    : Column(
                   children: [
                     Flexible(
                       child: CardSwiper(
@@ -178,42 +183,76 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                         children: [
-                          ChoiceButton(
-                            width: 60,
-                            height: 60,
-                            size: 25,
-                            icon: Icons.clear_rounded,
-                            onPressed: () {
-                              controller.swipeLeft();
-                            },
-                            color: Colors.red,
+                          Flexible(
+                            child: CardSwiper(
+                                controller: controller,
+                                cardsCount: shuffledCards.length,
+                                onSwipe: _onSwipe,
+                                onUndo: _onUndo,
+                                onEnd: () async {
+                                  print('End list');
+                                  BlocProvider.of<CardCubit>(context)
+                                      .getRandomUser();
+                                },
+                                allowedSwipeDirection:
+                                    AllowedSwipeDirection.symmetric(
+                                        horizontal: true),
+                                numberOfCardsDisplayed: 1,
+                                backCardOffset: const Offset(10, 35),
+                                padding: const EdgeInsets.all(24.0),
+                                cardBuilder: (
+                                  context,
+                                  index,
+                                  horizontalThresholdPercentage,
+                                  verticalThresholdPercentage,
+                                ) =>
+                                    shuffledCards[index]),
                           ),
-                          ChoiceButton(
-                            width: 80,
-                            height: 80,
-                            size: 30,
-                            icon: Icons.favorite,
-                            color: Colors.red,
-                            onPressed: () {
-                              controller.swipeRight();
-                            },
-                          ),
-                          ChoiceButton(
-                            width: 60,
-                            height: 60,
-                            size: 25,
-                            icon: Icons.watch_later,
-                            color: Colors.red,
-                            onPressed: () {
-                              controller.undo();
-                            },
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15.0,
+                              horizontal: 60,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ChoiceButton(
+                                  width: 60,
+                                  height: 60,
+                                  size: 25,
+                                  icon: Icons.clear_rounded,
+                                  onPressed: () {
+                                    controller.swipeLeft();
+                                  },
+                                  color: Colors.red,
+                                ),
+                                ChoiceButton(
+                                  width: 80,
+                                  height: 80,
+                                  size: 30,
+                                  icon: Icons.favorite,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    controller.swipeRight();
+                                  },
+                                ),
+                                ChoiceButton(
+                                  width: 60,
+                                  height: 60,
+                                  size: 25,
+                                  icon: Icons.watch_later,
+                                  color: Colors.red,
+                                  onPressed: () {
+                                    controller.undo();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
               ),
             ],
           );
