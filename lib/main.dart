@@ -85,86 +85,41 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        //2 cai nay dang duoc su dung de navigate bang notification
-        navigatorKey: navigatorKey,
-        routes: {
-          '/chat_list_screen': (context) => FriendChatList(),
-          '/my_app': (context) => MyApp(),
-          '/welcome': (context) => WelcomeScreen()
-        },
-        //
-        debugShowCheckedModeBanner: false,
-        title: 'BelieveDer App',
-        theme: ThemeData(
-            primaryColor: kPrimaryColor,
-            scaffoldBackgroundColor: Colors.white,
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: kPrimaryColor,
-                shape: const StadiumBorder(),
-                maximumSize: const Size(double.infinity, 56),
-                minimumSize: const Size(double.infinity, 56),
-              ),
+      //2 cai nay dang duoc su dung de navigate bang notification
+      navigatorKey: navigatorKey,
+      routes: {
+        '/chat_list_screen': (context) => FriendChatList(),
+        '/my_app': (context) => MyApp(),
+        '/welcome': (context) => WelcomeScreen()
+      },
+      //
+      debugShowCheckedModeBanner: false,
+      title: 'BelieveDer App',
+      theme: ThemeData(
+          primaryColor: kPrimaryColor,
+          scaffoldBackgroundColor: Colors.white,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              backgroundColor: kPrimaryColor,
+              shape: const StadiumBorder(),
+              maximumSize: const Size(double.infinity, 56),
+              minimumSize: const Size(double.infinity, 56),
             ),
-            inputDecorationTheme: const InputDecorationTheme(
-              filled: true,
-              fillColor: kPrimaryLightColor,
-              iconColor: kPrimaryColor,
-              prefixIconColor: kPrimaryColor,
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding, vertical: defaultPadding),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-                borderSide: BorderSide.none,
-              ),
-            )),
-        home: BlocListener<LoginCubit, LoginState>(
-          listener: (context, state) {
-            if (state is LoginSuccess) {
-              Future.delayed(Duration.zero, () async {
-                ElegantNotification.success(
-                        background: kPrimaryLightColor,
-                        height: 50,
-                        notificationPosition: NotificationPosition.topCenter,
-                        animation: AnimationType.fromTop,
-                        toastDuration: const Duration(milliseconds: 2000),
-                        description: const Text("Login success !"))
-                    .show(context);
-              });
-              Future.delayed(const Duration(milliseconds: 500), () {
-                //delay de hien thong bao dang nhap thanh cong
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) {
-                    return const HomePage(); // Widget của màn hình mới bạn muốn hiển thị.
-                  }),
-                  (Route<dynamic> route) =>
-                      false, // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
-                );
-              });
-            } else if (state is NewUser) {
-              Future.delayed(const Duration(seconds: 1), () {
-                //delay de hien thong bao dang nhap thanh cong
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return const NewUserPage(); // Widget của màn hình mới bạn muốn hiển thị.
-                  }),
-                  // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
-                );
-              });
-            } else if (state is LogoutSuccess) {
-              Future.delayed(const Duration(seconds: 1), () {
-                //delay de hien thong bao dang nhap thanh cong
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return const WelcomeScreen(); // Widget của màn hình mới bạn muốn hiển thị.
-                  }),
-                  // Điều kiện để loại bỏ màn hình hiện tại khỏi ngăn xếp.
-                );
-              });
-            }
-          },
-          child: const WelcomeScreen(),
-        ));
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            filled: true,
+            fillColor: kPrimaryLightColor,
+            iconColor: kPrimaryColor,
+            prefixIconColor: kPrimaryColor,
+            contentPadding: EdgeInsets.symmetric(
+                horizontal: defaultPadding, vertical: defaultPadding),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              borderSide: BorderSide.none,
+            ),
+          )),
+      home: WelcomeScreen(),
+    );
   }
 }
