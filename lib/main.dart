@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/chat_list_screen': (context) => FriendChatList(),
           '/my_app': (context) => MyApp(),
-          '/log_in': (context) => LoginScreen()
+          '/welcome': (context) => WelcomeScreen()
         },
         //
         debugShowCheckedModeBanner: false,

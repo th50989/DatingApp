@@ -185,7 +185,7 @@ class _ChatSessionState extends State<ChatSession> {
     };
     try {
       final response = await dio.post(
-        "api/Users/send-message",
+        "/api/Messages/send-message",
         data: body,
       );
       //context.read<ChatCubit>().renderChatMessage(widget.user.userId);
@@ -196,7 +196,7 @@ class _ChatSessionState extends State<ChatSession> {
     var optionsFirebase = BaseOptions(
         contentType: 'application/json',
         method: 'POST',
-        baseUrl: base_url1,
+        baseUrl: addmess,
         validateStatus: ((status) => status != null && status < 500));
 
     final Dio dioFirebase = Dio(optionsFirebase);
@@ -208,7 +208,7 @@ class _ChatSessionState extends State<ChatSession> {
     };
     try {
       final response = await dioFirebase.post(
-        "https://addmessages.onrender.com/addmessages",
+        "/addmessages",
         data: bodyFirebase,
       );
       debugPrint(response.data.toString());
