@@ -1,11 +1,12 @@
-import 'package:believeder_app/Models/models.dart';
-import 'package:believeder_app/Screens/ChatSession/Chat.dart';
-import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
-import 'package:believeder_app/constant/url_constant.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:believeder_app/Models/models.dart';
+import 'package:believeder_app/constant/url_constant.dart';
+import 'package:believeder_app/Screens/ChatSession/Chat.dart';
+import 'package:believeder_app/constant/colors_constant.dart';
+import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 
 class FriendChatList extends StatefulWidget {
   FriendChatList({super.key});
@@ -55,7 +56,7 @@ class _FriendChatListState extends State<FriendChatList> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
-      backgroundColor: Colors.pinkAccent,
+      backgroundColor: kPrimaryColor,
       body: BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
         if (state is LoginSuccess) {
           widget.matchedUser = fetchMatchedUser(state.user.accessToken);
@@ -116,15 +117,11 @@ class _FriendChatListState extends State<FriendChatList> {
                           height: 220,
                           decoration: const BoxDecoration(
                             color: Color.fromARGB(255, 239, 99, 145),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(40),
-                              topRight: Radius.circular(40),
-                            ),
                             gradient: LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                Colors.pinkAccent,
+                                kPrimaryColor,
                                 Colors.white70,
                               ],
                             ),
