@@ -1,18 +1,20 @@
 import 'dart:io';
-
-import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
-import 'package:believeder_app/Screens/Profile/cubit/editInfoCubit/cubit/edit_info_cubit.dart';
-import 'package:believeder_app/repositories/UserRepo.dart';
+import 'dart:ui';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:believeder_app/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:believeder_app/repositories/UserRepo.dart';
 import 'package:believeder_app/Screens/Welcome/welcome_screen.dart';
 import 'package:believeder_app/Screens/Profile/Widgets/InfoTextBox.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
-
-import 'package:image_picker/image_picker.dart';
-
 import 'package:believeder_app/Screens/Profile/Widgets/editDataProfile.dart';
+import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
+import 'package:believeder_app/Screens/Profile/cubit/editInfoCubit/cubit/edit_info_cubit.dart';
+
+
 
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
@@ -23,6 +25,12 @@ class PersonalProfilePage extends StatefulWidget {
 
 class _PersonalProfilePageState extends State<PersonalProfilePage> {
   File? image;
+  String _selectedGender = "None"; // Default selection
+  List<String> _genderOptions = ['Male', 'Female', 'Email'];
+  DateTime dateTime = DateTime.now();
+
+  TextEditingController Gender = TextEditingController();
+  TextEditingController bDay = TextEditingController();
 
   @override
   void initState() {
@@ -57,13 +65,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   var imgUrl = state.user.imgUrl;
                   return Stack(
                     children: <Widget>[
-                      Container(
+                      Container(                      
                         height: MediaQuery.sizeOf(context).height / 2.6,
                         decoration: BoxDecoration(
                           image: imgUrl != ''
                               ? DecorationImage(
                                   image: NetworkImage(imgUrl),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.cover,                                 
                                 )
                               : const DecorationImage(
                                   image: AssetImage(
@@ -73,8 +81,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                           color: imgUrl != null
                               ? null
                               : Colors.grey, // Màu nền của hộp trang trí
-                          borderRadius:
-                              BorderRadius.circular(10.0), // Góc bo tròn
+                          borderRadius: BorderRadius.circular(10.0), // Góc bo tròn
                           boxShadow: [
                             BoxShadow(
                               color:
@@ -85,6 +92,12 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             ),
                           ],
                         ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Độ mờ: điều chỉnh giá trị của sigmaX và sigmaY
+                          child: Container(
+                            color: Colors.black.withOpacity(0.3), // Màu và độ mờ của hiệu ứng làm mờ
+                          ),
+                        ),
                       ),
                       ListView(
                         children: [
@@ -92,8 +105,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             height: 50.0,
                           ),
                           Container(
-                            width:
-                                120.0, // Đặt chiều rộng và chiều cao cho container
+                            width: 120.0, // Đặt chiều rộng và chiều cao cho container
                             height: 120.0,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -104,10 +116,16 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             ),
                             child: CircleAvatar(
                               radius: 60,
-                              backgroundImage: NetworkImage(
-                                imgUrl,
+                              backgroundColor: Colors.transparent, // Optional: Set background color to transparent
+                              child: ClipOval(
+                                child: Image.network(
+                                  imgUrl,
+                                  width: 120, // Set the width to the double of the radius
+                                  height: 120, // Set the height to the double of the radius
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
+                            )
                           ),
                           TextButton.icon(
                               label: Text('Edit Avatar'),
@@ -119,8 +137,8 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w300),
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -237,49 +255,72 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                         text: state.user.birthDay,
                                         sectionName: 'Birthday',
                                         onTap: () async {
-                                          String updatedBirthDay =
-                                              await showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (BuildContext context) {
-                                              return EditProfileDialog(
-                                                text: "Change Birthday",
-                                              );
-                                            },
+                                          DateTime updatedBirthDay =
+                                          await showCupertinoModalPopup(
+                                            context: context, 
+                                              builder: (BuildContext context) => SizedBox(
+                                                // width: double.infinity,
+                                                height: 250,
+                                                child: CupertinoDatePicker(
+                                                  itemExtent: 30,
+                                                  backgroundColor: Colors.white,
+                                                  initialDateTime: dateTime,
+                                                  // children:
+                                                  onDateTimeChanged: (DateTime newTime) {
+                                                    setState(() 
+                                                      {
+                                                        dateTime = newTime; 
+                                                        bDay.text = '${dateTime.day}-${dateTime.month}-${dateTime.year}';
+                                                      }     
+                                                    );
+                                                  },
+                                                  use24hFormat: true,
+                                                  mode: CupertinoDatePickerMode.date,
+                                                  
+                                                ),
+                                              ) 
                                           );
-                                          if (updatedBirthDay != '') {
-                                            print(
-                                                'Updated Bio: $updatedBirthDay');
-                                            BlocProvider.of<EditInfoCubit>(
-                                                    context)
-                                                .updateInfo(updatedBirthDay,
-                                                    Info.bday, state.user);
-                                          }
+                                          String formattedDateTime = '${updatedBirthDay.year}-${updatedBirthDay.month}-${updatedBirthDay.day}';
+                                          // Gọi phương thức updateInfo với giá trị đã định dạng
+                                          BlocProvider.of<EditInfoCubit>(context).updateInfo(
+                                            formattedDateTime,
+                                            Info.bday,
+                                            state.user,
+                                          );
+                                          
                                         },
                                       ),
                                       infoTextBox(
                                         text: state.user.gender,
                                         sectionName: 'Gender',
-                                        onTap: () async {
-                                          String updatedGender =
-                                              await showDialog(
+                                        onTap: () async { 
+                                          await showCupertinoModalPopup(
                                             context: context,
-                                            barrierDismissible: false,
-                                            builder: (BuildContext context) {
-                                              return EditProfileDialog(
-                                                text: "Change Gender",
-                                              );
-                                            },
+                                            builder: (_) => SizedBox(
+                                              // width: double.infinity,
+                                              height: 250,
+                                              child: CupertinoPicker(
+                                                backgroundColor: Colors.white,
+                                                itemExtent: 30,
+                                                scrollController: FixedExtentScrollController(
+                                                  initialItem: _genderOptions.indexOf(_selectedGender),
+                                                ),
+                                                children: _genderOptions.map((gender) => Text(gender)).toList(),
+                                                onSelectedItemChanged: (int index) {
+                                                  setState(() {
+                                                    _selectedGender = _genderOptions[index];
+                                                    Gender.text = _selectedGender;
+                                                  });
+                                                },
+                                              ),
+                                            ),
                                           );
-                                          if (updatedGender != '') {
-                                            print(
-                                                'Updated Bio: $updatedGender');
-                                            BlocProvider.of<EditInfoCubit>(
-                                                    context)
-                                                .updateInfo(updatedGender,
-                                                    Info.gender, state.user);
-                                          }
-                                        },
+                                          BlocProvider.of<EditInfoCubit>(context).updateInfo(
+                                            _selectedGender,
+                                            Info.gender,
+                                            state.user,
+                                          );
+                                        }
                                       ),
                                       infoTextBox(
                                         text: state.user.location,
