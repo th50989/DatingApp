@@ -2,6 +2,7 @@ import 'package:believeder_app/Models/models.dart';
 import 'package:believeder_app/constant/url_constant.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 
 import 'package:meta/meta.dart';
 
@@ -13,6 +14,11 @@ class EditInfoCubit extends Cubit<EditInfoState> {
   EditInfoCubit() : super(EditInfoInitial());
 
   dynamic genBodyJson(Info part, String data, User currentUser) {
+    DateTime? tempDate;
+    if (part == Info.bday) {
+      tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(data);
+    }
+
     var body;
     switch (part) {
       case Info.bio:
@@ -41,7 +47,7 @@ class EditInfoCubit extends Cubit<EditInfoState> {
       case Info.bday:
         return body = {
           "gender": currentUser.gender,
-          "birthday": data,
+          "birthday": tempDate!.toIso8601String(),
           "lastName": currentUser.lastName,
           "firstName": currentUser.firstName,
           "location": currentUser.location

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class User {
   int userId;
   int age;
@@ -29,13 +31,19 @@ class User {
 
   // Factory constructor để tạo một User từ dữ liệu JSON
   factory User.fromJson(Map<String, dynamic> json) {
+    String bday = json['birthday'] ?? '';
+
+    DateTime tempDate = DateTime.parse(bday);
+
+    String date = DateFormat("yyyy-MM-dd").format(tempDate);
+
     return User(
       userId: json['userId'] ?? 0,
       age: json['age'] ?? 18,
       gender: json['gender'] ?? '',
       imgUrl: json['ImageURL'] ?? '',
       bio: json['bio'] ?? '',
-      birthDay: json['birthday'] ?? '',
+      birthDay: date ?? '',
       lastName: json['lastName'] ?? '',
       firstName: json['firstName'] ?? '',
       location: json['location'] ?? '',

@@ -166,7 +166,7 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> logout() async {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
-    emit(LogoutSuccess());
+    //emit(LogoutSuccess());
     //emit(LoginInitial());
   }
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +14,7 @@ import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
 import 'package:believeder_app/Screens/Profile/Widgets/editDataProfile.dart';
 import 'package:believeder_app/Screens/Profile/cubit/avatarCubit/cubit/avatar_cubit.dart';
 import 'package:believeder_app/Screens/Profile/cubit/editInfoCubit/cubit/edit_info_cubit.dart';
-
-
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class PersonalProfilePage extends StatefulWidget {
   const PersonalProfilePage({super.key});
@@ -27,7 +27,10 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
   File? image;
   String _selectedGender = "None"; // Default selection
   List<String> _genderOptions = ['Male', 'Female', 'Email'];
-  DateTime dateTime = DateTime.now();
+  //DateTime dateTime = DateTime.now();
+
+  DateRangePickerController _dateRangePickerController =
+      DateRangePickerController();
 
   TextEditingController Gender = TextEditingController();
   TextEditingController bDay = TextEditingController();
@@ -65,13 +68,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                   var imgUrl = state.user.imgUrl;
                   return Stack(
                     children: <Widget>[
-                      Container(                      
+                      Container(
                         height: MediaQuery.sizeOf(context).height / 2.6,
                         decoration: BoxDecoration(
                           image: imgUrl != ''
                               ? DecorationImage(
                                   image: NetworkImage(imgUrl),
-                                  fit: BoxFit.cover,                                 
+                                  fit: BoxFit.cover,
                                 )
                               : const DecorationImage(
                                   image: AssetImage(
@@ -81,7 +84,8 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                           color: imgUrl != null
                               ? null
                               : Colors.grey, // Màu nền của hộp trang trí
-                          borderRadius: BorderRadius.circular(10.0), // Góc bo tròn
+                          borderRadius:
+                              BorderRadius.circular(10.0), // Góc bo tròn
                           boxShadow: [
                             BoxShadow(
                               color:
@@ -93,9 +97,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                           ],
                         ),
                         child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Độ mờ: điều chỉnh giá trị của sigmaX và sigmaY
+                          filter: ImageFilter.blur(
+                              sigmaX: 5.0,
+                              sigmaY:
+                                  5.0), // Độ mờ: điều chỉnh giá trị của sigmaX và sigmaY
                           child: Container(
-                            color: Colors.black.withOpacity(0.3), // Màu và độ mờ của hiệu ứng làm mờ
+                            color: Colors.black.withOpacity(
+                                0.3), // Màu và độ mờ của hiệu ứng làm mờ
                           ),
                         ),
                       ),
@@ -105,28 +113,31 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                             height: 50.0,
                           ),
                           Container(
-                            width: 120.0, // Đặt chiều rộng và chiều cao cho container
-                            height: 120.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.black, // Màu sắc của border
-                                width: 1.0, // Độ rộng của border (1px)
-                              ),
-                            ),
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundColor: Colors.transparent, // Optional: Set background color to transparent
-                              child: ClipOval(
-                                child: Image.network(
-                                  imgUrl,
-                                  width: 120, // Set the width to the double of the radius
-                                  height: 120, // Set the height to the double of the radius
-                                  fit: BoxFit.cover,
+                              width:
+                                  120.0, // Đặt chiều rộng và chiều cao cho container
+                              height: 120.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black, // Màu sắc của border
+                                  width: 1.0, // Độ rộng của border (1px)
                                 ),
                               ),
-                            )
-                          ),
+                              child: CircleAvatar(
+                                radius: 60,
+                                backgroundColor: Colors
+                                    .transparent, // Optional: Set background color to transparent
+                                child: ClipOval(
+                                  child: Image.network(
+                                    imgUrl,
+                                    width:
+                                        120, // Set the width to the double of the radius
+                                    height:
+                                        120, // Set the height to the double of the radius
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )),
                           TextButton.icon(
                               label: Text('Edit Avatar'),
                               onPressed: () => _showImagePickerModal(
@@ -255,73 +266,102 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                         text: state.user.birthDay,
                                         sectionName: 'Birthday',
                                         onTap: () async {
-                                          DateTime updatedBirthDay =
-                                          await showCupertinoModalPopup(
-                                            context: context, 
-                                              builder: (BuildContext context) => SizedBox(
-                                                // width: double.infinity,
-                                                height: 250,
-                                                child: CupertinoDatePicker(
-                                                  itemExtent: 30,
-                                                  backgroundColor: Colors.white,
-                                                  initialDateTime: dateTime,
-                                                  // children:
-                                                  onDateTimeChanged: (DateTime newTime) {
-                                                    setState(() 
-                                                      {
-                                                        dateTime = newTime; 
-                                                        bDay.text = '${dateTime.day}-${dateTime.month}-${dateTime.year}';
-                                                      }     
-                                                    );
-                                                  },
-                                                  use24hFormat: true,
-                                                  mode: CupertinoDatePickerMode.date,
-                                                  
-                                                ),
-                                              ) 
-                                          );
-                                          String formattedDateTime = '${updatedBirthDay.year}-${updatedBirthDay.month}-${updatedBirthDay.day}';
-                                          // Gọi phương thức updateInfo với giá trị đã định dạng
-                                          BlocProvider.of<EditInfoCubit>(context).updateInfo(
-                                            formattedDateTime,
-                                            Info.bday,
-                                            state.user,
-                                          );
-                                          
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  SfDateRangePicker(
+                                                    controller:
+                                                        _dateRangePickerController,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    view: DateRangePickerView
+                                                        .month,
+                                                    selectionMode:
+                                                        DateRangePickerSelectionMode
+                                                            .single,
+                                                    toggleDaySelection: true,
+                                                    showActionButtons: true,
+                                                    showNavigationArrow: true,
+                                                    onCancel: () {
+                                                      _dateRangePickerController
+                                                          .selectedDate = null;
+                                                      Navigator.pop(context);
+                                                    },
+                                                    onSubmit:
+                                                        (Object? value) async {
+                                                      print(value);
+                                                      await BlocProvider.of<
+                                                                  EditInfoCubit>(
+                                                              context)
+                                                          .updateInfo(
+                                                            value.toString(),
+                                                            Info.bday,
+                                                            state.user,
+                                                          )
+                                                          .then((value) =>
+                                                              Navigator.pop(
+                                                                  context));
+                                                    },
+                                                  ));
                                         },
                                       ),
                                       infoTextBox(
-                                        text: state.user.gender,
-                                        sectionName: 'Gender',
-                                        onTap: () async { 
-                                          await showCupertinoModalPopup(
-                                            context: context,
-                                            builder: (_) => SizedBox(
-                                              // width: double.infinity,
-                                              height: 250,
-                                              child: CupertinoPicker(
-                                                backgroundColor: Colors.white,
-                                                itemExtent: 30,
-                                                scrollController: FixedExtentScrollController(
-                                                  initialItem: _genderOptions.indexOf(_selectedGender),
+                                          text: state.user.gender,
+                                          sectionName: 'Gender',
+                                          onTap: () async {
+                                            await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('Cancel')),
+                                                  TextButton(
+                                                      onPressed: () async {
+                                                        await BlocProvider.of<
+                                                                    EditInfoCubit>(
+                                                                context)
+                                                            .updateInfo(
+                                                              _selectedGender,
+                                                              Info.gender,
+                                                              state.user,
+                                                            )
+                                                            .then((value) =>
+                                                                Navigator.pop(
+                                                                    context));
+                                                      },
+                                                      child: Text('Change')),
+                                                ],
+                                                content: SizedBox(
+                                                  // width: double.infinity,
+                                                  height: 100,
+                                                  child: CupertinoPicker(
+                                                    itemExtent: 30,
+                                                    scrollController:
+                                                        FixedExtentScrollController(
+                                                      initialItem:
+                                                          _genderOptions.indexOf(
+                                                              _selectedGender),
+                                                    ),
+                                                    children: _genderOptions
+                                                        .map((gender) =>
+                                                            Text(gender))
+                                                        .toList(),
+                                                    onSelectedItemChanged:
+                                                        (int index) {
+                                                      _selectedGender =
+                                                          _genderOptions[index];
+                                                      Gender.text =
+                                                          _selectedGender;
+                                                    },
+                                                  ),
                                                 ),
-                                                children: _genderOptions.map((gender) => Text(gender)).toList(),
-                                                onSelectedItemChanged: (int index) {
-                                                  setState(() {
-                                                    _selectedGender = _genderOptions[index];
-                                                    Gender.text = _selectedGender;
-                                                  });
-                                                },
                                               ),
-                                            ),
-                                          );
-                                          BlocProvider.of<EditInfoCubit>(context).updateInfo(
-                                            _selectedGender,
-                                            Info.gender,
-                                            state.user,
-                                          );
-                                        }
-                                      ),
+                                            );
+                                          }),
                                       infoTextBox(
                                         text: state.user.location,
                                         sectionName: 'Location',
@@ -358,12 +398,13 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                                 onPressed: () async {
                                   // Navigator.pop(context);
                                   await BlocProvider.of<LoginCubit>(context)
-                                      .logout();
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    '/welcome',
-                                    (route) => false,
-                                  );
+                                      .logout()
+                                      .then((value) =>
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            '/welcome',
+                                            (route) => false,
+                                          ));
                                 },
                                 child: const Text(
                                     style: TextStyle(color: Colors.white),

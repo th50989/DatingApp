@@ -78,7 +78,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<LoginCubit>().isLogged();
   }
 
   // This widget is the root of your application.
