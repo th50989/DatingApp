@@ -73,8 +73,8 @@ class _HomePageState extends State<HomePage> {
                       }));
                     },
                     child: Container(
-                      height: 20,
-                      width: 20,
+                      height: 60,
+                      width: 60,
                       child: const Icon(
                         Icons.person,
                         color: Colors.white,
@@ -98,8 +98,8 @@ class _HomePageState extends State<HomePage> {
                         }));
                       },
                       child: Container(
-                          height: 20,
-                          width: 20,
+                          height: 60,
+                          width: 60,
                           child: Icon(
                             Icons.chat,
                             color: Colors.white,
