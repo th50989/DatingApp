@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:believeder_app/constant/colors_constant.dart';
 
 class SenderRowView extends StatefulWidget {
   const SenderRowView({Key? key, required this.senderMessage, this.time})
@@ -33,26 +34,29 @@ class _SenderRowViewState extends State<SenderRowView> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(
-                        left: 8.0, right: 5.0, top: 8.0, bottom: 2.0),
+                        left: 8.0, right: 20.0, top: 8.0, bottom: 2.0),
                     padding: const EdgeInsets.only(
                         left: 5.0, right: 5.0, top: 9.0, bottom: 9.0),
                     decoration: const BoxDecoration(
                         shape: BoxShape.rectangle,
-                        color: Color(0xFF7CE994),
+                        color: kPrimaryLightColor,
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     child: Text(
                       widget.senderMessage!,
                       textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(right: 10.0, bottom: 8.0),
+                margin: const EdgeInsets.only(right: 20.0, bottom: 8.0),
                 child: Text(
                   widget.time!,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 7.0,
                   ),
                 ),
@@ -61,20 +65,6 @@ class _SenderRowViewState extends State<SenderRowView> {
           ),
           //
         ),
-        const Flexible(
-          flex: 13,
-          fit: FlexFit.tight,
-          child: Padding(
-            padding: EdgeInsets.only(right: 10.0, top: 1.0, bottom: 9.0),
-            child: CircleAvatar(
-              backgroundColor: Color(0xFF90C953),
-              child: Text('A',
-                  style: TextStyle(
-                    color: Colors.black,
-                  )),
-            ),
-          ),
-        )
       ],
     );
   }

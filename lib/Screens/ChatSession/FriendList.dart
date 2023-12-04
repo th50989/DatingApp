@@ -231,32 +231,46 @@ class _FriendChatListState extends State<FriendChatList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  UserAvatar(filename: user.imgUrl),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        user.firstName,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        CurrentUserid == user.latestMessageUserIdFrom
-                            ? 'You sent : ${user.latestMessageContent}'
-                            : '${user.firstName} sent to you :${user.latestMessageContent} ',
-                        // user.latestMessageContent,
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  )
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    UserAvatar(filename: user.imgUrl),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user.firstName,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10.0,
+                          ),
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width / 1.8,
+                            child: Text(
+                              CurrentUserid == user.latestMessageUserIdFrom
+                                  ? 'You sent : ${user.latestMessageContent}'
+                                  : '${user.firstName} sent to you :${user.latestMessageContent} ',
+                              // user.latestMessageContent,
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 25, top: 5),

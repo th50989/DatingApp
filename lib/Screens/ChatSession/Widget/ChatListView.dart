@@ -1,16 +1,16 @@
-import 'package:believeder_app/Models/models.dart';
-import 'package:believeder_app/Screens/ChatSession/cubit/chat_cubit.dart';
-import 'package:believeder_app/Screens/ChatSession/cubit/chat_state.dart';
-import 'package:believeder_app/constant/url_constant.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../Global_Members.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:believeder_app/Models/models.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:believeder_app/constant/url_constant.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:believeder_app/Screens/ChatSession/cubit/chat_cubit.dart';
+import 'package:believeder_app/Screens/ChatSession/cubit/chat_state.dart';
 import 'package:believeder_app/Screens/ChatSession/Widget/SenderView.dart';
 import 'package:believeder_app/Screens/ChatSession/Widget/RecieverView.dart';
+
 
 class ChatListView extends StatefulWidget {
   ChatListView(
@@ -126,41 +126,56 @@ class _ChatListViewState extends State<ChatListView> {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: ClipOval(
+              child: CircularProgressIndicator(
+                value: 0.0, // Giá trị tiến triển tùy chọn
+                strokeWidth: 0.0, // Độ rộng của đường vòng tròn
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue), // Màu sắc của vòng tròn
+              ),
+            ),
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
           return Expanded(
-            child: ListView.builder(
-                // controller: _scrollController.jumpTo(value),
-                // controller:ScrollController(initialScrollOffset: ),
-                shrinkWrap: true,
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (context, index) {
-                  var document = snapshot.data!.docs[index];
-                  // var testId = document['UserIdFrom'];
-                  try {
-                    if ((document['UserIdFrom'] == widget.currentUser.userId &&
-                            document['UserIdTo'] == widget.peerUser.userId) ||
-                        (document['UserIdFrom'] == widget.peerUser.userId &&
-                            document['UserIdTo'] ==
-                                widget.currentUser.userId)) {
-                      if (document['UserIdFrom'] == widget.currentUser.userId) {
-                        return SenderRowView(
-                            senderMessage: document['content'],
-                            time: document['timeSent']);
-                      } else {
-                        return ReceiverRowView(
-                            receiverMessage: document['content'],
-                            time: document['timeSent']);
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 10.0
+              ),
+              child: ListView.builder(
+                  // controller: _scrollController.jumpTo(value),
+                  // controller:ScrollController(initialScrollOffset: ),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data?.docs.length,
+                  itemBuilder: (context, index) {
+                    var document = snapshot.data!.docs[index];
+                    // var testId = document['UserIdFrom'];
+                    try {
+                      if ((document['UserIdFrom'] == widget.currentUser.userId &&
+                              document['UserIdTo'] == widget.peerUser.userId) ||
+                          (document['UserIdFrom'] == widget.peerUser.userId &&
+                              document['UserIdTo'] ==
+                                  widget.currentUser.userId)) {
+                        if (document['UserIdFrom'] == widget.currentUser.userId) {
+                          return SenderRowView(
+                              senderMessage: document['content'],
+                              time: document['timeSent']);
+                        } else {
+                          return ReceiverRowView(
+                              receiverMessage: document['content'],
+                              time: document['timeSent']);
+                        }
                       }
-                    }
-                  } catch (e) {}
-                  // } else {
-                  //   return Center(child: CircularProgressIndicator());
-                  // }
-                  return Container();
-                }),
+                    } catch (e) {}
+                    // } else {
+                    //   return Center(child: CircularProgressIndicator());
+                    // }
+                    return Container();
+                  }),
+            ),
           );
         }
       },
