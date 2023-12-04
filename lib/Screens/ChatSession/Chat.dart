@@ -1,19 +1,20 @@
 import 'dart:math';
-
+import 'package:dio/dio.dart';
+import 'Widget/ChatListView.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../constant/colors_constant.dart';
 import 'package:believeder_app/Models/models.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:believeder_app/constant/url_constant.dart';
 import 'package:believeder_app/Screens/ChatSession/FriendList.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:believeder_app/Screens/ChatSession/cubit/chat_cubit.dart';
 import 'package:believeder_app/Screens/ChatSession/cubit/chat_state.dart';
 import 'package:believeder_app/Screens/Login/cubit/cubit/login_cubit.dart';
-import 'package:believeder_app/constant/url_constant.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'Widget/ChatListView.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 
 class ChatSession extends StatefulWidget {
   const ChatSession({super.key, required this.user});
@@ -45,48 +46,66 @@ class _ChatSessionState extends State<ChatSession> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.pinkAccent,
+        backgroundColor: kPrimaryLightColor,
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 242, 37, 105),
-          leadingWidth: 50.0,
-          titleSpacing: -8.0,
+          backgroundColor: kPrimaryColor,
+          leadingWidth: 110.0,
+          titleSpacing: -5.0,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+            padding: const EdgeInsets.only(
+              left: 7.0,
+            ),
             child: Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      popOut();
-                    },
-                    icon: const Icon(Icons.arrow_back)),
-                const CircleAvatar(
-                  backgroundColor: Colors.blueAccent,
-                  child: Text('Q',
-                      style: TextStyle(
-                        color: Colors.black,
-                      )),
+                  onPressed: () {
+                    popOut();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    )
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10.0,
+                  ),
+                  child: const CircleAvatar(                
+                    backgroundColor: Colors.blueAccent,
+                    child: Text('Q',
+                        style: TextStyle(
+                          color: Colors.black,
+                        )
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(left: 50.0),
+            padding: const EdgeInsets.only(left: 7.0),
             child: ListTile(
               title: Text(widget.user.firstName,
                   style: const TextStyle(
                     color: Colors.white,
                   )),
-              subtitle: const Text('crosssuck',
-                  style: TextStyle(
-                    color: Colors.white70,
-                  )),
+              subtitle: Text(
+                widget.user.bio,
+                style: TextStyle(
+                  color: Colors.white70,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                maxLines: 1,
+              ),
             ),
           ),
-          actions: const [
-            Icon(Icons.videocam),
+          actions: const [            
             Padding(
               padding: EdgeInsets.only(right: 20.0, left: 20.0),
-              child: Icon(Icons.call),
+              child: Icon(
+                Icons.info_outline,
+                color: Colors.white,
+              ),
             ),
           ],
         ),
@@ -108,53 +127,49 @@ class _ChatSessionState extends State<ChatSession> {
                   margin: const EdgeInsets.all(8.0),
                   decoration: const BoxDecoration(
                       shape: BoxShape.rectangle,
-                      color: Color(0xFF333D56),
-                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      color: kPrimaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                            left: 8.0, right: 8.0, bottom: 12.0),
-                        child: Transform.rotate(
-                            angle: 0,
-                            child: const Icon(
-                              Icons.emoji_emotions,
-                              color: Colors.white,
-                            )),
-                      ),
+                    children: [                   
                       Expanded(
                         child: TextFormField(
                           controller: textEditingController,
                           cursorColor: Colors.white,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
-                          maxLines: 6,
-                          style: const TextStyle(color: Colors.white),
+                          maxLines: 1,
+                          style: const TextStyle(color: Colors.black),
                           decoration: const InputDecoration(
                             hintText: 'Type your message...',
                             hintStyle: TextStyle(color: Colors.grey),
-                            border: InputBorder.none,
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(21.0)),
+                              borderSide: BorderSide(
+                                color: kPrimaryColor,  // Màu sắc của viền
+                                width: 2.0,           // Độ rộng của viền
+                              ),
+                            ),                          
                           ),
                         ),
                       ),
                       Container(
+                        // color: Colors.white,
                         margin: const EdgeInsets.only(
                             left: 8.0, right: 8.0, bottom: 11.0),
-                        child: Transform.rotate(
-                          angle: -3.14 / 5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 5.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                sendMessage(state.user.accessToken, state.user,
-                                    widget.user);
-                              },
-                              onLongPress: () {},
-                              child: const Icon(
-                                Icons.send,
-                                color: Colors.white,
-                              ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              sendMessage(state.user.accessToken, state.user,
+                                  widget.user);
+                            },
+                            onLongPress: () {},
+                            child: const Icon(
+                              Icons.send_rounded,
+                              color: Colors.white,
                             ),
                           ),
                         ),
