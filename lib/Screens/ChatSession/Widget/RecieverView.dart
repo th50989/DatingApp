@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:believeder_app/constant/colors_constant.dart';
 
 class ReceiverRowView extends StatefulWidget {
   const ReceiverRowView(
@@ -18,17 +19,10 @@ class _ReceiverRowViewState extends State<ReceiverRowView> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const Flexible(
-          flex: 13,
+          flex: 0,
           fit: FlexFit.tight,
           child: Padding(
-            padding: EdgeInsets.only(left: 10.0, top: 1.0, bottom: 9.0),
-            child: CircleAvatar(
-              backgroundColor: Color(0xFF90C953),
-              child: Text('X',
-                  style: TextStyle(
-                    color: Colors.black,
-                  )),
-            ),
+            padding: EdgeInsets.only(left: 5.0, top: 1.0, bottom: 9.0),
           ),
         ),
         Flexible(
@@ -43,14 +37,18 @@ class _ReceiverRowViewState extends State<ReceiverRowView> {
                     margin: const EdgeInsets.only(
                         left: 5.0, right: 8.0, top: 8.0, bottom: 2.0),
                     padding: const EdgeInsets.only(
-                        left: 5.0, right: 5.0, top: 9.0, bottom: 9.0),
+                        left: 5.0, right: 20.0, top: 9.0, bottom: 9.0),
                     decoration: const BoxDecoration(
                         shape: BoxShape.rectangle,
-                        color: Color(0xFF87D4E6),
+                        color: kPrimaryColor,
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     child: Text(
                       widget.receiverMessage!,
                       textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -60,7 +58,7 @@ class _ReceiverRowViewState extends State<ReceiverRowView> {
                 child: Text(
                   widget.time!,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 7.0,
                   ),
                 ),

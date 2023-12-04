@@ -46,10 +46,10 @@ class _ChatSessionState extends State<ChatSession> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kPrimaryLightColor,
+        backgroundColor: kPrimaryColor,
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
-          leadingWidth: 110.0,
+          leadingWidth: 130.0,
           titleSpacing: -5.0,
           leading: Padding(
             padding: const EdgeInsets.only(
@@ -57,45 +57,63 @@ class _ChatSessionState extends State<ChatSession> {
             ),
             child: Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    popOut();
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    )
-                  ),
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      popOut();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      )
+                    ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    left: 10.0,
+                    left: 0.0,
                   ),
-                  child: const CircleAvatar(                
-                    backgroundColor: Colors.blueAccent,
-                    child: Text('Q',
-                        style: TextStyle(
-                          color: Colors.black,
-                        )
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                    ),
+                    child: CircleAvatar(  
+                      radius: 40,              
+                      child: ClipOval(
+                        child: Image.network(
+                          widget.user.imgUrl,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                      )
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 7.0),
-            child: ListTile(
-              title: Text(widget.user.firstName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  )),
-              subtitle: Text(
-                widget.user.bio,
-                style: TextStyle(
-                  color: Colors.white70,
-                  overflow: TextOverflow.ellipsis,
+          title: Container(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: ListTile(
+                title: Text(widget.user.firstName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    )),
+                subtitle: Text(
+                  widget.user.bio,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  maxLines: 1,
                 ),
-                maxLines: 1,
               ),
             ),
           ),
@@ -112,72 +130,86 @@ class _ChatSessionState extends State<ChatSession> {
         body: BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
           if (state is LoginSuccess) {
             // renderChatMessage(widget.user.userId, state.user.accessToken);
-            return Column(
-              children: [
-                // BlocBuilder<ChatCubit, ChatState>(
-                //     builder: (context, chatState) {
-                ChatListView(
-                  scrollController: scrollController,
-                  peerUser: widget.user,
-                  currentUser: state.user,
-                ),
-                // }),
-                Container(
-                  // height: 50,
-                  margin: const EdgeInsets.all(8.0),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: kPrimaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))
+            return Expanded(
+              child: Container(
+                height: MediaQuery.sizeOf(context).height,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [                   
-                      Expanded(
-                        child: TextFormField(
-                          controller: textEditingController,
-                          cursorColor: Colors.white,
-                          keyboardType: TextInputType.multiline,
-                          minLines: 1,
-                          maxLines: 1,
-                          style: const TextStyle(color: Colors.black),
-                          decoration: const InputDecoration(
-                            hintText: 'Type your message...',
-                            hintStyle: TextStyle(color: Colors.grey),
-                            isDense: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(21.0)),
-                              borderSide: BorderSide(
-                                color: kPrimaryColor,  // Màu sắc của viền
-                                width: 2.0,           // Độ rộng của viền
-                              ),
-                            ),                          
-                          ),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(                     
+                      child: Container(
+                        height: MediaQuery.sizeOf(context).height / 1.6,
+                        child: ChatListView(
+                          scrollController: scrollController,
+                          peerUser: widget.user,
+                          currentUser: state.user,
                         ),
                       ),
-                      Container(
-                        // color: Colors.white,
-                        margin: const EdgeInsets.only(
-                            left: 8.0, right: 8.0, bottom: 11.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              sendMessage(state.user.accessToken, state.user,
-                                  widget.user);
-                            },
-                            onLongPress: () {},
-                            child: const Icon(
-                              Icons.send_rounded,
-                              color: Colors.white,
+                    ),
+                    Container(
+                      // height: 50,
+                      margin: const EdgeInsets.all(8.0),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20.0))
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [                   
+                          Expanded(
+                            child: TextFormField(
+                              controller: textEditingController,
+                              cursorColor: Colors.white,
+                              keyboardType: TextInputType.multiline,
+                              minLines: 1,
+                              maxLines: 1,
+                              style: const TextStyle(color: Colors.black),
+                              decoration: const InputDecoration(
+                                hintText: 'Type your message...',
+                                hintStyle: TextStyle(color: Colors.grey),
+                                isDense: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(21.0)),
+                                  borderSide: BorderSide(
+                                    color: kPrimaryColor,  // Màu sắc của viền
+                                    width: 2.0,           // Độ rộng của viền
+                                  ),
+                                ),                          
+                              ),
                             ),
                           ),
-                        ),
+                          Container(
+                            // color: Colors.white,
+                            margin: const EdgeInsets.only(
+                                left: 8.0, right: 8.0, bottom: 11.0),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  sendMessage(state.user.accessToken, state.user,
+                                      widget.user);
+                                },
+                                onLongPress: () {},
+                                child: const Icon(
+                                  Icons.send_rounded,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             );
           } else
             return CircularProgressIndicator();
